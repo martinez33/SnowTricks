@@ -1,0 +1,16 @@
+{# templates/lucky/number.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Tous les Tricks :</h1>
+
+    {% for trick in tricks %}
+        <div>
+            {{ trick.trickName }}<br />
+            {{ trick.trickDescription }}<br />
+            {{ trick.trickGrp }}<br />
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
