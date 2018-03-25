@@ -19,6 +19,7 @@ class Trick implements TrickInterface
     private $trickId;
 
     /**
+     *
      * @var string
      */
     protected $trickName;

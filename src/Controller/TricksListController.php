@@ -23,7 +23,7 @@ class TricksListController extends Controller
      * )
      * @return Response
      */
-    public function showTricks()
+    public function ShowTricks()
     {
         $tricks = $this->getDoctrine()
             ->getRepository(Trick::class)
