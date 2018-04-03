@@ -8,6 +8,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Interfaces\TrickInterface;
 use App\Entity\Trick;
 use App\Tests\Entity\Interfaces\TrickInterfaceTest;
 use PHPUnit\Framework\TestCase;
@@ -15,27 +16,35 @@ use Ramsey\Uuid\Uuid;
 
 
 
-class TrickTest extends TestCase implements TrickInterfaceTest
+class TrickTest extends TestCase
 {
-
     /**
-     * @return string|void
+     * @return $string|void
      */
-    public function testGetTrickName()
+    public function testInstanceInterfaceOf()
     {
-        $trick = new Trick('360°', 'Rotation d\'un tour', 1);
-        $result = $trick->getTrickName();
+        $trick = new Trick('360°', 'Rotation d\un tour', 'Rotation');
 
-        $this->assertSame('360°', $result);
+        static::assertInstanceOf(TrickInterface::class, $trick);
     }
 
     /**
      * @return string|void
      */
-    public function testGetTrickDescription()
+    public function testGetName()
     {
-        $trick = new Trick('360°', 'Rotation d\'un tour', 1);
-        $result = $trick->getTrickDescription();
+        $trick = new Trick('360°', 'Rotation d\'un tour', 'Rotation');
+
+        $this->assertSame('360°', $trick->getName());
+    }
+
+    /**
+     * @return string|void
+     */
+    public function testGetDescription()
+    {
+        $trick = new Trick('360°', 'Rotation d\'un tour', 'Rotation');
+        $result = $trick->getDescription();
 
         $this->assertSame('Rotation d\'un tour', $result);
     }
@@ -43,12 +52,19 @@ class TrickTest extends TestCase implements TrickInterfaceTest
     /**
      * @return int|void
      */
-    public function testGetTrickGrp()
+    public function testGetGroup()
     {
-        $trick = new Trick('360°', 'Rotation d\'un tour', 1 );
-        $result = $trick->getTrickGrp();
+        $trick = new Trick('360°', 'Rotation d\'un tour', 'Rotation' );
+        $result = $trick->getGroup();
 
-        $this->assertSame(1, $result);
+        $this->assertSame('Rotation', $result);
+    }
+
+    public function testGetCreated()
+    {
+        $trick = new Trick('360°', 'Rotation d\'un tour', 'Rotation' );
+
+        static::assertEquals(time(), $trick->getCreated());
     }
 
 }

@@ -2,7 +2,8 @@
 
 namespace App\Repository;
 
-use App\Entity\Trick;
+use App\Domain\Trick;
+use App\Repository\Interfaces\TrickRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -12,12 +13,8 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Trick[]    findAll()
  * @method Trick[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TrickRepository extends ServiceEntityRepository
+class TrickRepository extends ServiceEntityRepository implements TrickRepositoryInterface
 {
-    /**
-     * TrickRepository constructor.
-     * @param RegistryInterface $registry
-     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Trick::class);
@@ -26,19 +23,18 @@ class TrickRepository extends ServiceEntityRepository
 //    /**
 //     * @return Trick[] Returns an array of Trick objects
 //     */
-    /*
-    public function findByExampleField($value)
+
+    public function findAllTrick()
     {
         return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('t.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('t.name', 't.description', 't.grp')
+            ->join('t.image', 'image')
+            ->addSelect('image.fileName', 'image.ext')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Trick

@@ -1,16 +1,21 @@
-{# templates/lucky/number.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    <h1>Tous les Tricks :</h1>
 
+{% block title %}{{ parent() }} | Home{% endblock %}
+
+{% block content %}
+    <h1>Test</h1>
     {% for trick in tricks %}
-        <div>
-            {{ trick.trickName }}<br />
-            {{ trick.trickDescription }}<br />
-            {{ trick.trickGrp }}<br />
+        <div class="row">
+            <div>
+                <img src="{{ asset(trick.fileName ~ trick.ext) }}" />
+            </div>
+            <h4>{{ trick.name }}</h4>
+            <p>{{ trick.description }}</p>
+            <h6>{{ trick.grp }}</h6>
+
         </div>
 
     {% endfor %}
-
 {% endblock %}
