@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: marti
  * Date: 29/03/2018
- * Time: 01:16
+ * Time: 01:16.
  */
 
 namespace App\Domain\Interfaces;
@@ -16,7 +16,7 @@ interface TrickInterface
      * TrickInterface constructor.
      *
      * @param int|null $updated
-     * @param array $images
+     * @param array    $images
      */
     public function __construct(
         int $updated = null,
@@ -29,27 +29,27 @@ interface TrickInterface
     public function getId();
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getName();
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getDescription();
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getGrp();
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getCreated();
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getUpdated();
 
@@ -59,25 +59,29 @@ interface TrickInterface
     public function getImage(): ArrayCollection;
 
     /**
- * @param $name
- * @return mixed
- */
+     * @param $name
+     *
+     * @return string
+     */
     public function setName(string $name);
 
     /**
      * @param $description
-     * @return mixed
+     *
+     * @return string
      */
     public function setDescription(string $description);
 
     /**
- * @param $grp
- * @return mixed
- */
+     * @param $grp
+     *
+     * @return string
+     */
     public function setGrp(string $grp);
 
     /**
      * @param int $updated
+     *
      * @return int
      */
     public function setUpdated(int $updated);

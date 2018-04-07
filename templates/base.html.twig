@@ -17,29 +17,39 @@
 </head>
 <body>
     {% block navbar %}
+        <nav class="navbar navbar-expand-lg navbar-light " id="">
+            <div class="container">
+                <a class="navbar-brand" href="/">SnowTricks</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                        data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fa fa-bars"></i>
+                </button>
 
-            <nav class="navbar navbar-inverse">
-                <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">SnowTricks</a>
-                </div>
-                <div class="container">
-                    <ul class="nav navbar-nav">
-                        <li class="active"> <a href="#">Home</a> </li>
-                        <li> <a href="#">Tricks</a> </li>
-                        <li> <a href="#">Sign Up</a> </li>
-                        <li> <a href="#">Sign In</a> </li>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Tricks</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Sign In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="">Sign Up</a>
+                        </li>
                     </ul>
                 </div>
-            </nav>
+            </div>
+        </nav>
 
-        <div class="row">
-        <h1 class="container">Hello, world!</h1>
-        </div>
     {% endblock %}
-<div class="container">
+
     {% block content %}{% endblock %}
-</div>
+
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

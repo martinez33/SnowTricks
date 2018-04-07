@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: marti
  * Date: 29/03/2018
- * Time: 13:37
+ * Time: 13:37.
  */
 
 namespace App\Domain;
@@ -13,9 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Class Trick
- *
- * @package App\Domain
+ * Class Trick.
  */
 class Trick implements TrickInterface
 {
@@ -54,21 +52,20 @@ class Trick implements TrickInterface
      */
     private $image;
 
-
     /**
      * Trick constructor.
+     *
      * @param int|null $updated
-     * @param array $images
+     * @param array    $images
      */
     public function __construct(
         int $updated = null,
         array $images = []
-    ){
+    ) {
         $this->id = Uuid::uuid4();
         $this->created = time();
         $this->updated = time();
         $this->image = new ArrayCollection($images);
-
     }
 
     /**
@@ -158,12 +155,4 @@ class Trick implements TrickInterface
     {
         $this->updated = $updated;
     }
-
-
-
-
-
-
-
-
 }

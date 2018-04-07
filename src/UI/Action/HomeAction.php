@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: marti
  * Date: 29/03/2018
- * Time: 01:44
+ * Time: 01:44.
  */
 
 namespace App\UI\Action;
@@ -11,15 +11,13 @@ namespace App\UI\Action;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\HomeActionInterface;
 use App\UI\Responder\Interfaces\HomeResponderInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class HomeAction
+ * Class HomeAction.
  *
- * @package App\UI\Action
  * @Route(
- *     path="/"
+ *     path="/snowtricks/{_locale}"
  * )
  */
 class HomeAction implements HomeActionInterface
@@ -34,16 +32,17 @@ class HomeAction implements HomeActionInterface
      */
     private $trickRepository;
 
-
     /**
      * HomeAction constructor.
      *
-     * @param EntityManagerInterface $em
+     * @param string                   $imageFolder
+     * @param TrickRepositoryInterface $trickRepository
+     * @param array                    $data
      */
     public function __construct(
         string $imageFolder,
         TrickRepositoryInterface $trickRepository,
-        array $datas = []
+        array $data = []
     ) {
         $this->imageFolder = $imageFolder;
         $this->trickRepository = $trickRepository;
@@ -51,12 +50,19 @@ class HomeAction implements HomeActionInterface
 
     /**
      * @param HomeResponderInterface $responder
+     *
      * @return HomeResponderInterface
+     *
+     * @throws \Exception
      */
     public function __invoke(HomeResponderInterface $responder)
     {
-        $datas = $this->trickRepository->findAllTrick();
+        $data = $this->trickRepository->findAllTrick();
 
-        return $responder($datas);
+        if (!empty($data)) {
+            return $responder($data);
+        } else {
+            throw new \Exception('Invalid Datas !');
+        }
     }
 }

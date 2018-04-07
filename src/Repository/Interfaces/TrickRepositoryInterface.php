@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: marti
  * Date: 03/04/2018
- * Time: 21:43
+ * Time: 21:43.
  */
 
 namespace App\Repository\Interfaces;

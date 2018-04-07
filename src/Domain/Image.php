@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: marti
  * Date: 29/03/2018
- * Time: 22:00
+ * Time: 22:00.
  */
 
 namespace App\Domain;
