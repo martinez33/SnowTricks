@@ -8,5 +8,7 @@
 
 interface TrickInterfaceTest
 {
+    public function testGetName();
 
+    public function testGetDescription();
 }
