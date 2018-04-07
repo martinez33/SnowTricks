@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Trick" >
+        <id name="id" column="id" type="string" />
+        <field  name="name" column="name" type="string" length="100" />
+        <field name="description" column="description" type="string" length="255" />
+        <field name="grp" column="grp" type="string" length="100" />
+        <field name="created" column="created" type="integer" length="11" />
+        <field name="updated" column="updated" type="integer" length="11" nullable="true" />
+        <one-to-many field="image" target-entity="App\Domain\Image" mapped-by="trick" />
+    </entity>
+</doctrine-mapping>
