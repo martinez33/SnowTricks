@@ -1,7 +1,7 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} - Home{% endblock %}
+{% block title %}{{ parent() }} - Tricks{% endblock %}
 
 {% block content %}
     <div class="container">
@@ -9,10 +9,14 @@
             {% for trick in tricks %}
                 <div class="col-md-2">
 
-                    <a href="/tricks/{{ trick.name }}" class="">
+                    <a class="">
                         <img src="{{ asset(trick.fileName ~ trick.ext) }}" class="img-thumbnail" />
                     </a>
-                    <h6>{{ trick.name }}</h6>
+                    <h2>{{ trick.name }}</h2>
+                    <h4>{{ trick.description }}</h4>
+                    <h5>{{ trick.grp }}</h5>
+                    <br>
+                    <p>{{ trick.content }}</p>
                 </div>
             {% endfor %}
         </div>

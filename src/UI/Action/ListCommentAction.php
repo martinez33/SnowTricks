@@ -8,8 +8,6 @@
 
 namespace App\UI\Action;
 
-
-use App\Domain\Trick;
 use App\Repository\Interfaces\CommentRepositoryInterface;
 use App\UI\Action\Interfaces\ListCommentActionInterface;
 use App\UI\Responder\Interfaces\ListCommentResponderInterface;

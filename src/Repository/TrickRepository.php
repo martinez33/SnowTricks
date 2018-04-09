@@ -20,16 +20,33 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
         parent::__construct($registry, Trick::class);
     }
 
-//    /**
-//     * @return Trick[] Returns an array of Trick objects
-//     */
-
+    /**
+     * @return array
+     */
     public function findAllTrick()
     {
         return $this->createQueryBuilder('t')
             ->select('t.name')
             ->join('t.image', 'image')
             ->addSelect('image.fileName', 'image.ext')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    /**
+     * @param $name
+     * @return array
+     */
+    public function findTrick($name)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.name', 't.description', 't.grp' )
+            ->join('t.image', 'image')
+            ->join('t.comment', 'comment')
+            ->addSelect('image.fileName', 'image.ext', 'comment.content')
+            ->where('t.name = :name')
+            ->setParameter('name', $name)
             ->getQuery()
             ->getResult()
         ;

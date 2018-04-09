@@ -15,4 +15,6 @@ interface TrickRepositoryInterface
     public function __construct(RegistryInterface $registry);
 
     public function findAllTrick();
+
+    public function findTrick($name);
 }
