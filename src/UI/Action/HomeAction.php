@@ -8,9 +8,11 @@
 
 namespace App\UI\Action;
 
+
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\HomeActionInterface;
 use App\UI\Responder\Interfaces\HomeResponderInterface;
+
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,6 +33,7 @@ class HomeAction implements HomeActionInterface
      * @var TrickRepositoryInterface
      */
     private $trickRepository;
+
 
     /**
      * HomeAction constructor.
@@ -57,6 +60,7 @@ class HomeAction implements HomeActionInterface
      */
     public function __invoke(HomeResponderInterface $responder)
     {
+
         $data = $this->trickRepository->findAllTrick();
 
         if (!empty($data)) {

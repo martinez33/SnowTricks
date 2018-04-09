@@ -2,21 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: marti
- * Date: 29/03/2018
- * Time: 01:19.
+ * Date: 09/04/2018
+ * Time: 13:44
  */
 
 namespace App\UI\Responder;
 
-use App\UI\Responder\Interfaces\HomeResponderInterface;
+
+use App\UI\Responder\Interfaces\ListCommentResponderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class HomeResponder implements HomeResponderInterface
+class ListCommentResponder implements ListCommentResponderInterface
 {
-    /**
-     * @var Environment
-     */
     private $twig;
 
     public function __construct(Environment $twig)
@@ -26,9 +24,7 @@ class HomeResponder implements HomeResponderInterface
 
     /**
      * @param array $data
-     *
      * @return Response
-     *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
@@ -36,8 +32,8 @@ class HomeResponder implements HomeResponderInterface
     public function __invoke(array $data)
     {
         return new Response($this->twig->render(
-            'home.html.twig',
-            ['tricks' => $data]
+            'showComments.html.twig',
+            ['comments' => $data]
         ));
     }
 }

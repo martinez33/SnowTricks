@@ -10,6 +10,7 @@ namespace App\UI\Action\Interfaces;
 
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Responder\Interfaces\HomeResponderInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 interface HomeActionInterface
 {

@@ -11,6 +11,11 @@ namespace App\Domain;
 use App\Domain\Interfaces\ImageInterface;
 use Ramsey\Uuid\Uuid;
 
+/**
+ * Class Image
+ *
+ * @package App\Domain
+ */
 class Image implements ImageInterface
 {
     /**
@@ -23,6 +28,9 @@ class Image implements ImageInterface
      */
     private $fileName;
 
+    /**
+     * @var string
+     */
     private $ext;
 
     /**
@@ -43,7 +51,7 @@ class Image implements ImageInterface
     /**
      * Image constructor.
      *
-     * @param string $fileName
+     * @param int|null  $updated
      */
     public function __construct(
         int $updated = null

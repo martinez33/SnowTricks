@@ -8,23 +8,29 @@
 
 namespace App\Tests\Domain;
 
-
 use App\Domain\Trick;
+use App\Tests\Domain\Interfaces\TrickTestInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Uuid;
-use TrickInterfaceTest;
+use Ramsey\Uuid\UuidInterface;
 
-class TrickTest extends TestCase implements  TrickInterfaceTest
+
+class TrickTest extends TestCase implements TrickTestInterface
 {
+    /**
+     * @test
+     */
     public function testGetId()
     {
         $trick = new Trick();
         $result = $trick->getId();
 
-        $this->assertSame(Uuid::uuid4(), $result);
-
+        $this->assertInstanceOf(UuidInterface::class, $result);
     }
 
+    /**
+     * @test
+     */
     public function testGetName()
     {
         $trick = new Trick();
@@ -34,6 +40,9 @@ class TrickTest extends TestCase implements  TrickInterfaceTest
         $this->assertSame('name', $result);
     }
 
+    /**
+     * @test
+     */
     public function testGetDescription()
     {
         $trick = new Trick();
@@ -43,5 +52,45 @@ class TrickTest extends TestCase implements  TrickInterfaceTest
         $this->assertSame('description', $result);
     }
 
+    /**
+     * @test
+     */
+    public function testGetCreated()
+    {
+        $trick = new Trick();
+        $result = $trick->getCreated();
+
+        $this->assertSame(time(), $result);
+    }
+
+    /**
+     * @test
+     */
+    public function testGetUpdated()
+    {
+        $trick = new Trick();
+        $result = $trick->getUpdated();
+
+        $this->assertSame(time(), $result);
+    }
+
+    /**
+     * @test
+     */
+    public function testGetImage()
+    {
+        $trick = new Trick();
+        $result = $trick->getImage();
+
+        $this->assertInstanceOf(ArrayCollection::class, $result);
+    }
+
+    public function testGetComment()
+    {
+        $trick = new Trick();
+        $result = $trick->getComment();
+
+        $this->assertInstanceOf(ArrayCollection::class, $result);
+    }
 
 }

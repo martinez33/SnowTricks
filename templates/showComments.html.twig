@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Home{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for comment in comments %}
+                <div class="col-md-2">
+
+                    <h6>{{ comment.content }}</h6>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

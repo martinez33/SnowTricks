@@ -49,8 +49,8 @@ interface ImageInterface
 
     /**
      * @return Trick
-     */
-    public function getTrick();
+     *//*
+    public function getTrick();*/
 
     /**
      * @param string $fileName
@@ -77,6 +77,6 @@ interface ImageInterface
      * @param Trick $trick
      *
      * @return Trick
-     */
-    public function setTrick(Trick $trick);
+     *//*
+    public function setTrick(Trick $trick);*/
 }

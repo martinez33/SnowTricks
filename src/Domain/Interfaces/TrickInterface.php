@@ -59,6 +59,11 @@ interface TrickInterface
     public function getImage(): ArrayCollection;
 
     /**
+     * @return ArrayCollection
+     */
+    public function getComment();
+
+    /**
      * @param $name
      *
      * @return string
@@ -85,4 +90,6 @@ interface TrickInterface
      * @return int
      */
     public function setUpdated(int $updated);
+
+
 }

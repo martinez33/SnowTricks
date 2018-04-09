@@ -13,7 +13,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Class Trick.
+ * Class Trick
+ *
+ * @package App\Domain
  */
 class Trick implements TrickInterface
 {
@@ -53,6 +55,11 @@ class Trick implements TrickInterface
     private $image;
 
     /**
+     * @var ArrayCollection
+     */
+    private $comment;
+
+    /**
      * Trick constructor.
      *
      * @param int|null $updated
@@ -60,12 +67,14 @@ class Trick implements TrickInterface
      */
     public function __construct(
         int $updated = null,
-        array $images = []
+        array $images = [],
+        array $comments = []
     ) {
         $this->id = Uuid::uuid4();
         $this->created = time();
         $this->updated = time();
         $this->image = new ArrayCollection($images);
+        $this->comment = new ArrayCollection($comments);
     }
 
     /**
@@ -125,6 +134,14 @@ class Trick implements TrickInterface
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getComment(): ArrayCollection
+    {
+        return $this->comment;
+    }
+
+    /**
      * @param string $name
      */
     public function setName(string $name): void
@@ -155,4 +172,6 @@ class Trick implements TrickInterface
     {
         $this->updated = $updated;
     }
+
+
 }
