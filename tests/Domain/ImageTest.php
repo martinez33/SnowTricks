@@ -10,6 +10,8 @@ namespace App\Tests\Domain;
 
 
 use App\Domain\Image;
+use App\Domain\Interfaces\TrickInterface;
+use App\Domain\Trick;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
 
@@ -72,4 +74,11 @@ class ImageTest extends TestCase
         $this->assertSame(time(), $result);
     }
 
+    public function testWithTrick()
+    {
+        $image = new Image();
+        $image->setTrick($this->createMock(Trick::class));
+
+        static::assertInstanceOf(TrickInterface::class, $image->getTrick());
+    }
 }

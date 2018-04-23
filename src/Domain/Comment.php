@@ -8,7 +8,6 @@
 
 namespace App\Domain;
 
-
 use App\Domain\Interfaces\CommentInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -95,5 +94,4 @@ class Comment implements CommentInterface
     {
         $this->trick = $trick;
     }
-
 }

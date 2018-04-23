@@ -7,7 +7,7 @@
 <entity name="App\Domain\Image" >
     <id name="id" column="id" type="string" />
     <field name="fileName" column="fileName" type="string" length="255" />
-    <field name="ext" column="ext" type="string" length="15" />
+    <field name="ext" column="ext" type="string" length="11" />
     <field name="created" column="created" type="integer" length="11" />
     <field name="updated" column="updated" type="integer" length="11" nullable="true" />
     <many-to-one field="trick" target-entity="App\Domain\Trick" inversed-by="image" />

@@ -9,6 +9,7 @@
 namespace App\Domain;
 
 use App\Domain\Interfaces\ImageInterface;
+use App\Domain\Interfaces\TrickInterface;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -29,11 +30,6 @@ class Image implements ImageInterface
     private $fileName;
 
     /**
-     * @var string
-     */
-    private $ext;
-
-    /**
      * @var int
      */
     private $created;
@@ -44,9 +40,14 @@ class Image implements ImageInterface
     private $updated;
 
     /**
-     * @var Trick
+     * @var TrickInterface
      */
     private $trick;
+
+    /**
+     * @var string
+     */
+    private $ext;
 
     /**
      * Image constructor.
@@ -78,14 +79,6 @@ class Image implements ImageInterface
     }
 
     /**
-     * @return string
-     */
-    public function getExt(): string
-    {
-        return $this->ext;
-    }
-
-    /**
      * @return int
      */
     public function getCreated(): int
@@ -102,7 +95,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * @return Trick
+     * @return TrickInterface
      */
     public function getTrick(): Trick
     {
@@ -118,14 +111,6 @@ class Image implements ImageInterface
     }
 
     /**
-     * @param string $ext
-     */
-    public function setExt(string $ext): void
-    {
-        $this->ext = $ext;
-    }
-
-    /**
      * @param int $updated
      */
     public function setUpdated(int $updated): void
@@ -135,9 +120,27 @@ class Image implements ImageInterface
 
     /**
      * @param Trick $trick
+     *
+     * @return Trick
      */
-    public function setTrick(Trick $trick): void
+    public function setTrick(TrickInterface $trick)
     {
         $this->trick = $trick;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExt(): string
+    {
+        return $this->ext;
+    }
+
+    /**
+     * @param string $ext
+     */
+    public function setExt(string $ext): void
+    {
+        $this->ext = $ext;
     }
 }

@@ -12,6 +12,11 @@ use App\UI\Responder\Interfaces\HomeResponderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
+/**
+ * Class HomeResponder
+ *
+ * @package App\UI\Responder
+ */
 class HomeResponder implements HomeResponderInterface
 {
     /**
@@ -19,6 +24,11 @@ class HomeResponder implements HomeResponderInterface
      */
     private $twig;
 
+    /**
+     * HomeResponder constructor.
+     *
+     * @param Environment $twig
+     */
     public function __construct(Environment $twig)
     {
         $this->twig = $twig;
@@ -33,11 +43,14 @@ class HomeResponder implements HomeResponderInterface
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function __invoke(array $data)
+    public function __invoke(array $data, $img)
     {
         return new Response($this->twig->render(
             'home.html.twig',
-            ['tricks' => $data]
+            [
+                'tricks' => $data,
+                'image' => $img
+            ]
         ));
     }
 }

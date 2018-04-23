@@ -8,12 +8,15 @@
 
 namespace App\UI\Action;
 
-
-use App\Domain\Interfaces\TrickInterface;
+use App\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
+use App\Repository\Interfaces\ImageRepositoryInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\TrickDetailsActionInterface;
-use App\UI\Responder\Interfaces\HomeResponderInterface;
+
+;
 use App\UI\Responder\Interfaces\TrickDetailsResponderInterface;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -22,34 +25,48 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\UI\Action
  *
  * @Route(
- *     path="/tricks/{name}"
- *     requirements={"name" = "\w+"}
+ *     path="/tricks/details/{slug}",
+ *     name="trick_details"
  * )
  */
 class TrickDetailsAction implements TrickDetailsActionInterface
 {
+    /**
+     * @var TrickRepositoryInterface
+     */
     private $trickRepository;
 
-    public function __construct(TrickRepositoryInterface $trickRepository)
-    {
+
+    /**
+     * TrickDetailsAction constructor.
+     *
+     * @param TrickRepositoryInterface      $trickRepository
+     * @param FormFactoryInterface          $formFactory
+     * @param AddTrickTypeHandlerInterface  $addTrickTypeHandler
+     */
+    public function __construct(
+        TrickRepositoryInterface $trickRepository
+    ) {
         $this->trickRepository = $trickRepository;
     }
 
     /**
      * @param TrickDetailsResponderInterface $responder
-     * @return mixed
+     * @param Request $request
+     * @return mixed|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function __invoke(TrickDetailsResponderInterface $responder)
-    {
-        $name = 'Test';
+    public function __invoke(
+        TrickDetailsResponderInterface $responder,
+        Request $request
+    ) {
+        $slug = $request->get('slug');
 
-        $data = $this->trickRepository->findTrick($name);
+        $data = $this->trickRepository->findTrick($slug);
 
-        if (!empty($data)) {
-            return $responder($data);
-        } else {
-            throw new \Exception('Invalid Datas !');
-        }
+        $img = $this->trickRepository->findImgByTrick($slug);
+
+        $video = $this->trickRepository->findVideoByTrick($slug);
+        return $responder($data, $img, $video);
     }
 }

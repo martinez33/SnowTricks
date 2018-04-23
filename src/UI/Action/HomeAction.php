@@ -8,46 +8,52 @@
 
 namespace App\UI\Action;
 
-
+use App\Domain\Comment;
+use App\Domain\Image;
+use App\Domain\Trick;
+use App\Repository\Interfaces\ImageRepositoryInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
+use App\Helper\Interfaces\SlugInterface;
 use App\UI\Action\Interfaces\HomeActionInterface;
 use App\UI\Responder\Interfaces\HomeResponderInterface;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class HomeAction.
  *
  * @Route(
- *     path="/snowtricks/{_locale}"
+ *     path="/{_locale}/",
+ *     name="home",
+ *     defaults={
+ *         "_locale": "%locale%"
+ *     }
  * )
  */
 class HomeAction implements HomeActionInterface
 {
     /**
-     * @var string
+     * @var ImageRepositoryInterface
      */
-    private $imageFolder;
+    private $ImageRepository;
 
     /**
      * @var TrickRepositoryInterface
      */
     private $trickRepository;
 
-
     /**
      * HomeAction constructor.
      *
-     * @param string                   $imageFolder
-     * @param TrickRepositoryInterface $trickRepository
-     * @param array                    $data
+     * @param ImageRepositoryInterface  $imageRepository
+     * @param TrickRepositoryInterface  $trickRepository
      */
     public function __construct(
-        string $imageFolder,
-        TrickRepositoryInterface $trickRepository,
-        array $data = []
+        ImageRepositoryInterface $imageRepository,
+        TrickRepositoryInterface $trickRepository
     ) {
-        $this->imageFolder = $imageFolder;
+        $this->ImageRepository = $imageRepository;
         $this->trickRepository = $trickRepository;
     }
 
@@ -60,13 +66,10 @@ class HomeAction implements HomeActionInterface
      */
     public function __invoke(HomeResponderInterface $responder)
     {
-
         $data = $this->trickRepository->findAllTrick();
 
-        if (!empty($data)) {
-            return $responder($data);
-        } else {
-            throw new \Exception('Invalid Datas !');
-        }
+        $img = $this->ImageRepository->findLastImg();
+
+        return $responder($data, $img);
     }
 }

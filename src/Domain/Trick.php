@@ -20,14 +20,14 @@ use Ramsey\Uuid\Uuid;
 class Trick implements TrickInterface
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface
-     */
-    private $id;
+    * @var ArrayCollection
+    */
+    private $comment;
 
     /**
-     * @var string
+     * @var int
      */
-    protected $name;
+    private $created;
 
     /**
      * @var string
@@ -40,14 +40,9 @@ class Trick implements TrickInterface
     private $grp;
 
     /**
-     * @var int
+     * @var \Ramsey\Uuid\UuidInterface
      */
-    private $created;
-
-    /**
-     * @var int
-     */
-    private $updated;
+    private $id;
 
     /**
      * @var ArrayCollection
@@ -55,27 +50,53 @@ class Trick implements TrickInterface
     private $image;
 
     /**
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * @var string
+     */
+    private $slug;
+
+    /**
+     * @var int
+     */
+    private $updated;
+    /**
      * @var ArrayCollection
      */
-    private $comment;
+    private $video;
 
     /**
      * Trick constructor.
      *
-     * @param int|null $updated
-     * @param array    $images
+     * @param ArrayCollection             $comment
+     * @param int                         $created
+     * @param string                      $description
+     * @param string                      $grp
+     * @param \Ramsey\Uuid\UuidInterface  $id
+     * @param ArrayCollection             $image
+     * @param string                      $name
+     * @param string                      $slug
+     * @param int                         $updated
      */
     public function __construct(
-        int $updated = null,
-        array $images = [],
-        array $comments = []
+        string $description,
+        string $grp,
+        string $name,
+        string $slug,
+        int $updated = null
     ) {
-        $this->id = Uuid::uuid4();
         $this->created = time();
+        $this->description = $description;
+        $this->grp = $grp;
+        $this->id = Uuid::uuid4();
+        $this->name = $name;
+        $this->slug = $slug;
         $this->updated = time();
-        $this->image = new ArrayCollection($images);
-        $this->comment = new ArrayCollection($comments);
     }
+
 
     /**
      * @return \Ramsey\Uuid\UuidInterface
@@ -142,28 +163,13 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @param string $name
+     * @return ArrayCollection
      */
-    public function setName(string $name): void
+    public function getVideo(): ArrayCollection
     {
-        $this->name = $name;
+        return $this->video;
     }
 
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @param string $grp
-     */
-    public function setGrp(string $grp): void
-    {
-        $this->grp = $grp;
-    }
 
     /**
      * @param int $updated
@@ -173,5 +179,28 @@ class Trick implements TrickInterface
         $this->updated = $updated;
     }
 
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param ArrayCollection $image
+     */
+    public function setImage(ArrayCollection $image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @param ArrayCollection $video
+     */
+    public function setVideo(ArrayCollection $video): void
+    {
+        $this->video = $video;
+    }
 
 }

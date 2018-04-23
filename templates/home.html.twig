@@ -5,16 +5,26 @@
 
 {% block content %}
     <div class="container">
-        <div class="row">
+        {% for img in image %}
+        <div class=" col-md-12">
+            <img src="{{ asset(img.fileName ) }}" class="img-fluid" />
+        </div>
+        {% endfor %}
+        <div class="container">
+            <div class="row">
+
             {% for trick in tricks %}
                 <div class="col-md-2">
 
-                    <a href="/tricks/{{ trick.name }}" class="">
-                        <img src="{{ asset(trick.fileName ~ trick.ext) }}" class="img-thumbnail" />
+                    <a href="{{ path('trick_details', {'slug': trick.slug}) }}" class="">
+                        <img src="{{ asset(trick.fileName) }}" class="img-thumbnail" />
                     </a>
                     <h6>{{ trick.name }}</h6>
                 </div>
+                {% else %}
+                   <p>Auncun trick !</p>
             {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

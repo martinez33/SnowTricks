@@ -45,7 +45,6 @@ class ListCommentAction implements ListCommentActionInterface
      */
     public function __invoke(ListCommentResponderInterface $responder)
     {
-
         $data = $this->commentRepository->findAllComment();
 
         return $responder($data);

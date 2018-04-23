@@ -33,11 +33,6 @@ interface ImageInterface
     public function getFileName();
 
     /**
-     * @return string
-     */
-    public function getExt();
-
-    /**
      * @return int
      */
     public function getCreated();
@@ -48,10 +43,11 @@ interface ImageInterface
     public function getUpdated();
 
     /**
-     * @return Trick
-     *//*
-    public function getTrick();*/
+     * @return TrickInterface
+     */
+    public function getTrick();
 
+    public function getExt();
     /**
      * @param string $fileName
      *
@@ -61,8 +57,7 @@ interface ImageInterface
 
     /**
      * @param string $ext
-     *
-     * @return string
+     * @return mixed
      */
     public function setExt(string $ext);
 
@@ -77,6 +72,6 @@ interface ImageInterface
      * @param Trick $trick
      *
      * @return Trick
-     *//*
-    public function setTrick(Trick $trick);*/
+     */
+    public function setTrick(TrickInterface $trick);
 }
