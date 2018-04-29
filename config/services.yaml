@@ -2,7 +2,8 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    imageFolder: '/images/'
+    imageUploadFolder: '/upLoads/images/'
+    imagesDirectory: '%kernel.project_dir%/public/uploads/images/'
 
 services:
     # default configuration for services in *this* file
@@ -13,8 +14,8 @@ services:
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
-            $imageFolder: '%imageFolder%'
-
+            $imageUploadFolder: '%imageUploadFolder%'
+            $targetImgDirectory: '%imagesDirectory%'
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name

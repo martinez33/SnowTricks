@@ -15,4 +15,14 @@ interface TrickRepositoryInterface
     public function __construct(RegistryInterface $registry);
 
     public function findAllTrick();
+
+    public function findImgByTrick($slug);
+
+    public function findVideoByTrick($slug);
+
+    public function findTrick($name);
+
+    public function save($data);
+
+    public function findNameExist($dataName);
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\Comment" >
+        <id name="id" column="id" type="string" />
+        <field name="content" column="content" type="string" length="255" />
+        <field name="created" column="created" type="integer" length="11" />
+        <many-to-one field="trick" target-entity="App\Domain\Trick" inversed-by="comment" />
+    </entity>
+</doctrine-mapping>

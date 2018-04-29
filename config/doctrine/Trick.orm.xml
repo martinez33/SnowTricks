@@ -6,11 +6,14 @@
 
     <entity name="App\Domain\Trick" >
         <id name="id" column="id" type="string" />
-        <field  name="name" column="name" type="string" length="100" />
+        <field name="name" column="name" type="string" length="100" />
         <field name="description" column="description" type="string" length="255" />
         <field name="grp" column="grp" type="string" length="100" />
         <field name="created" column="created" type="integer" length="11" />
         <field name="updated" column="updated" type="integer" length="11" nullable="true" />
+        <field name="slug" column="slug" type="string" length="100" />
         <one-to-many field="image" target-entity="App\Domain\Image" mapped-by="trick" />
+        <one-to-many field="comment" target-entity="App\Domain\Comment" mapped-by="trick" />
+        <one-to-many field="video" target-entity="App\Domain\Video" mapped-by="trick" />
     </entity>
 </doctrine-mapping>

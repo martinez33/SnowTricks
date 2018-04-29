@@ -15,24 +15,97 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class TrickRepository extends ServiceEntityRepository implements TrickRepositoryInterface
 {
+    /**
+     * TrickRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Trick::class);
     }
 
-//    /**
-//     * @return Trick[] Returns an array of Trick objects
-//     */
-
+    /**
+     * @return array
+     */
     public function findAllTrick()
     {
         return $this->createQueryBuilder('t')
-            ->select('t.name', 't.description', 't.grp')
+            ->select('t.name', 't.slug', 'image.fileName')
             ->join('t.image', 'image')
-            ->addSelect('image.fileName', 'image.ext')
+            ->groupBy('t.name')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+
+    }
+
+    /**
+     * @param $slug
+     *
+     * @return mixed
+     *
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findTrick($slug)
+    {
+        return $this->createQueryBuilder('t')
+            ->select(
+                't.name',
+                't.description',
+                't.grp',
+                't.slug',
+                'image.fileName'
+            )
+            ->join('t.image', 'image')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getResult();
+    }
+
+    public function findImgByTrick($slug)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.slug', 'image.fileName')
+            ->join('t.image', 'image')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findVideoByTrick($slug)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.slug', 'video.fileName')
+            ->join('t.video', 'video')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param  $data
+     *
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function save($data)
+    {
+        //$this->_em->persist($data)
+        $this->getEntityManager()->persist($data);
+        $this->getEntityManager()->flush();
+    }
+
+    public function findNameExist($dataName)
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t.name')
+            ->where('t.name = :dataName')
+            ->setParameter('dataName', $dataName)
+            ->getQuery()
+            ->getResult();
     }
 
     /*

@@ -14,6 +14,7 @@ interface HomeResponderInterface
 {
     /**
      * HomeResponderInterface constructor.
+     *
      * @param Environment $twig
      */
     public function __construct(Environment $twig);
@@ -22,5 +23,5 @@ interface HomeResponderInterface
      * @param array $data
      * @return mixed
      */
-    public function __invoke(array $data);
+    public function __invoke(array $data, $img);
 }

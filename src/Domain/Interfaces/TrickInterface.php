@@ -19,8 +19,11 @@ interface TrickInterface
      * @param array    $images
      */
     public function __construct(
-        int $updated = null,
-        array $images = []
+        string $description,
+        string $grp,
+        string $name,
+        string $slug,
+        int $updated = null
     );
 
     /**
@@ -59,25 +62,9 @@ interface TrickInterface
     public function getImage(): ArrayCollection;
 
     /**
-     * @param $name
-     *
-     * @return string
+     * @return ArrayCollection
      */
-    public function setName(string $name);
-
-    /**
-     * @param $description
-     *
-     * @return string
-     */
-    public function setDescription(string $description);
-
-    /**
-     * @param $grp
-     *
-     * @return string
-     */
-    public function setGrp(string $grp);
+    public function getComment();
 
     /**
      * @param int $updated
@@ -85,4 +72,7 @@ interface TrickInterface
      * @return int
      */
     public function setUpdated(int $updated);
+
+
+    public function setImage(ArrayCollection $image);
 }

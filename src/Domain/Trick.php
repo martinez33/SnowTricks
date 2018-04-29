@@ -7,25 +7,27 @@
  */
 
 namespace App\Domain;
-
+use Symfony\Component\Validator\Constraints;
 use App\Domain\Interfaces\TrickInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Class Trick.
+ * Class Trick
+ *
+ * @package App\Domain
  */
 class Trick implements TrickInterface
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface
-     */
-    private $id;
+    * @var ArrayCollection
+    */
+    private $comment;
 
     /**
-     * @var string
+     * @var int
      */
-    protected $name;
+    private $created;
 
     /**
      * @var string
@@ -38,14 +40,9 @@ class Trick implements TrickInterface
     private $grp;
 
     /**
-     * @var int
+     * @var \Ramsey\Uuid\UuidInterface
      */
-    private $created;
-
-    /**
-     * @var int
-     */
-    private $updated;
+    private $id;
 
     /**
      * @var ArrayCollection
@@ -53,20 +50,54 @@ class Trick implements TrickInterface
     private $image;
 
     /**
+     * @var string
+     *
+     */
+    protected $name;
+
+    /**
+     * @var string
+     */
+    private $slug;
+
+    /**
+     * @var int
+     */
+    private $updated;
+    /**
+     * @var ArrayCollection
+     */
+    private $video;
+
+    /**
      * Trick constructor.
      *
-     * @param int|null $updated
-     * @param array    $images
+     * @param ArrayCollection             $comment
+     * @param int                         $created
+     * @param string                      $description
+     * @param string                      $grp
+     * @param \Ramsey\Uuid\UuidInterface  $id
+     * @param ArrayCollection             $image
+     * @param string                      $name
+     * @param string                      $slug
+     * @param int                         $updated
      */
     public function __construct(
-        int $updated = null,
-        array $images = []
+        string $description,
+        string $grp,
+        string $name,
+        string $slug,
+        int $updated = null
     ) {
-        $this->id = Uuid::uuid4();
         $this->created = time();
+        $this->description = $description;
+        $this->grp = $grp;
+        $this->id = Uuid::uuid4();
+        $this->name = $name;
+        $this->slug = $slug;
         $this->updated = time();
-        $this->image = new ArrayCollection($images);
     }
+
 
     /**
      * @return \Ramsey\Uuid\UuidInterface
@@ -125,28 +156,21 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @param string $name
+     * @return ArrayCollection
      */
-    public function setName(string $name): void
+    public function getComment(): ArrayCollection
     {
-        $this->name = $name;
+        return $this->comment;
     }
 
     /**
-     * @param string $description
+     * @return ArrayCollection
      */
-    public function setDescription(string $description): void
+    public function getVideo(): ArrayCollection
     {
-        $this->description = $description;
+        return $this->video;
     }
 
-    /**
-     * @param string $grp
-     */
-    public function setGrp(string $grp): void
-    {
-        $this->grp = $grp;
-    }
 
     /**
      * @param int $updated
@@ -155,4 +179,29 @@ class Trick implements TrickInterface
     {
         $this->updated = $updated;
     }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    /**
+     * @param ArrayCollection $image
+     */
+    public function setImage(ArrayCollection $image): void
+    {
+        $this->image = $image;
+    }
+
+    /**
+     * @param ArrayCollection $video
+     */
+    public function setVideo(ArrayCollection $video): void
+    {
+        $this->video = $video;
+    }
+
 }

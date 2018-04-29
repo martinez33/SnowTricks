@@ -9,8 +9,14 @@
 namespace App\Domain;
 
 use App\Domain\Interfaces\ImageInterface;
+use App\Domain\Interfaces\TrickInterface;
 use Ramsey\Uuid\Uuid;
 
+/**
+ * Class Image
+ *
+ * @package App\Domain
+ */
 class Image implements ImageInterface
 {
     /**
@@ -23,8 +29,6 @@ class Image implements ImageInterface
      */
     private $fileName;
 
-    private $ext;
-
     /**
      * @var int
      */
@@ -36,21 +40,30 @@ class Image implements ImageInterface
     private $updated;
 
     /**
-     * @var Trick
+     * @var TrickInterface
      */
     private $trick;
 
     /**
+     * @var string
+     */
+    private $ext;
+
+    /**
      * Image constructor.
      *
-     * @param string $fileName
+     * @param int|null  $updated
      */
     public function __construct(
+        string $fileName,
+        string $ext,
         int $updated = null
     ) {
         $this->id = Uuid::uuid4();
         $this->created = time();
         $this->updated = time();
+        $this->fileName = $fileName;
+        $this->ext = $ext;
     }
 
     /**
@@ -70,14 +83,6 @@ class Image implements ImageInterface
     }
 
     /**
-     * @return string
-     */
-    public function getExt(): string
-    {
-        return $this->ext;
-    }
-
-    /**
      * @return int
      */
     public function getCreated(): int
@@ -94,27 +99,19 @@ class Image implements ImageInterface
     }
 
     /**
-     * @return Trick
+     * @return string
+     */
+    public function getExt(): string
+    {
+        return $this->ext;
+    }
+
+    /**
+     * @return TrickInterface
      */
     public function getTrick(): Trick
     {
         return $this->trick;
-    }
-
-    /**
-     * @param string $fileName
-     */
-    public function setFileName(string $fileName): void
-    {
-        $this->fileName = $fileName;
-    }
-
-    /**
-     * @param string $ext
-     */
-    public function setExt(string $ext): void
-    {
-        $this->ext = $ext;
     }
 
     /**
@@ -127,9 +124,14 @@ class Image implements ImageInterface
 
     /**
      * @param Trick $trick
+     *
+     * @return Trick
      */
-    public function setTrick(Trick $trick): void
+    public function setTrick(TrickInterface $trick)
     {
         $this->trick = $trick;
     }
+
+
+
 }

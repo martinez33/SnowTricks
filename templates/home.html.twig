@@ -1,0 +1,46 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Home{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+            <img src="{{ asset('images/home.jpg') }}" class="responsive" style="height: 800px; width: 102%" /><!--mettre dans style.css-->
+
+                <a href="#bas" class="navbar-fixed-bottom">
+                    <img src="{{ asset('images/arrow-up.png') }}" style="float: right;" />
+                </a>
+            </div>
+        </div>
+        <div class="">
+            <a href="{{ path('trick_creation') }}" id="trick_creation">
+                <button id="trick_creation-btn">Créez un Trick !</button>
+            </a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            {% for trick in tricks %}
+                <div class="col-md-2">
+                    <a name="bas" id="bas"></a>
+                    <a href="{{ path('trick_details', {'slug': trick.slug}) }}" class="">
+                        <img src="{{ asset(trick.fileName) }}" class="img-thumbnail" />
+                    </a>
+                    <h6>{{ trick.name }}</h6>
+                    <span class="glyphicon"></span>
+                </div>
+
+                {% else %}
+                   <p>Auncun trick !</p>
+            {% endfor %}
+        </div>
+
+        <div id="" class="" style="">
+            <a href="#haut">
+                <img src="{{ asset('images/arrow-up.png') }}" style="" />
+            </a>
+        </div>
+    </div>
+{% endblock %}

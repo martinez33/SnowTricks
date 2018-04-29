@@ -8,8 +8,10 @@
 
 namespace App\UI\Action\Interfaces;
 
+use App\Repository\Interfaces\ImageRepositoryInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Responder\Interfaces\HomeResponderInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 interface HomeActionInterface
 {
@@ -21,9 +23,8 @@ interface HomeActionInterface
      * @param array                    $datas
      */
     public function __construct(
-        string $imageFolder,
-        TrickRepositoryInterface $trickRepository,
-        array $data = []
+        ImageRepositoryInterface $imageRepository,
+        TrickRepositoryInterface $trickRepository
     );
 
     /**

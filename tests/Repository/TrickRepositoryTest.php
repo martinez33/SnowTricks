@@ -11,5 +11,4 @@ namespace App\Tests\Repository;
 
 class TrickRepositoryTest
 {
-
 }

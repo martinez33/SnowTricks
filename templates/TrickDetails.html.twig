@@ -1,0 +1,36 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Tricks{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="row">
+            {% for image in images %}
+                <a class="">
+                    <img src="{{ asset(image.fileName) }}" class="img-thumbnail" />
+                </a>
+            {% endfor %}
+        </div>
+        <div>
+            {% for video in videos %}
+                <embed width="200" height="150" src="{{ asset(video.fileName) }}"
+                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen />
+            {% endfor %}
+        </div>
+        <div class="row">
+            {% for trick in tricks %}
+                <div class="col-md-2">
+
+                    <h2>{{ trick.name }}</h2>
+                    <h4>{{ trick.description }}</h4>
+                    <h5>{{ trick.grp }}</h5>
+                    <br>
+                </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}
