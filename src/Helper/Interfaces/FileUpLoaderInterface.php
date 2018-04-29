@@ -23,7 +23,7 @@ interface FileUpLoaderInterface
      * @param string $targetImgDirectory
      * @param string $targetVideoDirectory
      */
-    public function __construct(string $targetImgDirectory, string $targetVideoDirectory);
+    public function __construct(string $targetImgDirectory);
 
     /**
      * @param UploadedFile $file
@@ -34,18 +34,12 @@ interface FileUpLoaderInterface
     /**
      * @param UploadedFile $file
      * @return string
-     */
-    public function upLoadVideo(UploadedFile $file);
+     /*
+    public function upLoadVideo(UploadedFile $file);*/
 
     /**
      * @return string
      */
     public function getTargetImgDirectory();
-
-    /**
-     * @return string
-     */
-    public function getTargetVideoDirectory();
-
 
 }

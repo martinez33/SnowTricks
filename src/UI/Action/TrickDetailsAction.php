@@ -8,12 +8,8 @@
 
 namespace App\UI\Action;
 
-use App\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
-use App\Repository\Interfaces\ImageRepositoryInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\TrickDetailsActionInterface;
-
-;
 use App\UI\Responder\Interfaces\TrickDetailsResponderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,7 +38,6 @@ class TrickDetailsAction implements TrickDetailsActionInterface
      *
      * @param TrickRepositoryInterface      $trickRepository
      * @param FormFactoryInterface          $formFactory
-     * @param AddTrickTypeHandlerInterface  $addTrickTypeHandler
      */
     public function __construct(
         TrickRepositoryInterface $trickRepository

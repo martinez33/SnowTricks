@@ -8,13 +8,12 @@
 
 namespace App\UI\Action;
 
-use App\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
-use App\Form\Type\AddTrickType;
 use App\UI\Action\Interfaces\AddTrickActionInterface;
+use App\UI\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
+use App\UI\Form\Type\AddTrickType;
 use App\UI\Responder\Interfaces\AddTrickResponderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 

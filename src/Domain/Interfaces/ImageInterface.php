@@ -19,6 +19,8 @@ interface ImageInterface
      * @param string   $ext
      */
     public function __construct(
+        string $fileName,
+        string $ext,
         int $updated = null
     );
 
@@ -47,19 +49,10 @@ interface ImageInterface
      */
     public function getTrick();
 
-    public function getExt();
     /**
-     * @param string $fileName
-     *
      * @return string
      */
-    public function setFileName(string $fileName);
-
-    /**
-     * @param string $ext
-     * @return mixed
-     */
-    public function setExt(string $ext);
+    public function getExt();
 
     /**
      * @param int $updated

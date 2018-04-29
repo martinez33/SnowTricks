@@ -93,6 +93,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
      */
     public function save($data)
     {
+        //$this->_em->persist($data)
         $this->getEntityManager()->persist($data);
         $this->getEntityManager()->flush();
     }

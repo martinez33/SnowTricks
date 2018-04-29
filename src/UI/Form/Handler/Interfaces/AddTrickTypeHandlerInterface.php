@@ -6,13 +6,15 @@
  * Time: 02:46
  */
 
-namespace App\Form\Handler\Interfaces;
+namespace App\UI\Form\Handler\Interfaces;
 
 use App\Domain\Builder\Interfaces\ImageBuilderInterface;
 use App\Domain\Builder\Interfaces\TrickBuilderInterface;
 use App\Domain\Builder\Interfaces\VideoBuilderInterface;
 use App\Helper\FileUpLoader;
+use App\Helper\Interfaces\FindUrlInterface;
 use App\Helper\Interfaces\SlugInterface;
+use App\Helper\Interfaces\UniqueTrickNameInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,14 +24,15 @@ interface AddTrickTypeHandlerInterface
 {
     public function __construct(
         FileUpLoader $fileUpLoader,
+        FindUrlInterface $findUrl,
         ImageBuilderInterface $imageBuilder,
-        string $imageFolder,
+        string $imageUploadFolder,
         SessionInterface $session,
         SlugInterface $slug,
         TrickBuilderInterface $trickBuilder,
         TrickRepositoryInterface $trickRepository,
-        VideoBuilderInterface $videoBuilder,
-        string $videoFolder
+        UniqueTrickNameInterface $uniqueTrickName,
+        VideoBuilderInterface $videoBuilder
     );
 
     public function handle(FormInterface $form, Request $request): bool;

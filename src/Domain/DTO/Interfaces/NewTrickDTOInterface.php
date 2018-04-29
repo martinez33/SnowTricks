@@ -7,6 +7,7 @@
  */
 namespace App\Domain\DTO\Interfaces;
 
+
 interface NewTrickDTOInterface
 {
     /**
@@ -15,6 +16,8 @@ interface NewTrickDTOInterface
      * @param string $name
      * @param string $description
      * @param string $grp
+     * @param NewImageDTOInterface $image
+     * @param array $video
      */
-    public function __construct(string $name, string $description, string $grp);
+    public function __construct(string $name, string $description, string $grp, array $image, array $video);
 }

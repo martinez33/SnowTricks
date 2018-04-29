@@ -15,9 +15,8 @@
         </div>
         <div>
             {% for video in videos %}
-                <a class="media">
-                    <iframe src="{{ asset(video.fileName) }}" class="" >Video sur le trick</iframe>
-                </a>
+                <embed width="200" height="150" src="{{ asset(video.fileName) }}"
+                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen />
             {% endfor %}
         </div>
         <div class="row">

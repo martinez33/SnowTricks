@@ -2,16 +2,16 @@
 /**
  * Created by PhpStorm.
  * User: marti
- * Date: 17/04/2018
- * Time: 09:38
+ * Date: 24/04/2018
+ * Time: 14:36
  */
 
-namespace App\Form\Type\Interfaces;
+namespace App\UI\Form\Type\Interfaces;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-interface AddTrickTypeInterface
+interface ImageTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options);
 

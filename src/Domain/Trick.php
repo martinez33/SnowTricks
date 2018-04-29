@@ -7,7 +7,7 @@
  */
 
 namespace App\Domain;
-
+use Symfony\Component\Validator\Constraints;
 use App\Domain\Interfaces\TrickInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\Uuid;
@@ -51,6 +51,7 @@ class Trick implements TrickInterface
 
     /**
      * @var string
+     *
      */
     protected $name;
 

@@ -6,19 +6,23 @@
  * Time: 02:02
  */
 
-namespace App\Form\Type;
+namespace App\UI\Form\Type;
 
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
 use App\Domain\DTO\NewTrickDTO;
-use App\Form\Type\Interfaces\AddTrickTypeInterface;
+use App\UI\Form\Type\Interfaces\AddTrickTypeInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Choice;
 
 /**
  * Class AddTrickType
@@ -36,18 +40,23 @@ class AddTrickType extends AbstractType implements AddTrickTypeInterface
         $builder
             ->add('name', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('grp', TextType::class)
+            ->add('grp', ChoiceType::class, array(
+                'choices' => array(
+                    'Rotations' => 'Rotation',
+                    'Grab' => 'Grabs',
+                    'Slides' => 'Slides'
+                ),
+            ))
             ->add('image', CollectionType::class, array(
-                'entry_type' => FileType::class,
+                'entry_type' => ImageType::class,
                 'allow_add' => true,
                 'allow_delete' => true
             ))
             ->add('video', CollectionType::class, array(
-                'entry_type' => FileType::class,
+                'entry_type' => VideoType::class,
                 'allow_add' => true,
                 'allow_delete' => true
-            ))
-        ;
+            ));
     }
 
     /**

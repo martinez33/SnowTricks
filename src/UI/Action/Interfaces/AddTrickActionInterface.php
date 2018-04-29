@@ -8,11 +8,11 @@
 
 namespace App\UI\Action\Interfaces;
 
-use App\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
+
+use App\UI\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
 use App\UI\Responder\Interfaces\AddTrickResponderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 interface AddTrickActionInterface

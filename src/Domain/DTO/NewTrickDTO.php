@@ -8,6 +8,8 @@
 
 namespace App\Domain\DTO;
 
+use App\Domain\DTO\Interfaces\NewImageDTOInterface;
+use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -16,7 +18,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * @package App\Domain\DTO
  */
-class NewTrickDTO
+class NewTrickDTO implements NewTrickDTOInterface
 {
     /**
      * @var string

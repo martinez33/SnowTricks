@@ -40,9 +40,7 @@ class ImageBuilder implements ImageBuilderInterface
     public function create(string $fileName, string $ext, TrickInterface $trick)
     {
 
-        $this->image = new Image();
-        $this->image->setFileName($fileName);
-        $this->image->setExt($ext);
+        $this->image = new Image($fileName, $ext);
         $this->image->setTrick($trick);
 
         return $this;
