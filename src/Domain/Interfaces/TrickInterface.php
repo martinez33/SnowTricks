@@ -67,12 +67,21 @@ interface TrickInterface
     public function getComment();
 
     /**
+     * @param ArrayCollection $comment
+     */
+    public function setComment(ArrayCollection $comment): void;
+
+    /**
      * @param int $updated
      *
      * @return int
      */
     public function setUpdated(int $updated);
 
-
+    /**
+     * @param ArrayCollection $image
+     *
+     * @return mixed
+     */
     public function setImage(ArrayCollection $image);
 }

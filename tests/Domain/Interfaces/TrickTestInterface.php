@@ -10,33 +10,10 @@ namespace App\Tests\Domain\Interfaces;
 
 interface TrickTestInterface
 {
+    public function setUp();
     /**
-     * @return string
+     * @return mixed
      */
-    public function testGetId();
+    public function testConstruct();
 
-    /**
-     * @return string
-     */
-    public function testGetName();
-
-    /**
-     * @return string
-     */
-    public function testGetDescription();
-
-    /**
-     * @return int
-     */
-    public function testGetCreated();
-
-    /**
-     * @return int
-     */
-    public function testGetUpdated();
-
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function testGetImage();
 }

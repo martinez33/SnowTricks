@@ -7,7 +7,7 @@
  */
 
 namespace App\Domain;
-use Symfony\Component\Validator\Constraints;
+
 use App\Domain\Interfaces\TrickInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\Uuid;
@@ -98,21 +98,20 @@ class Trick implements TrickInterface
         $this->updated = time();
     }
 
-
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return ArrayCollection
      */
-    public function getId(): \Ramsey\Uuid\UuidInterface
+    public function getComment(): ArrayCollection
     {
-        return $this->id;
+        return $this->comment;
     }
 
     /**
-     * @return string
+     * @return int
      */
-    public function getName(): string
+    public function getCreated(): int
     {
-        return $this->name;
+        return $this->created;
     }
 
     /**
@@ -132,11 +131,35 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @return int
+     * @return \Ramsey\Uuid\UuidInterface
      */
-    public function getCreated(): int
+    public function getId(): \Ramsey\Uuid\UuidInterface
     {
-        return $this->created;
+        return $this->id;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getImage(): ArrayCollection
+    {
+        return $this->image;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 
     /**
@@ -150,42 +173,17 @@ class Trick implements TrickInterface
     /**
      * @return ArrayCollection
      */
-    public function getImage(): ArrayCollection
-    {
-        return $this->image;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getComment(): ArrayCollection
-    {
-        return $this->comment;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
     public function getVideo(): ArrayCollection
     {
         return $this->video;
     }
 
-
     /**
-     * @param int $updated
+     * @param ArrayCollection $comment
      */
-    public function setUpdated(int $updated): void
+    public function setComment(ArrayCollection $comment): void
     {
-        $this->updated = $updated;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSlug(): string
-    {
-        return $this->slug;
+        $this->comment = $comment;
     }
 
     /**
@@ -197,11 +195,20 @@ class Trick implements TrickInterface
     }
 
     /**
+     * @param int $updated
+     */
+    public function setUpdated(int $updated): void
+    {
+        $this->updated = $updated;
+    }
+
+    /**
      * @param ArrayCollection $video
      */
     public function setVideo(ArrayCollection $video): void
     {
         $this->video = $video;
     }
+
 
 }

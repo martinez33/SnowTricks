@@ -8,6 +8,8 @@
 
 namespace App\Tests\Domain;
 
+use App\Domain\Image;
+use App\Domain\Interfaces\ImageInterface;
 use App\Domain\Trick;
 use App\Tests\Domain\Interfaces\TrickTestInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,79 +20,46 @@ use Ramsey\Uuid\UuidInterface;
 class TrickTest extends TestCase implements TrickTestInterface
 {
     /**
-     * @test
+     * @var ArrayCollection
      */
-    public function testGetId()
-    {
-        $trick = new Trick();
-        $result = $trick->getId();
-
-        $this->assertInstanceOf(UuidInterface::class, $result);
-    }
+    private $comment;
 
     /**
-     * @test
+     * @var ArrayCollection
      */
-    public function testGetName()
-    {
-        $trick = new Trick();
-        $trick->setName('name');
-        $result = $trick->getName();
-
-        $this->assertSame('name', $result);
-    }
+    private $image;
 
     /**
-     * @test
+     * @var ArrayCollection
      */
-    public function testGetDescription()
-    {
-        $trick = new Trick();
-        $trick->setDescription('description');
-        $result = $trick->getDescription();
+    private $video;
 
-        $this->assertSame('description', $result);
+    public function setUp()
+    {
+        $this->comment = $this->createMock(ArrayCollection::class);
+        $this->image = $this->createMock(ArrayCollection::class);
+        $this->video = $this->createMock(ArrayCollection::class);
     }
 
-    /**
-     * @test
-     */
-    public function testGetCreated()
+    public function testConstruct()
     {
-        $trick = new Trick();
-        $result = $trick->getCreated();
+        $trick = new Trick('Grab de la planche', 'Grab', 'Japan Air', 'japan-air');
 
-        $this->assertSame(time(), $result);
-    }
+        $trick->setComment($this->comment);
+        $trick->setImage($this->image);
+        $trick->setVideo($this->video);
 
-    /**
-     * @test
-     */
-    public function testGetUpdated()
-    {
-        $trick = new Trick();
-        $result = $trick->getUpdated();
+        $this->assertInstanceOf(UuidInterface::class, $trick->getId());
+        $this->assertSame('Grab de la planche', $trick->getDescription());
+        $this->assertSame('Grab', $trick->getGrp());
+        $this->assertSame('Japan Air', $trick->getName());
+        $this->assertSame('japan-air', $trick->getSlug());
+        $this->assertSame(time(), $trick->getCreated());
+        $this->assertSame(time(), $trick->getUpdated());
 
-        $this->assertSame(time(), $result);
-    }
-
-    /**
-     * @test
-     */
-    public function testGetImage()
-    {
-        $trick = new Trick();
-        $result = $trick->getImage();
-
-        $this->assertInstanceOf(ArrayCollection::class, $result);
-    }
-
-    public function testGetComment()
-    {
-        $trick = new Trick();
-        $result = $trick->getComment();
-
-        $this->assertInstanceOf(ArrayCollection::class, $result);
+        $this->assertInstanceOf(ArrayCollection::class, $trick->getComment());
+        $this->assertInstanceOf(ArrayCollection::class, $trick->getImage());
+        $this->assertInstanceOf(ArrayCollection::class, $trick->getVideo());
     }
 
 }
