@@ -162,11 +162,7 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
 
 
                         $this->imageBuilder->create(
-                            $this->imageUploadFolder . $fileName
-                            /*$request
-                                ->files
-                                ->get('add_trick')['image'][$i]['image']
-                                ->getClientOriginalName()*/,
+                            $this->imageUploadFolder . $fileName,
                             $request
                                 ->files
                                 ->get('add_trick')['image'][$i]['image']

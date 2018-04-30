@@ -25,4 +25,7 @@ interface TrickRepositoryInterface
     public function save($data);
 
     public function findNameExist($dataName);
+
+    public function delTrickBySlug($slug);
+
 }

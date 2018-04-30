@@ -29,7 +29,7 @@
                         <img src="{{ asset(trick.fileName) }}" class="img-thumbnail" />
                     </a>
                     <h6>{{ trick.name }}</h6>
-                    <span class="glyphicon"></span>
+                    <a href="{{ path('trick_delete', {'slug': trick.slug}) }}"><p>Supprimer</p></a>
                 </div>
 
                 {% else %}

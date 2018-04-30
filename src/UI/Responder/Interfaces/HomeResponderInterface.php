@@ -23,5 +23,5 @@ interface HomeResponderInterface
      * @param array $data
      * @return mixed
      */
-    public function __invoke(array $data, $img);
+    public function __invoke(array $data);
 }

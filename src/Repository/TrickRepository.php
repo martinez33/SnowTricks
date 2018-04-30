@@ -93,7 +93,6 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
      */
     public function save($data)
     {
-        //$this->_em->persist($data)
         $this->getEntityManager()->persist($data);
         $this->getEntityManager()->flush();
     }
@@ -107,6 +106,18 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function delTrickBySlug($slug)
+    {
+        return $this->createQueryBuilder('t')
+            ->delete()
+            ->join('t.image', 'image')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getResult();
+    }
+
 
     /*
     public function findOneBySomeField($value): ?Trick

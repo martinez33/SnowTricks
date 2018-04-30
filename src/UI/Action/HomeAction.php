@@ -68,8 +68,8 @@ class HomeAction implements HomeActionInterface
     {
         $data = $this->trickRepository->findAllTrick();
 
-        $img = $this->ImageRepository->findLastImg();
 
-        return $responder($data, $img);
+
+        return $responder($data);
     }
 }

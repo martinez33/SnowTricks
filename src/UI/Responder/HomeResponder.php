@@ -43,13 +43,12 @@ class HomeResponder implements HomeResponderInterface
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function __invoke(array $data, $img)
+    public function __invoke(array $data)
     {
         return new Response($this->twig->render(
             'home.html.twig',
             [
-                'tricks' => $data,
-                'image' => $img
+                'tricks' => $data
             ]
         ));
     }

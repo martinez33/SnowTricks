@@ -22,15 +22,4 @@ class ImageRepository extends ServiceEntityRepository implements ImageRepository
     }
 
 
-    public function findLastImg()
-    {
-        return $this->createQueryBuilder('i')
-            ->select('i.fileName')
-            ->orderBy('i.created', 'DESC')
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-
 }
