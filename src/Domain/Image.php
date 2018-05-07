@@ -126,9 +126,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * @param Trick $trick
-     *
-     * @return Trick
+     * @param TrickInterface $trick
      */
     public function setTrick(TrickInterface $trick)
     {
