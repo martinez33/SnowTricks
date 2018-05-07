@@ -63,7 +63,5 @@ class DelTrickAction implements DelTrickActionInterface
 
             return $responder();
         }
-
     }
-
 }

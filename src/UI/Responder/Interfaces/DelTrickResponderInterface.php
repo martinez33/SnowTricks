@@ -8,7 +8,12 @@
 
 namespace App\UI\Responder\Interfaces;
 
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment;
+
 interface DelTrickResponderInterface
 {
+    public function __construct(Environment $twig, UrlGeneratorInterface $urlGenerator);
 
+    public function __invoke();
 }

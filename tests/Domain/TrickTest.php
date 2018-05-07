@@ -8,16 +8,14 @@
 
 namespace App\Tests\Domain;
 
-use App\Domain\Image;
-use App\Domain\Interfaces\ImageInterface;
+
 use App\Domain\Trick;
-use App\Tests\Domain\Interfaces\TrickTestInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\UuidInterface;
 
 
-class TrickTest extends TestCase implements TrickTestInterface
+class TrickTest extends TestCase
 {
     /**
      * @var ArrayCollection
@@ -34,7 +32,7 @@ class TrickTest extends TestCase implements TrickTestInterface
      */
     private $video;
 
-    public function setUp()
+    protected function setUp()
     {
         $this->comment = $this->createMock(ArrayCollection::class);
         $this->image = $this->createMock(ArrayCollection::class);

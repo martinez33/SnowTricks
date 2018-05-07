@@ -131,7 +131,4 @@ class Image implements ImageInterface
     {
         $this->trick = $trick;
     }
-
-
-
 }

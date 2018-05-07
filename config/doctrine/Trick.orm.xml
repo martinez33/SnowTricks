@@ -4,9 +4,12 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
         http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\Domain\Trick" >
+    <entity name="App\Domain\Trick" table="trick">
+        <unique-constraints>
+            <unique-constraint columns="name,slug" name="search_idx" />
+        </unique-constraints>
         <id name="id" column="id" type="string" />
-        <field name="name" column="name" type="string" length="100" />
+        <field name="name" column="name" type="string" length="100" unique="true"/>
         <field name="description" column="description" type="string" length="255" />
         <field name="grp" column="grp" type="string" length="100" />
         <field name="created" column="created" type="integer" length="11" />

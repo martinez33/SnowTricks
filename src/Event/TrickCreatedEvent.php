@@ -8,7 +8,6 @@
 
 namespace App\Event;
 
-
 use App\Domain\Interfaces\TrickInterface;
 use Symfony\Component\EventDispatcher\Event;
 

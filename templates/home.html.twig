@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-            <img src="{{ asset('images/home.jpg') }}" class="responsive" style="height: 800px; width: 102%" /><!--mettre dans style.css-->
+                <img src="{{ asset('images/home.jpg') }}" class="responsive" style="height: 800px; width: 102%" /><!--mettre dans style.css-->
 
                 <a href="#bas" class="navbar-fixed-bottom">
                     <img src="{{ asset('images/arrow-up.png') }}" style="float: right;" />
@@ -28,8 +28,15 @@
                     <a href="{{ path('trick_details', {'slug': trick.slug}) }}" class="">
                         <img src="{{ asset(trick.fileName) }}" class="img-thumbnail" />
                     </a>
-                    <h6>{{ trick.name }}</h6>
-                    <a href="{{ path('trick_delete', {'slug': trick.slug}) }}"><p>Supprimer</p></a>
+
+                    <h5 class="col-lg-6">{{ trick.name }}</h5>
+
+                    <a class="col-lg-1" href="{{ path('trick_modify', {'slug': trick.slug}) }}">
+                        <i class="glyphicon glyphicon-pencil" ></i>
+                    </a>
+                    <a class="col-lg-1" href="{{ path('trick_delete', {'slug': trick.slug}) }}">
+                        <i class="glyphicon glyphicon-trash" ></i>
+                    </a>
                 </div>
 
                 {% else %}

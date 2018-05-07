@@ -8,7 +8,6 @@
 
 namespace App\Helper;
 
-
 use App\Helper\Interfaces\UniqueTrickNameInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 

@@ -19,6 +19,7 @@ use App\Repository\Interfaces\TrickRepositoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 interface AddTrickTypeHandlerInterface
 {

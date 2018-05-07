@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: marti
- * Date: 10/04/2018
- * Time: 02:16
+ * Date: 30/04/2018
+ * Time: 14:32
  */
 
 namespace App\UI\Form\Handler;
@@ -15,20 +15,14 @@ use App\Helper\FileUpLoader;
 use App\Helper\Interfaces\FindUrlInterface;
 use App\Helper\Interfaces\SlugInterface;
 use App\Helper\Interfaces\UniqueTrickNameInterface;
+use App\Repository\Interfaces\ImageRepositoryInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
-use App\UI\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator;
+use App\UI\Form\Handler\Interfaces\ModifyTrickTypeHandlerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-/**
- * Class AddTrickTypeHandler
- *
- * @package App\Form\Handler
- */
-class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
+class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
 {
     /**
      * @var FileUpLoader
@@ -79,6 +73,8 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
      */
     private $videoBuilder;
 
+    private $imageRepository;
+
     /**
      * AddTrickTypeHandler constructor.
      *
@@ -101,6 +97,7 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
         SessionInterface $session,
         SlugInterface $slug,
         TrickBuilderInterface $trickBuilder,
+        ImageRepositoryInterface $imageRepository,
         TrickRepositoryInterface $trickRepository,
         UniqueTrickNameInterface $uniqueTrickName,
         VideoBuilderInterface $videoBuilder
@@ -113,6 +110,7 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
         $this->slug = $slug;
         $this->trickBuilder = $trickBuilder;
         $this->trickRepository = $trickRepository;
+        $this->imageRepository = $imageRepository;
         $this->uniqueTrickName = $uniqueTrickName;
         $this->videoBuilder = $videoBuilder;
     }
@@ -124,21 +122,43 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
     public function handle(FormInterface $form, Request $request): bool
     {
         if ($form->isSubmitted() && $form->isValid()) {
-
             $dataName = $form->getData()->name;
+
+            $slug = $request->get('slug');
 
             if ($this->uniqueTrickName->isUniqueName($dataName)) {
 
+
+                /*$data = $this->trickRepository->findNameExist($dataName); //voir plutot contrainte au niveau du Type
+
+                 if ($data != null) {
+                     $this->session
+                         ->getFlashBag()
+                         ->add(
+                             'note',
+                             'The Trick is already exist !'
+                         )
+                     ;
+                 } */
                 $res = $this->slug->slug($form->getData()->name);
 
-               $this->trickBuilder->create(
-                   $form->getData()->name,
-                   $form->getData()->description,
-                   $form->getData()->grp,
-                   $res
-               );
+                /*$trick = $this->trickBuilder->create(
+                    $form->getData()->name,
+                    $form->getData()->description,
+                    $form->getData()->grp,
+                    $res
+                );*/
 
-                $this->trickRepository->save($this->trickBuilder->getTrick());
+                $this->trickRepository->modifyTrick(
+                    $slug,
+                    $form->getData()->name,
+                    $form->getData()->description,
+                    $form->getData()->grp,
+                    $res,
+                    time()
+                );
+
+
 
                 $file = $form->getData()->image; //renvoie du tab image
 
@@ -151,17 +171,23 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
 
 
                     $this->imageBuilder->create(
-                            $this->imageUploadFolder . $fileName,
-                            $request
-                                ->files
-                                ->get('add_trick')['image'][$i]['image']
-                                ->getClientOriginalExtension(),
-                            $this->trickBuilder->getTrick()
-                        );
+                        $this->imageUploadFolder . $fileName,
+                        $request
+                            ->files
+                            ->get('add_trick')['image'][$i]['image']
+                            . 'jpg',
+                        $this->trickBuilder->getTrick()
+                    );
 
-                    $this->trickRepository->save($this->imageBuilder->getImage());
+
+                    /*$temp = $this->imageRepository->modifyImage(
+                        $res,
+                        $this->imageUploadFolder . $fileName,
+                        time(),
+                    );*/
                 }
-
+                //dump($temp);
+                die();
 
                 $video = $form->getData()->video;
                 $maxVideo = count($video);
@@ -172,9 +198,9 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
                     $url = $this->findUrl->SearchUrl($str);
 
                     $this->videoBuilder->create(
-                            $url,
-                            $this->trickBuilder->getTrick()
-                        );
+                        $url,
+                        $this->trickBuilder->getTrick()
+                    );
 
                     $this->trickRepository->save($this->videoBuilder->getVideo());
                 }

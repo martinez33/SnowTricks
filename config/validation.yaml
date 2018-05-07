@@ -1,0 +1,4 @@
+App\Domain\Trick:
+        properties:
+            name:
+                - NotBlank: ~

@@ -28,4 +28,7 @@ interface TrickRepositoryInterface
 
     public function delTrickBySlug($slug);
 
+    public function modifyTrick($slug, $tName, $tDescription, $grp, $newSlug, $updated);
+
+    //public function modifyImage($slug, $fileName, $updated);
 }

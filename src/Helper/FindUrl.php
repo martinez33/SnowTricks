@@ -8,7 +8,6 @@
 
 namespace App\Helper;
 
-
 use App\Helper\Interfaces\FindUrlInterface;
 
 class FindUrl implements FindUrlInterface
@@ -17,7 +16,7 @@ class FindUrl implements FindUrlInterface
     {
         $regex = '#(https|http):\/\/(www.youtube.com|www.dailymotion.com|www.vimeo.com)(\/\w+){1,}#';
 
-        preg_match($regex, $str,$matches );
+        preg_match($regex, $str, $matches);
 
         $url = $matches[0];
 

@@ -11,11 +11,15 @@ namespace App\Domain;
 use App\Domain\Interfaces\TrickInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Ramsey\Uuid\Uuid;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Trick
  *
  * @package App\Domain
+ *
+ * @UniqueEntity("name")
  */
 class Trick implements TrickInterface
 {
@@ -52,6 +56,7 @@ class Trick implements TrickInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank(groups={"creation"})
      */
     protected $name;
 
@@ -64,6 +69,7 @@ class Trick implements TrickInterface
      * @var int
      */
     private $updated;
+
     /**
      * @var ArrayCollection
      */
@@ -209,6 +215,4 @@ class Trick implements TrickInterface
     {
         $this->video = $video;
     }
-
-
 }

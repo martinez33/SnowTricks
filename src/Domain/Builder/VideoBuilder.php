@@ -8,7 +8,6 @@
 
 namespace App\Domain\Builder;
 
-
 use App\Domain\Builder\Interfaces\VideoBuilderInterface;
 use App\Domain\Interfaces\TrickInterface;
 use App\Domain\Interfaces\VideoInterface;
@@ -45,5 +44,4 @@ class VideoBuilder implements VideoBuilderInterface
     {
         return $this->video;
     }
-
 }

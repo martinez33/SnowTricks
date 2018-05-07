@@ -8,10 +8,9 @@
 
 namespace App\Domain\DTO;
 
-use App\Domain\DTO\Interfaces\NewImageDTOInterface;
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Class NewTrickDTO
@@ -22,11 +21,15 @@ class NewTrickDTO implements NewTrickDTOInterface
 {
     /**
      * @var string
+     *
+     * @Assert\NotBlank(groups={"creation"})
      */
     public $name;
 
     /**
      * @var string
+     *
+     * @Assert\NotBlank(groups={"creation"})
      */
     public $description;
 
@@ -53,7 +56,7 @@ class NewTrickDTO implements NewTrickDTOInterface
      * @param string $description
      * @param string $grp
      */
-    public function __construct(string $name, string $description, string $grp, array $image, array $video)
+    public function __construct(string $name = null, string $description = null, string $grp, array $image, array $video)
     {
         $this->name = $name;
         $this->description = $description;

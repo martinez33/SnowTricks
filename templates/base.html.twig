@@ -3,13 +3,9 @@
 <head>
     {% block head %}
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-          crossorigin="anonymous">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
     {% endblock %}
 
     <title>{% block title %}SnowTricks{% endblock %}</title>
@@ -18,8 +14,8 @@
 <body>
     <a name="haut" id="haut"></a>
     {% block navbar %}
-        <nav class="navbar navbar-expand-lg navbar-light" id="">
-            <div class="container">
+        <div class="container">
+            <nav class="navbar" id="">
                 <a class="navbar-brand" href="{{ path('home') }}">SnowTricks</a>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                         data-target="#navbarResponsive" aria-controls="navbarResponsive"
@@ -28,24 +24,25 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('home') }}">Home</a>
+                <div class="collapse navbar-collapse navbar-right" id="navbarResponsive">
+                    <ul class="nav navbar-nav">
+                        <li class="">
+                            <a class="" href="{{ path('home') }}">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Tricks</a>
+                        <li>
+                            <a href="#">Tricks</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="">Sign In</a>
+                        <li>
+                            <a href="#">Sign In</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="">Sign Up</a>
                         </li>
                     </ul>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </div>
+
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="flash-notice" role="">
@@ -68,143 +65,8 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-            var $container = $('div#add_trick_image');
-
-            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-            var index = $container.find(':input').length;
-
-            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-            $('#add_image').click(function(e) {
-                addImage($container);
-
-                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                return false;
-            });
-
-            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-            if (index == 0) {
-                addCategory($container);
-            } else {
-                // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
-                $container.children('div').each(function() {
-                    addDeleteLink($(this));
-                });
-            }
-
-            // La fonction qui ajoute un formulaire CategoryType
-            function addImage($container) {
-                // Dans le contenu de l'attribut « data-prototype », on remplace :
-                // - le texte "__name__label__" qu'il contient par le label du champ
-                // - le texte "__name__" qu'il contient par le numéro du champ
-                var template = $container.attr('data-prototype')
-                    .replace(/__name__label__/g, 'Image n°' + (index+1))
-                    .replace(/__name__/g,        index)
-                ;
-
-                // On crée un objet jquery qui contient ce template
-                var $prototype = $(template);
-
-                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
-                addDeleteLink($prototype);
-
-                // On ajoute le prototype modifié à la fin de la balise <div>
-                $container.append($prototype);
-
-                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-                index++;
-            }
-
-            // La fonction qui ajoute un lien de suppression d'une catégorie
-            function addDeleteLink($prototype) {
-                // Création du lien
-                var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-
-                // Ajout du lien
-                $prototype.append($deleteLink);
-
-                // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
-                $deleteLink.click(function(e) {
-                    $prototype.remove();
-
-                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                    return false;
-                });
-            }
-        });
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
-            var $container = $('div#add_trick_video');
-
-            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
-            var index = $container.find(':input').length;
-
-            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
-            $('#add_video').click(function(e) {
-                addVideo($container);
-
-                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                return false;
-            });
-
-            // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
-            if (index == 0) {
-                addCategory($container);
-            } else {
-                // S'il existe déjà des catégories, on ajoute un lien de suppression pour chacune d'entre elles
-                $container.children('div').each(function() {
-                    addDeleteLink($(this));
-                });
-            }
-
-            // La fonction qui ajoute un formulaire CategoryType
-            function addVideo($container) {
-                // Dans le contenu de l'attribut « data-prototype », on remplace :
-                // - le texte "__name__label__" qu'il contient par le label du champ
-                // - le texte "__name__" qu'il contient par le numéro du champ
-                var template = $container.attr('data-prototype')
-                    .replace(/__name__label__/g, 'Video n°' + (index+1))
-                    .replace(/__name__/g,        index)
-                ;
-
-                // On crée un objet jquery qui contient ce template
-                var $prototype = $(template);
-
-                // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
-                addDeleteLink($prototype);
-
-                // On ajoute le prototype modifié à la fin de la balise <div>
-                $container.append($prototype);
-
-                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
-                index++;
-            }
-
-            // La fonction qui ajoute un lien de suppression d'une catégorie
-            function addDeleteLink($prototype) {
-                // Création du lien
-                var $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
-
-                // Ajout du lien
-                $prototype.append($deleteLink);
-
-                // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
-                $deleteLink.click(function(e) {
-                    $prototype.remove();
-
-                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
-                    return false;
-                });
-            }
-        });
-    </script>
-    <script>
+    <script src="{{ asset('build/js/app.js') }}" ></script>
 
 
-    </script>
 </body>
 </html>

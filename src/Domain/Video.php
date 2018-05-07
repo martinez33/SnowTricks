@@ -8,7 +8,6 @@
 
 namespace App\Domain;
 
-
 use App\Domain\Interfaces\TrickInterface;
 use App\Domain\Interfaces\VideoInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -105,6 +104,4 @@ class Video implements VideoInterface
     {
         $this->trick = $trick;
     }
-
-
 }

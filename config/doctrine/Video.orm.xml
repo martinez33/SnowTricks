@@ -9,6 +9,10 @@
         <field name="fileName" column="fileName" type="string" length="255" />
         <field name="created" column="created" type="integer" length="11" />
         <field name="updated" column="updated" type="integer" length="11" nullable="true" />
-        <many-to-one field="trick" target-entity="App\Domain\Trick" inversed-by="video" />
+        <many-to-one field="trick" target-entity="App\Domain\Trick" inversed-by="video" >
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

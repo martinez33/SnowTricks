@@ -5,17 +5,15 @@
 {% block content %}
     <div class="container">
         <div class="row">
-            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-            {{ form_widget(form) }}
+            {{ form_start(form) }}
             {{ form_row(form.name) }}
-            {{ form_errors(form.name)}}
             {{ form_row(form.description) }}
             {{ form_row(form.grp) }}
             {{ form_row(form.image) }}
-            <a href="#" id="add_image" class="btn btn-default">Ajouter une image</a><br />
+            <a href="#" id="modify_image" class="btn btn-default">Ajouter une image</a><br />
             {{ form_row(form.video) }}
-            <a href="#" id="add_video" class="btn btn-default">Ajouter une vidéo</a><br />
-                <button type="submit">Envoyer</button>
+            <a href="#" id="modify_video" class="btn btn-default">Ajouter une vidéo</a><br />
+            <button type="submit">Envoyer</button>
             {{ form_end(form) }}
         </div>
     </div>
