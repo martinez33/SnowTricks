@@ -169,12 +169,14 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
                 for ($i = 0; $i < $maxVideo; $i++) {
                     $str = $form->getData()->video[$i]['video'];
 
-                    $url = $this->findUrl->SearchUrl($str);
+                    $vidType = $this->findUrl->SearchVideoType($str);
+                    $vidId = $this->findUrl->FindVideoId($str, $vidType);
 
                     $this->videoBuilder->create(
-                            $url,
-                            $this->trickBuilder->getTrick()
-                        );
+                        $vidId,
+                        $vidType,
+                        $this->trickBuilder->getTrick()
+                    );
 
                     $this->trickRepository->save($this->videoBuilder->getVideo());
                 }

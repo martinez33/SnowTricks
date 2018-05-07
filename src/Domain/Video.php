@@ -21,11 +21,6 @@ class Video implements VideoInterface
     private $created;
 
     /**
-     * @var string
-     */
-    private $fileName;
-
-    /**
      * @var \Ramsey\Uuid\UuidInterface
      */
     private $id;
@@ -41,21 +36,34 @@ class Video implements VideoInterface
     private $updated;
 
     /**
+     * @var string
+     */
+    private $vidId;
+
+    /**
+     * @var string
+     */
+    private $vidType;
+
+    /**
      * Video constructor.
      *
-     * @param int              $created
-     * @param string           $fileName
-     * @param int|null         $updated
+     * @param string    $vidId
+     * @param string    $vidType
+     * @param int|null  $updated
      */
     public function __construct(
-        string $fileName,
+        string $vidId,
+        string $vidType,
         int $updated = null
     ) {
         $this->created = time();
-        $this->fileName = $fileName;
         $this->id = Uuid::uuid4();
         $this->updated = time();
+        $this->vidId = $vidId;
+        $this->vidType = $vidType;
     }
+
 
     /**
      * @return int
@@ -63,14 +71,6 @@ class Video implements VideoInterface
     public function getCreated(): int
     {
         return $this->created;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFileName(): string
-    {
-        return $this->fileName;
     }
 
     /**
@@ -103,5 +103,21 @@ class Video implements VideoInterface
     public function setTrick(TrickInterface $trick): void
     {
         $this->trick = $trick;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVidId(): string
+    {
+        return $this->vidId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getVidType(): string
+    {
+        return $this->vidType;
     }
 }

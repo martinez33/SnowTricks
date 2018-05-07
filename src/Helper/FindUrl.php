@@ -12,14 +12,51 @@ use App\Helper\Interfaces\FindUrlInterface;
 
 class FindUrl implements FindUrlInterface
 {
-    public function SearchUrl(string $str)
+    public function SearchVideoType(string $str)
     {
-        $regex = '#(https|http):\/\/(www.youtube.com|www.dailymotion.com|www.vimeo.com)(\/\w+){1,}#';
 
-        preg_match($regex, $str, $matches);
+        if (strpos($str, 'youtube') !== false) {
 
-        $url = $matches[0];
+            $type = 'Youtube';
 
-        return $url;
+        } elseif (strpos($str, 'dailymotion') !== false) {
+
+            $type = 'Dailymotion';
+
+        } elseif (strpos($str, 'vimeo') !== false) {
+
+            $type = 'Vimeo';
+        }
+       return $type;
+    }
+
+    public function FindVideoId(string $str, string $type)
+    {
+        if ($type === 'Youtube') {
+
+            $reg = "#.+?https?://www.youtube.com/embed\/([a-z0-9]+).+?#i";
+
+            preg_match($reg, $str, $matches);
+
+            $vidId = $matches[1];
+
+        } elseif ($type === 'Dailymotion') {
+
+            $reg = "#.//www.dailymotion.com/embed/video/([a-z0-9]+).+?#i";
+
+            preg_match($reg, $str, $matches);
+
+            $vidId = $matches[1];
+
+        } elseif ($type === "Vimeo") {
+
+            $reg = "#.+?https?://player.vimeo.com/video/([A-Za-z0-9]+).+?#i";
+
+            preg_match($reg, $str, $matches);
+
+            $vidId = $matches[1];
+        }
+
+        return $vidId;
     }
 }

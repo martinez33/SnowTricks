@@ -15,8 +15,17 @@
         </div>
         <div>
             {% for video in videos %}
-                <embed width="200" height="150" src="{{ asset(video.fileName) }}"
-                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen />
+                {% if video.vidType == "Youtube" %}
+                    <embed width="200" height="150" src="https://www.youtube.com/embed/{{ asset(video.vidId) }}"
+                           frameborder="0" allow="encrypted-media" allowfullscreen />
+                {% elseif video.vidType == "Dailymotion" %}
+                    <embed width="200" height="150" src="//www.dailymotion.com/embed/video{{ asset(video.vidId) }}"
+                           frameborder="0" allow="encrypted-media" allowfullscreen />
+                {% elseif video.vidType == "Vimeo" %}
+                    <embed src="https://player.vimeo.com/video/{{ asset(video.vidId) }}"
+                           width="200" height="150" frameborder="0"
+                           webkitallowfullscreen mozallowfullscreen allowfullscreen />
+                {% endif %}
             {% endfor %}
         </div>
         <div class="row">

@@ -77,7 +77,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
     public function findVideoByTrick($slug)
     {
         return $this->createQueryBuilder('t')
-            ->select('t.slug', 'video.fileName')
+            ->select('t.slug', 'video.vidType', 'video.vidId')
             ->join('t.video', 'video')
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)

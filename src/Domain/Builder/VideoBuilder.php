@@ -15,22 +15,30 @@ use App\Domain\Video;
 
 class VideoBuilder implements VideoBuilderInterface
 {
-    /**
-     * @var string
-     */
-    private $fileName;
+
     /**
      * @var TrickInterface
      */
     private $trick;
+
     /**
      * @var VideoInterface
      */
     private $video;
 
-    public function create(string $fileName, TrickInterface $trick)
+    /**
+     * string
+     */
+    private $vidId;
+
+    /**
+     * @var string
+     */
+    private $vidType;
+
+    public function create(string $vidId, string $vidType, TrickInterface $trick)
     {
-        $this->video = new Video($fileName);
+        $this->video = new Video($vidId, $vidType);
 
         $this->video->setTrick($trick);
 

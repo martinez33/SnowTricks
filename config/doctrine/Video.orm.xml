@@ -6,7 +6,8 @@
 
     <entity name="App\Domain\Video" >
         <id name="id" column="id" type="string" />
-        <field name="fileName" column="fileName" type="string" length="255" />
+        <field name="vidType" column="vidType" type="string" length="100" />
+        <field name="vidId" column="vidId" type="string" length="255" unique="true" />
         <field name="created" column="created" type="integer" length="11" />
         <field name="updated" column="updated" type="integer" length="11" nullable="true" />
         <many-to-one field="trick" target-entity="App\Domain\Trick" inversed-by="video" >

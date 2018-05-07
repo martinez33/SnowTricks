@@ -11,6 +11,7 @@ namespace App\Domain;
 use App\Domain\Interfaces\ImageInterface;
 use App\Domain\Interfaces\TrickInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Image
@@ -46,6 +47,8 @@ class Image implements ImageInterface
 
     /**
      * @var string
+     *
+     * @Assert\NotEqualTo("php")
      */
     private $ext;
 
