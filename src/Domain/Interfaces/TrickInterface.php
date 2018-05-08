@@ -56,10 +56,7 @@ interface TrickInterface
      */
     public function getUpdated();
 
-    /**
-     * @return ArrayCollection
-     */
-    public function getImage(): ArrayCollection;
+    public function getImage(): \ArrayAccess;
 
     /**
      * @return ArrayCollection
@@ -78,10 +75,5 @@ interface TrickInterface
      */
     public function setUpdated(int $updated);
 
-    /**
-     * @param ArrayCollection $image
-     *
-     * @return mixed
-     */
-    public function setImage(ArrayCollection $image);
+    public function setImage(\ArrayAccess $image): void;
 }

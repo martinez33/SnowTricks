@@ -50,7 +50,7 @@ class FindUrl implements FindUrlInterface
 
         } elseif ($type === "Vimeo") {
 
-            $reg = "#.+?https?://player.vimeo.com/video/([A-Za-z0-9]+).+?#i";
+            $reg = "#.+?https?://player.vimeo.com/video/([a-z0-9]+).+?#i";
 
             preg_match($reg, $str, $matches);
 

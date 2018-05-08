@@ -25,9 +25,7 @@ class ModifyTrickType extends AbstractType implements ModifyTrickTypeInterface
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, array(
-                'data' => 'name'
-            ))
+            ->add('name', TextType::class)
             ->add('description', TextareaType::class)
             ->add('grp', ChoiceType::class, array(
                 'choices' => array(

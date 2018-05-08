@@ -22,13 +22,19 @@
     </div>
     <div class="container">
         <div class="row">
+
             {% for trick in tricks %}
+
+                {% for image in trick.image %}
+
                 <div class="col-md-2">
                     <a name="bas" id="bas"></a>
-                    <a href="{{ path('trick_details', {'slug': trick.slug}) }}" class="">
-                        <img src="{{ asset(trick.fileName) }}" class="img-thumbnail" />
-                    </a>
 
+                    <a href="{{ path('trick_details', {'slug': trick.slug}) }}" class="">
+                        <img src="{{ asset(image.fileName) }}" class="img-thumbnail" />
+
+                    </a>
+                {% endfor %}
                     <h5 class="col-lg-6">{{ trick.name }}</h5>
 
                     <a class="col-lg-1" href="{{ path('trick_modify', {'slug': trick.slug}) }}">

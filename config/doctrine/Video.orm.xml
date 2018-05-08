@@ -14,6 +14,11 @@
             <cascade>
                 <cascade-all/>
             </cascade>
+            <join-table name="trick">
+                <join-columns>
+                    <join-column name="trick_id" reference-colum-name="id" nullable="false" unique="false" />
+                </join-columns>
+            </join-table>
         </many-to-one>
     </entity>
 </doctrine-mapping>

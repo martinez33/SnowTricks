@@ -8,6 +8,7 @@
 
 namespace App\UI\Responder\Interfaces;
 
+use App\Domain\Interfaces\TrickInterface;
 use Twig\Environment;
 
 interface HomeResponderInterface
@@ -23,5 +24,5 @@ interface HomeResponderInterface
      * @param array $data
      * @return mixed
      */
-    public function __invoke(array $data);
+    public function __invoke(array $tricks);
 }

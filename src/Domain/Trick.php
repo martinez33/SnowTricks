@@ -49,7 +49,7 @@ class Trick implements TrickInterface
     private $id;
 
     /**
-     * @var ArrayCollection
+     * @var \ArrayAccess
      */
     private $image;
 
@@ -78,15 +78,11 @@ class Trick implements TrickInterface
     /**
      * Trick constructor.
      *
-     * @param ArrayCollection             $comment
-     * @param int                         $created
-     * @param string                      $description
-     * @param string                      $grp
-     * @param \Ramsey\Uuid\UuidInterface  $id
-     * @param ArrayCollection             $image
-     * @param string                      $name
-     * @param string                      $slug
-     * @param int                         $updated
+     * @param string $description
+     * @param string $grp
+     * @param string $name
+     * @param string $slug
+     * @param int|null $updated
      */
     public function __construct(
         string $description,
@@ -145,12 +141,13 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return \ArrayAccess
      */
-    public function getImage(): ArrayCollection
+    public function getImage(): \ArrayAccess
     {
         return $this->image;
     }
+
 
     /**
      * @return string
@@ -184,6 +181,7 @@ class Trick implements TrickInterface
         return $this->video;
     }
 
+
     /**
      * @param ArrayCollection $comment
      */
@@ -193,12 +191,14 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @param ArrayCollection $image
+     * @param \ArrayAccess $image
      */
-    public function setImage(ArrayCollection $image): void
+    public function setImage(\ArrayAccess $image): void
     {
         $this->image = $image;
     }
+
+
 
     /**
      * @param int $updated

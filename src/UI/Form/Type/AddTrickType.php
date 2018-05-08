@@ -69,7 +69,7 @@ class AddTrickType extends AbstractType implements AddTrickTypeInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'validation_groups' => array('creation'),
+            'validation_groups' => array('creationDTO'),
             'data_class' => NewTrickDTOInterface::class,
             'empty_data' => /**
              * @param FormInterface $form

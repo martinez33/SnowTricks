@@ -66,10 +66,12 @@ class HomeAction implements HomeActionInterface
      */
     public function __invoke(HomeResponderInterface $responder)
     {
-        $data = $this->trickRepository->findAllTrick();
+        $tricks = $this->trickRepository->getAllTricks();
+
+        //dump($tricks);
+        //die();
 
 
-
-        return $responder($data);
+        return $responder($tricks);
     }
 }

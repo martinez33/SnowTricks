@@ -8,6 +8,7 @@
 
 namespace App\UI\Action;
 
+use App\Domain\Interfaces\TrickInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\DelTrickActionInterface;
 
@@ -34,6 +35,11 @@ class DelTrickAction implements DelTrickActionInterface
     private $trickRepository;
 
     /**
+     * @var TrickInterface
+     */
+    private $trick;
+
+    /**
      * DelTrickAction constructor.
      *
      * @param TrickRepositoryInterface $trickRepository
@@ -52,16 +58,17 @@ class DelTrickAction implements DelTrickActionInterface
     public function __invoke(
         Request $request,
         DelTrickResponderInterface $responder,
-        SessionInterface $session
+        SessionInterface $session//dans construct
     ) {
-        $slug = $request->get('slug');
 
-        $result = $this->trickRepository->delTrickBySlug($slug);
+        $trick = $this->trickRepository->getTrickBySlug($request->attributes->get('slug'));
 
-        if ($result == 1) {
+        $this->trickRepository->delTrickBySlug($trick);
+
+        /*if ($result == 1) {*/
             $session->getFlashBag()->add('notice', 'Successfull : Trick removed !');
 
             return $responder();
-        }
+        //}
     }
 }

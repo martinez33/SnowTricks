@@ -8,6 +8,7 @@
 
 namespace App\UI\Action\Interfaces;
 
+use App\Domain\Interfaces\TrickInterface;
 use App\Repository\Interfaces\ImageRepositoryInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Responder\Interfaces\DelTrickResponderInterface;

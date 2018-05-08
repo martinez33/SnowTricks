@@ -126,7 +126,7 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
 
             $slug = $request->get('slug');
 
-            if ($this->uniqueTrickName->isUniqueName($dataName)) {
+            //if ($this->uniqueTrickName->isUniqueName($dataName)) {
 
 
                 /*$data = $this->trickRepository->findNameExist($dataName); //voir plutot contrainte au niveau du Type
@@ -142,21 +142,21 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
                  } */
                 $res = $this->slug->slug($form->getData()->name);
 
-                /*$trick = $this->trickBuilder->create(
+                $trick = $this->trickBuilder->create(
                     $form->getData()->name,
                     $form->getData()->description,
                     $form->getData()->grp,
                     $res
-                );*/
+                );
 
-                $this->trickRepository->modifyTrick(
+                /*$this->trickRepository->modifyTrick(
                     $slug,
                     $form->getData()->name,
                     $form->getData()->description,
                     $form->getData()->grp,
                     $res,
                     time()
-                );
+                );*/
 
 
 
@@ -179,34 +179,30 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
                         $this->trickBuilder->getTrick()
                     );
 
+                    $this->trickRepository->save($this->imageBuilder->getImage());
 
-                    /*$temp = $this->imageRepository->modifyImage(
-                        $res,
-                        $this->imageUploadFolder . $fileName,
-                        time(),
-                    );*/
                 }
-                //dump($temp);
-                die();
 
                 $video = $form->getData()->video;
                 $maxVideo = count($video);
 
-                for ($i = 0; $i < $maxVideo; $i++) {
-                    $str = $form->getData()->video[$i]['video'];
+            for ($i = 0; $i < $maxVideo; $i++) {
+                $str = $form->getData()->video[$i]['video'];
 
-                    $url = $this->findUrl->SearchUrl($str);
+                $vidType = $this->findUrl->SearchVideoType($str);
+                $vidId = $this->findUrl->FindVideoId($str, $vidType);
 
-                    $this->videoBuilder->create(
-                        $url,
-                        $this->trickBuilder->getTrick()
-                    );
+                $this->videoBuilder->create(
+                    $vidId,
+                    $vidType,
+                    $this->trickBuilder->getTrick()
+                );
 
                     $this->trickRepository->save($this->videoBuilder->getVideo());
                 }
                 return true;
             }
-        }
+
         return false;
     }
 }

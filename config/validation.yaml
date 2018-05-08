@@ -1,4 +1,4 @@
-App\Domain\Trick:
+App\Domain\DTO\NewTrickDTO:
         properties:
             name:
                 - NotBlank: ~
