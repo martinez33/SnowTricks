@@ -57,8 +57,11 @@ class AddTrickAction implements AddTrickActionInterface
      * @param SessionInterface $session
      * @return mixed
      */
-    public function __invoke(AddTrickResponderInterface $responder, Request $request, SessionInterface $session)
-    {
+    public function __invoke(
+        AddTrickResponderInterface $responder,
+        Request $request,
+        SessionInterface $session
+    ) {
         $addTrickType = $this->formFactory->create(AddTrickType::class)->handleRequest($request);
 
 

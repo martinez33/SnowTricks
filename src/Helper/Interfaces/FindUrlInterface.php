@@ -10,5 +10,7 @@ namespace App\Helper\Interfaces;
 
 interface FindUrlInterface
 {
-    public function SearchUrl(string $str);
+    public function SearchVideoType(string $str);
+
+    public function FindVideoId(string $str, string $type);
 }

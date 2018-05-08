@@ -14,6 +14,5 @@ interface ImageRepositoryInterface
 {
     public function __construct(RegistryInterface $registry);
 
-    public function findLastImg();
-
+    public function modifyImage($slug, $fileName, $updated);
 }

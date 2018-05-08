@@ -41,5 +41,4 @@ interface FileUpLoaderInterface
      * @return string
      */
     public function getTargetImgDirectory();
-
 }

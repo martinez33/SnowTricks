@@ -8,7 +8,6 @@
 
 namespace App\Domain\Interfaces;
 
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Interface VideoInterface
@@ -25,7 +24,8 @@ interface VideoInterface
      * @param int|null $updated
      */
     public function __construct(
-        string $fileName,
+        string $vidId,
+        string $vidType,
         int $updated = null
     );
 
@@ -37,7 +37,7 @@ interface VideoInterface
     /**
      * @return string
      */
-    public function getFileName(): string;
+    public function getVidType(): string;
 
     /**
      * @return \Ramsey\Uuid\UuidInterface

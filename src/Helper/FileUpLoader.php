@@ -67,6 +67,4 @@ class FileUpLoader implements FileUpLoaderInterface
     {
         return $this->targetImgDirectory;
     }
-
-
 }

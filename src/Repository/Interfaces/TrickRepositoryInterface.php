@@ -14,7 +14,7 @@ interface TrickRepositoryInterface
 {
     public function __construct(RegistryInterface $registry);
 
-    public function findAllTrick();
+    public function getAllTricks();
 
     public function findImgByTrick($slug);
 
@@ -25,4 +25,14 @@ interface TrickRepositoryInterface
     public function save($data);
 
     public function findNameExist($dataName);
+
+    public function delTrickBySlug($slug);
+
+    public function modifyTrick($slug, $tName, $tDescription, $grp, $newSlug, $updated);
+
+    //public function modifyImage($slug, $fileName, $updated);
+
+    public function getTrickBySlug(string $slug);
+
+
 }

@@ -8,6 +8,7 @@
 
 namespace App\UI\Responder;
 
+use App\Domain\Interfaces\TrickInterface;
 use App\UI\Responder\Interfaces\HomeResponderInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -35,21 +36,18 @@ class HomeResponder implements HomeResponderInterface
     }
 
     /**
-     * @param array $data
-     *
-     * @return Response
-     *
+     * @param TrickInterface $tricks
+     * @return mixed|Response
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function __invoke(array $data, $img)
+    public function __invoke(array $tricks)
     {
         return new Response($this->twig->render(
             'home.html.twig',
             [
-                'tricks' => $data,
-                'image' => $img
+                'tricks' => $tricks
             ]
         ));
     }

@@ -25,20 +25,32 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
         parent::__construct($registry, Trick::class);
     }
 
+
     /**
-     * @return array
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findAllTrick()
+    public function getAllTricks()
     {
         return $this->createQueryBuilder('t')
-            ->select('t.name', 't.slug', 'image.fileName')
             ->join('t.image', 'image')
-            ->groupBy('t.name')
             ->getQuery()
             ->getResult();
-
     }
 
+    /**
+     * @param string $slug
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getTrickBySlug(string $slug)
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
     /**
      * @param $slug
      *
@@ -60,8 +72,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
-            ->setMaxResults(1)
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
     public function findImgByTrick($slug)
@@ -78,7 +89,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
     public function findVideoByTrick($slug)
     {
         return $this->createQueryBuilder('t')
-            ->select('t.slug', 'video.fileName')
+            ->select('t.slug', 'video.vidType', 'video.vidId')
             ->join('t.video', 'video')
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)
@@ -93,7 +104,6 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
      */
     public function save($data)
     {
-        //$this->_em->persist($data)
         $this->getEntityManager()->persist($data);
         $this->getEntityManager()->flush();
     }
@@ -108,15 +118,57 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
             ->getResult();
     }
 
-    /*
-    public function findOneBySomeField($value): ?Trick
+    public function delTrickBySlug($trick)
     {
-        return $this->createQueryBuilder('t')
-            ->andWhere('t.exampleField = :val')
-            ->setParameter('val', $value)
+        $this->_em->remove($trick);
+       /* return $this->createQueryBuilder('t')
+            ->delete()
+            ->join('t.image', 'image')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();*/
     }
-    */
+
+    public function modifyTrick(
+        $slug,
+        $name,
+        $description,
+        $grp,
+        $newSlug,
+        $updated
+    ) {
+        return $this->createQueryBuilder('t')
+            ->update()
+            ->join('t.image', 'image')
+            ->where('t.slug = ?1')
+            ->set('t.name', '?2')
+            ->set('t.description', '?3')
+            ->set('t.grp', '?4')
+            ->set('t.slug', '?5')
+            ->set('t.updated', '?6')
+            ->setParameter(1, $slug)
+            ->setParameter(2, $name)
+            ->setParameter(3, $description)
+            ->setParameter(4, $grp)
+            ->setParameter(5, $newSlug)
+            ->setParameter(6, $updated)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /* public function modifyImage($slug, $fileName, $updated)
+     {
+         return $this->createQueryBuilder('t')
+             ->update()
+             ->join('t.image', 'image')
+             ->where('t.slug = ?1')
+             ->set('image.fileName', '?2')
+             ->set('image.updated', '?3')
+             ->setParameter(1, $slug)
+             ->setParameter(2, $fileName)
+             ->setParameter(3, $updated)
+             ->getQuery()
+             ->getResult();
+     }*/
 }

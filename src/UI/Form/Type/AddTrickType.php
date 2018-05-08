@@ -10,7 +10,10 @@ namespace App\UI\Form\Type;
 
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
 use App\Domain\DTO\NewTrickDTO;
+use App\Domain\Interfaces\TrickInterface;
 use App\UI\Form\Type\Interfaces\AddTrickTypeInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,6 +26,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Choice;
+use Symfony\Component\Validator\Constraints\GroupSequence;
 
 /**
  * Class AddTrickType
@@ -65,7 +69,8 @@ class AddTrickType extends AbstractType implements AddTrickTypeInterface
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-           'data_class' => NewTrickDTOInterface::class,
+            'validation_groups' => array('creationDTO'),
+            'data_class' => NewTrickDTOInterface::class,
             'empty_data' => /**
              * @param FormInterface $form
              * @return NewTrickDTO

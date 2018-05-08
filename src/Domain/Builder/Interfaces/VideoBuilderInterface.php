@@ -13,7 +13,7 @@ use App\Domain\Interfaces\VideoInterface;
 
 interface VideoBuilderInterface
 {
-    public function create(string $fileName, TrickInterface $trick);
+    public function create(string $vidId, string $vidType, TrickInterface $trick);
 
     public function getVideo(): VideoInterface;
 }

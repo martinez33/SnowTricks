@@ -8,7 +8,6 @@
 
 namespace App\UI\Action\Interfaces;
 
-
 use App\UI\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
 use App\UI\Responder\Interfaces\AddTrickResponderInterface;
 use Symfony\Component\Form\FormFactoryInterface;

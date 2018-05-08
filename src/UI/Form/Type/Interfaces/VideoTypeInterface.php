@@ -10,5 +10,4 @@ namespace App\UI\Form\Type\Interfaces;
 
 interface VideoTypeInterface
 {
-
 }
