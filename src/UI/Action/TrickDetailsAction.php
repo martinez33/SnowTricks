@@ -55,13 +55,17 @@ class TrickDetailsAction implements TrickDetailsActionInterface
         TrickDetailsResponderInterface $responder,
         Request $request
     ) {
-        $slug = $request->get('slug');
+       // $slug = $request->get('slug');
 
-        $data = $this->trickRepository->findTrick($slug);
+        //$data = $this->trickRepository->findTrick($slug);
 
-        $img = $this->trickRepository->findImgByTrick($slug);
+        $trick = $this->trickRepository->getTrickBySlug($request->attributes->get('slug'));
+        //dump($trick);
+        //die();
 
-        $video = $this->trickRepository->findVideoByTrick($slug);
-        return $responder($data, $img, $video);
+        //$img = $this->trickRepository->findImgByTrick($slug);
+
+        //$video = $this->trickRepository->findVideoByTrick($slug);
+        return $responder($trick);
     }
 }

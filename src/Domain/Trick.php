@@ -71,7 +71,7 @@ class Trick implements TrickInterface
     private $updated;
 
     /**
-     * @var ArrayCollection
+     * @var \ArrayAccess
      */
     private $video;
 
@@ -148,7 +148,6 @@ class Trick implements TrickInterface
         return $this->image;
     }
 
-
     /**
      * @return string
      */
@@ -174,13 +173,12 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return \ArrayAccess
      */
-    public function getVideo(): ArrayCollection
+    public function getVideo(): \ArrayAccess
     {
         return $this->video;
     }
-
 
     /**
      * @param ArrayCollection $comment
@@ -198,8 +196,6 @@ class Trick implements TrickInterface
         $this->image = $image;
     }
 
-
-
     /**
      * @param int $updated
      */
@@ -209,10 +205,11 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @param ArrayCollection $video
+     * @param \ArrayAccess $video
      */
-    public function setVideo(ArrayCollection $video): void
+    public function setVideo(\ArrayAccess $video): void
     {
         $this->video = $video;
     }
+
 }

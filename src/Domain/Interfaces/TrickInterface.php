@@ -27,14 +27,14 @@ interface TrickInterface
     );
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return ArrayCollection
      */
-    public function getId();
+    public function getComment();
 
     /**
-     * @return string
+     * @return int
      */
-    public function getName();
+    public function getCreated();
 
     /**
      * @return string
@@ -47,26 +47,39 @@ interface TrickInterface
     public function getGrp();
 
     /**
-     * @return int
+     * @return \Ramsey\Uuid\UuidInterface
      */
-    public function getCreated();
+    public function getId();
+
+    /**
+     * @return \ArrayAccess
+     */
+    public function getImage(): \ArrayAccess;
+
+    /**
+     * @return string
+     */
+    public function getName();
 
     /**
      * @return int
      */
     public function getUpdated();
 
-    public function getImage(): \ArrayAccess;
-
     /**
-     * @return ArrayCollection
+     * @return \ArrayAccess
      */
-    public function getComment();
+    public function getVideo(): \ArrayAccess;
 
     /**
      * @param ArrayCollection $comment
      */
     public function setComment(ArrayCollection $comment): void;
+
+    /**
+     * @param \ArrayAccess $image
+     */
+    public function setImage(\ArrayAccess $image): void;
 
     /**
      * @param int $updated
@@ -75,5 +88,8 @@ interface TrickInterface
      */
     public function setUpdated(int $updated);
 
-    public function setImage(\ArrayAccess $image): void;
+    /**
+     * @param \ArrayAccess $video
+     */
+    public function setVideo(\ArrayAccess $video): void;
 }

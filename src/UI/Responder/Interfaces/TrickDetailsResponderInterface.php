@@ -8,6 +8,7 @@
 
 namespace App\UI\Responder\Interfaces;
 
+use App\Domain\Interfaces\TrickInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
@@ -25,5 +26,5 @@ interface TrickDetailsResponderInterface
      * @param array $data
      * @return Response
      */
-    public function __invoke(array $data, array $img, array $video);
+    public function __invoke(TrickInterface $trick);
 }
