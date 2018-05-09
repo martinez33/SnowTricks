@@ -7,14 +7,15 @@
     <div class="container">
 
         <div class="row">
-            {% for image in images %}
+
+         {% for image in trick.image %}
                 <a class="">
                     <img src="{{ asset(image.fileName) }}" class="img-thumbnail" />
                 </a>
-            {% endfor %}
+         {% endfor %}
         </div>
         <div>
-            {% for video in videos %}
+            {% for video in trick.video %}
                 {% if video.vidType == "Youtube" %}
                     <embed width="200" height="150" src="https://www.youtube.com/embed/{{ asset(video.vidId) }}"
                            frameborder="0" allow="encrypted-media" allowfullscreen />
@@ -29,7 +30,6 @@
             {% endfor %}
         </div>
         <div class="row">
-            {% for trick in tricks %}
                 <div class="col-md-2">
 
                     <h2>{{ trick.name }}</h2>
@@ -37,9 +37,6 @@
                     <h5>{{ trick.grp }}</h5>
                     <br>
                 </div>
-
-            {% endfor %}
-
         </div>
     </div>
 {% endblock %}
