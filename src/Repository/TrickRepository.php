@@ -33,7 +33,6 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
     public function getAllTricks()
     {
         return $this->createQueryBuilder('t')
-            ->join('t.image', 'image')
             ->getQuery()
             ->getResult();
     }

@@ -149,19 +149,26 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
 
                     $fileName = $this->fileUpLoader->upLoadImg($pict['image']);
 
+                   // dump($fileName);
+
+                    if ($i == 0) {
+                        $first = true;
+                    } else {
+                        $first = false;
+                    }
 
                     $this->imageBuilder->create(
-                            $this->imageUploadFolder . $fileName,
-                            $request
-                                ->files
-                                ->get('add_trick')['image'][$i]['image']
-                                ->getClientOriginalExtension(),
-                            $this->trickBuilder->getTrick()
-                        );
+                        $request
+                        ->files
+                        ->get('add_trick')['image'][$i]['image']
+                        ->getClientOriginalExtension(),
+                        $this->imageUploadFolder . $fileName,
+                        $first,
+                        $this->trickBuilder->getTrick()
+                    );
 
                     $this->trickRepository->save($this->imageBuilder->getImage());
                 }
-
 
                 $video = $form->getData()->video;
                 $maxVideo = count($video);

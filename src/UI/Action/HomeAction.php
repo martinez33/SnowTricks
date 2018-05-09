@@ -68,7 +68,7 @@ class HomeAction implements HomeActionInterface
     {
         $tricks = $this->trickRepository->getAllTricks();
 
-        //dump($tricks);
+       // dump($tricks);
         //die();
 
 

@@ -21,29 +21,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Image implements ImageInterface
 {
     /**
-     * @var \Ramsey\Uuid\UuidInterface
-     */
-    private $id;
-
-    /**
-     * @var string
-     */
-    private $fileName;
-
-    /**
      * @var int
      */
     private $created;
-
-    /**
-     * @var int
-     */
-    private $updated;
-
-    /**
-     * @var TrickInterface
-     */
-    private $trick;
 
     /**
      * @var string
@@ -53,36 +33,53 @@ class Image implements ImageInterface
     private $ext;
 
     /**
+     * @var string
+     */
+    private $fileName;
+
+    /**
+     * @var bool
+     */
+    private $first;
+
+    /**
+     * @var \Ramsey\Uuid\UuidInterface
+     */
+    private $id;
+
+    /**
+     * @var TrickInterface
+     */
+    private $trick;
+
+    /**
+     * @var int
+     */
+    private $updated;
+
+    /**
      * Image constructor.
      *
-     * @param int|null  $updated
+     * @param int $created
+     * @param string $ext
+     * @param string $fileName
+     * @param bool $first
+     * @param \Ramsey\Uuid\UuidInterface $id
+     * @param TrickInterface $trick
+     * @param int $updated
      */
     public function __construct(
-        string $fileName,
         string $ext,
+        string $fileName,
+        bool $first = false,
         int $updated = null
     ) {
-        $this->id = Uuid::uuid4();
         $this->created = time();
-        $this->updated = time();
-        $this->fileName = $fileName;
         $this->ext = $ext;
-    }
-
-    /**
-     * @return \Ramsey\Uuid\UuidInterface
-     */
-    public function getId(): \Ramsey\Uuid\UuidInterface
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFileName(): string
-    {
-        return $this->fileName;
+        $this->fileName = $fileName;
+        $this->first = $first;
+        $this->id = Uuid::uuid4();
+        $this->updated = time();
     }
 
     /**
@@ -94,14 +91,6 @@ class Image implements ImageInterface
     }
 
     /**
-     * @return int
-     */
-    public function getUpdated(): int
-    {
-        return $this->updated;
-    }
-
-    /**
      * @return string
      */
     public function getExt(): string
@@ -110,11 +99,51 @@ class Image implements ImageInterface
     }
 
     /**
+     * @return string
+     */
+    public function getFileName(): string
+    {
+        return $this->fileName;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFirst(): bool
+    {
+        return $this->first;
+    }
+
+    /**
+     * @return \Ramsey\Uuid\UuidInterface
+     */
+    public function getId(): \Ramsey\Uuid\UuidInterface
+    {
+        return $this->id;
+    }
+
+    /**
      * @return TrickInterface
      */
-    public function getTrick(): Trick
+    public function getTrick(): TrickInterface
     {
         return $this->trick;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUpdated(): int
+    {
+        return $this->updated;
+    }
+
+    /**
+     * @param bool $first
+     */
+    public function setFirst(bool $first): void
+    {
+        $this->first = $first;
     }
 
     /**

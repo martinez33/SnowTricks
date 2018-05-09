@@ -12,59 +12,60 @@ use App\Domain\Trick;
 
 interface ImageInterface
 {
-    /**
-     * ImageInterface constructor.
-     *
-     * @param int|null $updated
-     * @param string   $ext
-     */
     public function __construct(
-        string $fileName,
         string $ext,
+        string $fileName,
+        bool $first = false,
         int $updated = null
     );
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return int
      */
-    public function getId();
+    public function getCreated(): int;
 
     /**
      * @return string
      */
-    public function getFileName();
+    public function getExt(): string;
 
     /**
-     * @return int
+     * @return string
      */
-    public function getCreated();
+    public function getFileName(): string;
 
     /**
-     * @return int
+     * @return bool
      */
-    public function getUpdated();
+    public function isFirst(): bool;
+
+    /**
+     * @return \Ramsey\Uuid\UuidInterface
+     */
+    public function getId(): \Ramsey\Uuid\UuidInterface;
 
     /**
      * @return TrickInterface
      */
-    public function getTrick();
+    public function getTrick(): TrickInterface;
 
     /**
-     * @return string
+     * @return int
      */
-    public function getExt();
+    public function getUpdated(): int;
+
+    /**
+     * @param bool $first
+     */
+    public function setFirst(bool $first): void;
 
     /**
      * @param int $updated
-     *
-     * @return int
      */
-    public function setUpdated(int $updated);
+    public function setUpdated(int $updated): void;
 
     /**
-     * @param Trick $trick
-     *
-     * @return Trick
+     * @param TrickInterface $trick
      */
     public function setTrick(TrickInterface $trick);
 }
