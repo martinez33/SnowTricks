@@ -10,15 +10,15 @@ namespace App\UI\Action;
 
 use App\Domain\Interfaces\TrickInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
-use App\UI\Action\Interfaces\DelTrickActionInterface;
+use App\UI\Action\Interfaces\RemoveTrickActionInterface;
 
-use App\UI\Responder\Interfaces\DelTrickResponderInterface;
+use App\UI\Responder\Interfaces\RemoveTrickResponderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class DelTrickAction
+ * Class RemoveTrickAction
  *
  * @package App\UI\Action
  *
@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *     name="trick_delete"
  *     )
  */
-class DelTrickAction implements DelTrickActionInterface
+class RemoveTrickAction implements RemoveTrickActionInterface
 {
     /**
      * @var TrickRepositoryInterface
@@ -35,40 +35,41 @@ class DelTrickAction implements DelTrickActionInterface
     private $trickRepository;
 
     /**
-     * @var TrickInterface
+     * @var SessionInterface
      */
-    private $trick;
+    private $session;
 
     /**
-     * DelTrickAction constructor.
+     * RemoveTrickAction constructor.
      *
      * @param TrickRepositoryInterface $trickRepository
      */
-    public function __construct(TrickRepositoryInterface $trickRepository)
+    public function __construct(SessionInterface $session, TrickRepositoryInterface $trickRepository)
     {
+        $this->session = $session;
         $this->trickRepository = $trickRepository;
     }
 
     /**
      * @param Request $request
-     * @param DelTrickResponderInterface $responder
+     * @param RemoveTrickResponderInterface $responder
      * @param SessionInterface $session
      * @return mixed
      */
     public function __invoke(
         Request $request,
-        DelTrickResponderInterface $responder,
-        SessionInterface $session//dans construct
+        RemoveTrickResponderInterface $responder
     ) {
 
         $trick = $this->trickRepository->getTrickBySlug($request->attributes->get('slug'));
 
-        $this->trickRepository->delTrickBySlug($trick);
+        $result = $this->trickRepository->delTrickBySlug($trick);
 
-        /*if ($result == 1) {*/
-            $session->getFlashBag()->add('notice', 'Successfull : Trick removed !');
-
-            return $responder();
-        //}
+       if ($result == null ) {
+            $this->session->getFlashBag()->add('notice', 'Successfull : Trick removed !');
+       } else {
+           $this->session->getFlashBag()->add('notice', 'Error : Remove Impossible !');
+       }
+        return $responder();
     }
 }

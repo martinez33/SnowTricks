@@ -50,51 +50,6 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-    /**
-     * @param $slug
-     *
-     * @return mixed
-     *
-     * @throws \Doctrine\ORM\NonUniqueResultException
-     */
-    public function findTrick($slug)
-    {
-        return $this->createQueryBuilder('t')
-            ->select(
-                't.name',
-                't.description',
-                't.grp',
-                't.slug',
-                'image.fileName'
-            )
-            ->join('t.image', 'image')
-            ->where('t.slug = :slug')
-            ->setParameter('slug', $slug)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
-    public function findImgByTrick($slug)
-    {
-        return $this->createQueryBuilder('t')
-            ->select('t.slug', 'image.fileName')
-            ->join('t.image', 'image')
-            ->where('t.slug = :slug')
-            ->setParameter('slug', $slug)
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findVideoByTrick($slug)
-    {
-        return $this->createQueryBuilder('t')
-            ->select('t.slug', 'video.vidType', 'video.vidId')
-            ->join('t.video', 'video')
-            ->where('t.slug = :slug')
-            ->setParameter('slug', $slug)
-            ->getQuery()
-            ->getResult();
-    }
 
     /**
      * @param  $data
@@ -120,13 +75,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
     public function delTrickBySlug($trick)
     {
         $this->_em->remove($trick);
-       /* return $this->createQueryBuilder('t')
-            ->delete()
-            ->join('t.image', 'image')
-            ->where('t.slug = :slug')
-            ->setParameter('slug', $slug)
-            ->getQuery()
-            ->getResult();*/
+        $this->_em->flush();
     }
 
     public function modifyTrick(

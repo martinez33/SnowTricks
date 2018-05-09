@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: marti
- * Date: 30/04/2018
- * Time: 10:17
+ * Date: 09/05/2018
+ * Time: 15:01
  */
 
 namespace App\UI\Responder\Interfaces;
@@ -11,7 +11,7 @@ namespace App\UI\Responder\Interfaces;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
-interface DelTrickResponderInterface
+interface RemoveTrickResponderInterface
 {
     public function __construct(Environment $twig, UrlGeneratorInterface $urlGenerator);
 

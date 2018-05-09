@@ -16,11 +16,7 @@ interface TrickRepositoryInterface
 
     public function getAllTricks();
 
-    public function findImgByTrick($slug);
-
-    public function findVideoByTrick($slug);
-
-    public function findTrick($name);
+    public function getTrickBySlug(string $slug);
 
     public function save($data);
 
@@ -29,10 +25,5 @@ interface TrickRepositoryInterface
     public function delTrickBySlug($slug);
 
     public function modifyTrick($slug, $tName, $tDescription, $grp, $newSlug, $updated);
-
-    //public function modifyImage($slug, $fileName, $updated);
-
-    public function getTrickBySlug(string $slug);
-
 
 }

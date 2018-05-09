@@ -8,20 +8,17 @@
 
 namespace App\UI\Action\Interfaces;
 
-use App\Domain\Interfaces\TrickInterface;
-use App\Repository\Interfaces\ImageRepositoryInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
-use App\UI\Responder\Interfaces\DelTrickResponderInterface;
+use App\UI\Responder\Interfaces\RemoveTrickResponderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-interface DelTrickActionInterface
+interface RemoveTrickActionInterface
 {
-    public function __construct(TrickRepositoryInterface $trickRepository);
+    public function __construct(SessionInterface $session, TrickRepositoryInterface $trickRepository);
 
     public function __invoke(
         Request $request,
-        DelTrickResponderInterface $responder,
-        SessionInterface $session
+        RemoveTrickResponderInterface $responder
     );
 }

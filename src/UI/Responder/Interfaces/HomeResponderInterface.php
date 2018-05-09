@@ -2,27 +2,17 @@
 /**
  * Created by PhpStorm.
  * User: marti
- * Date: 29/03/2018
- * Time: 01:18.
+ * Date: 09/05/2018
+ * Time: 14:55
  */
 
 namespace App\UI\Responder\Interfaces;
 
-use App\Domain\Interfaces\TrickInterface;
 use Twig\Environment;
 
 interface HomeResponderInterface
 {
-    /**
-     * HomeResponderInterface constructor.
-     *
-     * @param Environment $twig
-     */
     public function __construct(Environment $twig);
 
-    /**
-     * @param array $data
-     * @return mixed
-     */
     public function __invoke(array $tricks);
 }

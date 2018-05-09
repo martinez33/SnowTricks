@@ -8,13 +8,13 @@
 
 namespace App\UI\Responder;
 
-use App\UI\Responder\Interfaces\DelTrickResponderInterface;
+use App\UI\Responder\Interfaces\RemoveTrickResponderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Environment;
 
-class DelTrickResponder implements DelTrickResponderInterface
+class RemoveTrickResponder implements RemoveTrickResponderInterface
 {
     /**
      * @var Environment
@@ -27,7 +27,7 @@ class DelTrickResponder implements DelTrickResponderInterface
     private $urlGenerator;
 
     /**
-     * DelTrickResponder constructor.
+     * RemoveTrickResponder constructor.
      *
      * @param Environment $twig
      * @param UrlGeneratorInterface $urlGenerator
