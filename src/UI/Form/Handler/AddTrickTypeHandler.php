@@ -17,7 +17,6 @@ use App\Helper\Interfaces\SlugInterface;
 use App\Helper\Interfaces\UniqueTrickNameInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntityValidator;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -75,6 +74,11 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
     private $uniqueTrickName;
 
     /**
+     * @var ValidatorInterface
+     */
+    private $validator;
+
+    /**
      * @var VideoBuilderInterface
      */
     private $videoBuilder;
@@ -103,6 +107,7 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
         TrickBuilderInterface $trickBuilder,
         TrickRepositoryInterface $trickRepository,
         UniqueTrickNameInterface $uniqueTrickName,
+        ValidatorInterface $validator,
         VideoBuilderInterface $videoBuilder
     ) {
         $this->fileUpLoader = $fileUpLoader;
@@ -114,6 +119,7 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
         $this->trickBuilder = $trickBuilder;
         $this->trickRepository = $trickRepository;
         $this->uniqueTrickName = $uniqueTrickName;
+        $this->validator = $validator;
         $this->videoBuilder = $videoBuilder;
     }
 
@@ -123,20 +129,46 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
      */
     public function handle(FormInterface $form, Request $request): bool
     {
+
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $dataName = $form->getData()->name;
+            $errors = $this->validator->validate($form->getData(), null, array('creation'));
 
-            if ($this->uniqueTrickName->isUniqueName($dataName)) {
+            if(count($errors) > 0) {
+                $max = count($errors);
 
-                $res = $this->slug->slug($form->getData()->name);
+                for ($i=0; $i<$max; $i++) {
 
-               $this->trickBuilder->create(
-                   $form->getData()->name,
-                   $form->getData()->description,
-                   $form->getData()->grp,
-                   $res
-               );
+                    $this->session->getFlashBag()->add('form_notice', $errors[$i]->getMessage());
+                }
+
+                return false;
+            }
+
+            $name = $this->slug->slug($form->getData()->name);
+
+            $this->trickBuilder->create(
+                $form->getData()->name,
+                $form->getData()->description,
+                $form->getData()->grp,
+                $name
+            );
+
+
+            $errorName = $this->validator->validate($this->trickBuilder->getTrick(), null, array('creation'));
+            if(count($errorName) > 0) {
+                $max = count($errorName);
+
+                for ($i=0; $i<$max; $i++) {
+
+                    $this->session->getFlashBag()->add('form_notice', $errorName[$i]->getMessage());
+                }
+
+                return false;
+            }
+
+               //dump($errorName);
+                //die();
 
                 $this->trickRepository->save($this->trickBuilder->getTrick());
 
@@ -188,7 +220,6 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
                     $this->trickRepository->save($this->videoBuilder->getVideo());
                 }
                 return true;
-            }
         }
         return false;
     }

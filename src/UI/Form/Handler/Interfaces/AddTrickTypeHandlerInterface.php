@@ -33,6 +33,7 @@ interface AddTrickTypeHandlerInterface
         TrickBuilderInterface $trickBuilder,
         TrickRepositoryInterface $trickRepository,
         UniqueTrickNameInterface $uniqueTrickName,
+        ValidatorInterface $validator,
         VideoBuilderInterface $videoBuilder
     );
 

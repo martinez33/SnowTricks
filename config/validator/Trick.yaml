@@ -1,0 +1,9 @@
+App\Domain\Trick:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name, slug]
+            message: Le trick exist déja !
+            groups: [creation]
+
+
+

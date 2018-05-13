@@ -15,8 +15,7 @@ interface NewTrickDTOInterface
      * @param string $name
      * @param string $description
      * @param string $grp
-     * @param NewImageDTOInterface $image
      * @param array $video
      */
-    public function __construct(string $name, string $description, string $grp, array $image, array $video);
+    public function __construct(string $name = null, string $description = null, string $grp, array $image, array $video);
 }

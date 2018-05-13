@@ -43,15 +43,17 @@
             </nav>
         </div>
 
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="flash-notice" role="">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endfor %}
+
     {% endblock %}
 
+    {% set flashbag_notices = app.session.flashbag.get('notice') %}
+    {% if flashbag_notices is not empty %}
+    <ul class="msg">
+        {% for notice in flashbag_notices %}
+            <li>{{ notice }}</li>
+        {% endfor %}
+        {% endif %}
+    </ul>
     {% block content %}{% endblock %}
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
