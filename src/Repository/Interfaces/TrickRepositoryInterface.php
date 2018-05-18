@@ -20,10 +20,12 @@ interface TrickRepositoryInterface
 
     public function save($data);
 
-    public function findNameExist($dataName);
-
     public function delTrickBySlug($slug);
 
-    public function modifyTrick($slug, $tName, $tDescription, $grp, $newSlug, $updated);
+    public function test($slug);
+
+    public function update();
+
+    //public function modifyTrick($slug, $tName, $tDescription, $grp, $newSlug, $updated);
 
 }

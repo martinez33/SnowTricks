@@ -22,6 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModifyTrickType extends AbstractType implements ModifyTrickTypeInterface
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -51,21 +52,5 @@ class ModifyTrickType extends AbstractType implements ModifyTrickTypeInterface
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-           'data_class' => NewTrickDTOInterface::class,
-           'empty_data' => /**
-            * @param FormInterface $form
-            * @return NewTrickDTO
-            */
-               function (FormInterface $form) {
-                   return new NewTrickDTO(
-                       $form->get('name')->getData(),
-                       $form->get('description')->getData(),
-                       $form->get('grp')->getData(),
-                       $form->get('image')->getData(),
-                       $form->get('video')->getData()
-                   );
-               }
-       ]);
     }
 }

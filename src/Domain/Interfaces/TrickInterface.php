@@ -8,15 +8,20 @@
 
 namespace App\Domain\Interfaces;
 
+use App\Domain\Video;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 interface TrickInterface
 {
     /**
-     * TrickInterface constructor.
+     * Trick constructor.
      *
+     * @param string $description
+     * @param string $grp
+     * @param string $name
+     * @param string $slug
      * @param int|null $updated
-     * @param array    $images
      */
     public function __construct(
         string $description,
@@ -47,14 +52,14 @@ interface TrickInterface
     public function getGrp();
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return string
      */
     public function getId();
 
     /**
      * @return \ArrayAccess
      */
-    public function getImage(): \ArrayAccess;
+    public function getImage();
 
     /**
      * @return string
@@ -62,34 +67,42 @@ interface TrickInterface
     public function getName();
 
     /**
+     * @return string
+     */
+    public function getSlug();
+
+    /**
      * @return int
      */
     public function getUpdated();
 
     /**
-     * @return \ArrayAccess
+     * @return Collection|video
      */
-    public function getVideo(): \ArrayAccess;
+    public function getVideo(): Collection;
+
+
+    public function update(string $description, string $grp, \ArrayAccess $arrayAccessImg, \ArrayAccess $arrayAccessVid);
+
 
     /**
      * @param ArrayCollection $comment
      */
-    public function setComment(ArrayCollection $comment): void;
+    public function setComment(ArrayCollection $comment);
 
     /**
      * @param \ArrayAccess $image
      */
-    public function setImage(\ArrayAccess $image): void;
+    public function setImage(array $image);
 
     /**
      * @param int $updated
-     *
-     * @return int
      */
     public function setUpdated(int $updated);
 
     /**
      * @param \ArrayAccess $video
      */
-    public function setVideo(\ArrayAccess $video): void;
+    //public function setVideo(\ArrayAccess $video);
+
 }

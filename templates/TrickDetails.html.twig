@@ -15,6 +15,7 @@
          {% endfor %}
         </div>
         <div>
+
             {% for video in trick.video %}
                 {% if video.vidType == "Youtube" %}
                     <embed width="200" height="150" src="https://www.youtube.com/embed/{{ asset(video.vidId) }}"

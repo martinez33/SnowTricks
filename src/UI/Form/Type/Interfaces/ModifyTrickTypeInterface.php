@@ -8,7 +8,9 @@
 
 namespace App\UI\Form\Type\Interfaces;
 
+use App\Repository\Interfaces\TrickRepositoryInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 interface ModifyTrickTypeInterface

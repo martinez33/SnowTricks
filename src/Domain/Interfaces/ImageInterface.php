@@ -46,7 +46,7 @@ interface ImageInterface
 
     /**
      * @return TrickInterface
-     */
+     *//*
     public function getTrick(): TrickInterface;
 
     /**
@@ -66,6 +66,6 @@ interface ImageInterface
 
     /**
      * @param TrickInterface $trick
-     */
-    public function setTrick(TrickInterface $trick);
+     *//*
+    public function setTrick(TrickInterface $trick);*/
 }

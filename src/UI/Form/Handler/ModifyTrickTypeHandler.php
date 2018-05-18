@@ -121,87 +121,62 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
      */
     public function handle(FormInterface $form, Request $request): bool
     {
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $dataName = $form->getData()->name;
 
             $slug = $request->get('slug');
 
-            //if ($this->uniqueTrickName->isUniqueName($dataName)) {
+            $temp = $this->trickRepository->getTrickBySlug($slug);
+            $trick = $this->trickRepository->test($temp->getId());
 
+            $trick->setUpdated(time());
+            $trick->setDescription($form->getData()->description);
+            $trick->setGrp($form->getData()->grp);
 
-                /*$data = $this->trickRepository->findNameExist($dataName); //voir plutot contrainte au niveau du Type
+            $file = $form->getData()->image; //renvoie du tab image
 
-                 if ($data != null) {
-                     $this->session
-                         ->getFlashBag()
-                         ->add(
-                             'note',
-                             'The Trick is already exist !'
-                         )
-                     ;
-                 } */
-                $res = $this->slug->slug($form->getData()->name);
+            $maxImg = count($file);
 
-                $trick = $this->trickBuilder->create(
-                    $form->getData()->name,
-                    $form->getData()->description,
-                    $form->getData()->grp,
-                    $res
+            for ($i = 0; $i < $maxImg; $i++) {
+                $pict = $form->getData()->image[$i];
+
+                $fileName = $this->fileUpLoader->upLoadImg($pict['image']);
+
+                $first = false;
+
+                $this->imageBuilder->create(
+                    $request->files->get('add_trick')['image'][$i]['image'] . 'jpg',
+                    $this->imageUploadFolder . $fileName,
+                    $first,
+                    $trick
                 );
 
-                /*$this->trickRepository->modifyTrick(
-                    $slug,
-                    $form->getData()->name,
-                    $form->getData()->description,
-                    $form->getData()->grp,
-                    $res,
-                    time()
-                );*/
+                $this->trickRepository->save($this->imageBuilder->getImage());
+            }
 
-
-
-                $file = $form->getData()->image; //renvoie du tab image
-
-                $maxImg = count($file);
-
-                for ($i = 0; $i < $maxImg; $i++) {
-                    $pict = $form->getData()->image[$i];
-
-                    $fileName = $this->fileUpLoader->upLoadImg($pict['image']);
-
-
-                    $this->imageBuilder->create(
-                        $this->imageUploadFolder . $fileName,
-                        $request
-                            ->files
-                            ->get('add_trick')['image'][$i]['image']
-                            . 'jpg',
-                        $this->trickBuilder->getTrick()
-                    );
-
-                    $this->trickRepository->save($this->imageBuilder->getImage());
-
-                }
-
-                $video = $form->getData()->video;
-                $maxVideo = count($video);
+            $video = $form->getData()->video;
+            $maxVideo = count($video);
 
             for ($i = 0; $i < $maxVideo; $i++) {
-                $str = $form->getData()->video[$i]['video'];
 
+                $str = $form->getData()->video[$i]['video'];
                 $vidType = $this->findUrl->SearchVideoType($str);
                 $vidId = $this->findUrl->FindVideoId($str, $vidType);
 
                 $this->videoBuilder->create(
                     $vidId,
                     $vidType,
-                    $this->trickBuilder->getTrick()
+                    $trick
                 );
 
-                    $this->trickRepository->save($this->videoBuilder->getVideo());
-                }
-                return true;
+                $this->trickRepository->save($this->videoBuilder->getVideo());
             }
+
+            $this->trickRepository->update();
+           // $this->trickRepository->save($trick);
+
+            return true;
+        }
 
         return false;
     }

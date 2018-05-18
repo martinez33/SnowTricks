@@ -35,28 +35,35 @@ class TrickBuilder implements TrickBuilderInterface
     private $grp;
 
     /**
+     * @var array
+     */
+    private $images;
+
+    /**
      * @var string
      */
     private $slug;
 
     /**
-     * TrickBuilder constructor.
-     *
-     * @param TrickInterface  $trick
-     * @param string          $name
-     * @param string          $description
-     * @param string          $grp
+     * @param string $description
+     * @param string $grp
+     * @param string $name
+     * @param array $images
+     * @param string $slug
+     * @return TrickInterface|Trick
      */
-    public function create(
-        string $name,
+    public function createTrick(
         string $description,
         string $grp,
-        string $slug
+        string $name,
+        string $slug,
+        array $images
     ) {
-        $this->trick = new Trick($description, $grp, $name, $slug);
+        $this->trick = new Trick($description, $grp, $name, $slug, $images);
 
         return $this->trick;
     }
+
 
     /**
      * @return TrickInterface

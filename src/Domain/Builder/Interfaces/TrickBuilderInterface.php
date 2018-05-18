@@ -12,11 +12,12 @@ use App\Domain\Interfaces\TrickInterface;
 
 interface TrickBuilderInterface
 {
-    public function create(
-        string $name,
+    public function createTrick(
         string $description,
         string $grp,
-        string $slug
+        string $name,
+        string $slug,
+        array $images
     );
 
     public function getTrick(): TrickInterface;

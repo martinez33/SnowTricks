@@ -50,10 +50,8 @@ class HomeAction implements HomeActionInterface
      * @param TrickRepositoryInterface  $trickRepository
      */
     public function __construct(
-        ImageRepositoryInterface $imageRepository,
         TrickRepositoryInterface $trickRepository
     ) {
-        $this->ImageRepository = $imageRepository;
         $this->trickRepository = $trickRepository;
     }
 
@@ -68,6 +66,8 @@ class HomeAction implements HomeActionInterface
     {
         $tricks = $this->trickRepository->getAllTricks();
 
+        //dump($this->trickRepository->getAllTricks());
+        //die();
         return $responder($tricks);
     }
 }

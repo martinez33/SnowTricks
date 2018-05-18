@@ -5,7 +5,7 @@
         http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <entity name="App\Domain\Video" >
-        <id name="id" column="id" type="string" />
+        <id name="id" column="id" type="uuid" />
         <field name="vidType" column="vidType" type="string" length="100" />
         <field name="vidId" column="vidId" type="string" length="255" unique="true" />
         <field name="created" column="created" type="integer" length="11" />

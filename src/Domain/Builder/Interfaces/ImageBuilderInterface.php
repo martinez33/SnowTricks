@@ -12,7 +12,7 @@ use App\Domain\Interfaces\TrickInterface;
 
 interface ImageBuilderInterface
 {
-    public function create(string $ext, string $fileName, bool $first, TrickInterface $trick);
+    public function createImage(string $ext, string $fileName, bool $first);
 
     public function getImage();
 }

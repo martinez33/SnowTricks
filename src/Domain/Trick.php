@@ -8,8 +8,10 @@
 
 namespace App\Domain;
 
+use App\Domain\Interfaces\ImageInterface;
 use App\Domain\Interfaces\TrickInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -58,7 +60,7 @@ class Trick implements TrickInterface
      *
      * @Assert\NotBlank(groups={"creation"})
      */
-    protected $name;
+    private $name;
 
     /**
      * @var string
@@ -98,6 +100,9 @@ class Trick implements TrickInterface
         $this->name = $name;
         $this->slug = $slug;
         $this->updated = time();
+
+        $this->image = new ArrayCollection();
+        $this->video = new ArrayCollection();
     }
 
     /**
@@ -133,17 +138,17 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @return \Ramsey\Uuid\UuidInterface
+     * @return string
      */
-    public function getId(): \Ramsey\Uuid\UuidInterface
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @return \ArrayAccess
+     * @return Collection|Image
      */
-    public function getImage(): \ArrayAccess
+    public function getImage(): Collection
     {
         return $this->image;
     }
@@ -173,11 +178,20 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @return \ArrayAccess
+     * @return Collection|video
      */
-    public function getVideo(): \ArrayAccess
+    public function getVideo(): Collection
     {
         return $this->video;
+    }
+
+    public function update(string $description, string $grp, \ArrayAccess $arrayAccessImg, \ArrayAccess $arrayAccessVid)
+    {
+        $this->description = $description;
+        $this->grp = $grp;
+        $this->image = $arrayAccessImg;
+        $this->updated = time();
+        $this->video = $arrayAccessVid;
     }
 
     /**
@@ -189,11 +203,27 @@ class Trick implements TrickInterface
     }
 
     /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @param string $grp
+     */
+    public function setGrp(string $grp): void
+    {
+        $this->grp = $grp;
+    }
+
+    /**
      * @param \ArrayAccess $image
      */
-    public function setImage(\ArrayAccess $image): void
+    public function setImage(array $image): void
     {
-        $this->image = $image;
+        $this->image = new ArrayCollection($image);
     }
 
     /**
@@ -207,9 +237,9 @@ class Trick implements TrickInterface
     /**
      * @param \ArrayAccess $video
      */
-    public function setVideo(\ArrayAccess $video): void
+    public function setVideo(array $videos): void
     {
-        $this->video = $video;
+        $this->video = new ArrayCollection($videos);
     }
 
 }

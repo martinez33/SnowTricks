@@ -62,23 +62,26 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
         $this->getEntityManager()->flush();
     }
 
-    public function findNameExist($dataName)
-    {
-        return $this->createQueryBuilder('t')
-            ->select('t.name')
-            ->where('t.name = :dataName')
-            ->setParameter('dataName', $dataName)
-            ->getQuery()
-            ->getResult();
-    }
-
+    /**
+     * @param $trick
+     */
     public function delTrickBySlug($trick)
     {
         $this->_em->remove($trick);
         $this->_em->flush();
     }
 
-    public function modifyTrick(
+    public function update()
+    {
+        $this->_em->flush();
+    }
+
+    public function test($id)
+    {
+      return $this->_em->find('App\Domain\Trick',$id);
+    }
+
+   /* public function modifyTrick(
         $slug,
         $name,
         $description,
@@ -103,20 +106,6 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
             ->setParameter(6, $updated)
             ->getQuery()
             ->getResult();
-    }
+    }*/
 
-    /* public function modifyImage($slug, $fileName, $updated)
-     {
-         return $this->createQueryBuilder('t')
-             ->update()
-             ->join('t.image', 'image')
-             ->where('t.slug = ?1')
-             ->set('image.fileName', '?2')
-             ->set('image.updated', '?3')
-             ->setParameter(1, $slug)
-             ->setParameter(2, $fileName)
-             ->setParameter(3, $updated)
-             ->getQuery()
-             ->getResult();
-     }*/
 }

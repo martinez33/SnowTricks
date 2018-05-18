@@ -23,7 +23,6 @@ interface HomeActionInterface
      * @param array                    $datas
      */
     public function __construct(
-        ImageRepositoryInterface $imageRepository,
         TrickRepositoryInterface $trickRepository
     );
 

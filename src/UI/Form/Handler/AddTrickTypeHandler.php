@@ -11,6 +11,9 @@ namespace App\UI\Form\Handler;
 use App\Domain\Builder\Interfaces\ImageBuilderInterface;
 use App\Domain\Builder\Interfaces\TrickBuilderInterface;
 use App\Domain\Builder\Interfaces\VideoBuilderInterface;
+use App\Domain\Image;
+use App\Domain\Trick;
+use App\Domain\Video;
 use App\Helper\FileUpLoader;
 use App\Helper\Interfaces\FindUrlInterface;
 use App\Helper\Interfaces\SlugInterface;
@@ -68,6 +71,7 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
      * @var TrickRepositoryInterface
      */
     private $trickRepository;
+
     /**
      * @var UniqueTrickNameInterface
      */
@@ -106,7 +110,6 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
         SlugInterface $slug,
         TrickBuilderInterface $trickBuilder,
         TrickRepositoryInterface $trickRepository,
-        UniqueTrickNameInterface $uniqueTrickName,
         ValidatorInterface $validator,
         VideoBuilderInterface $videoBuilder
     ) {
@@ -118,7 +121,6 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
         $this->slug = $slug;
         $this->trickBuilder = $trickBuilder;
         $this->trickRepository = $trickRepository;
-        $this->uniqueTrickName = $uniqueTrickName;
         $this->validator = $validator;
         $this->videoBuilder = $videoBuilder;
     }
@@ -147,15 +149,14 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
 
             $name = $this->slug->slug($form->getData()->name);
 
-            $this->trickBuilder->create(
-                $form->getData()->name,
+            $trick = new Trick(
                 $form->getData()->description,
                 $form->getData()->grp,
+                $form->getData()->name,
                 $name
             );
 
-
-            $errorName = $this->validator->validate($this->trickBuilder->getTrick(), null, array('creation'));
+            $errorName = $this->validator->validate($trick, null, array('creation'));
             if(count($errorName) > 0) {
                 $max = count($errorName);
 
@@ -167,59 +168,56 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
                 return false;
             }
 
-               //dump($errorName);
-                //die();
+            $images = $form->getData()->image;
 
-                $this->trickRepository->save($this->trickBuilder->getTrick());
+            foreach ($images as $cle => $tab) {
 
-                $file = $form->getData()->image; //renvoie du tab image
+                $fileName = $this->fileUpLoader->upLoadImg($tab['image']);
 
-                $maxImg = count($file);
+                if ($cle == 0) {
+                    $first = true;
+                } else {
+                    $first = false;
+                }
+                $res = $request->files->get('add_trick')['image'];
 
-                for ($i = 0; $i < $maxImg; $i++) {
-                    $pict = $form->getData()->image[$i];
+                foreach ($res as $ext) {
 
-                    $fileName = $this->fileUpLoader->upLoadImg($pict['image']);
-
-                   // dump($fileName);
-
-                    if ($i == 0) {
-                        $first = true;
-                    } else {
-                        $first = false;
-                    }
-
-                    $this->imageBuilder->create(
-                        $request
-                        ->files
-                        ->get('add_trick')['image'][$i]['image']
-                        ->getClientOriginalExtension(),
+                    $images = new Image($ext['image']->getClientOriginalExtension(),
                         $this->imageUploadFolder . $fileName,
-                        $first,
-                        $this->trickBuilder->getTrick()
-                    );
-
-                    $this->trickRepository->save($this->imageBuilder->getImage());
+                        $first);
                 }
 
-                $video = $form->getData()->video;
-                $maxVideo = count($video);
+                $images->setTrick($trick);
 
-                for ($i = 0; $i < $maxVideo; $i++) {
-                    $str = $form->getData()->video[$i]['video'];
+                $tabImg[] = $images;
+            }
 
-                    $vidType = $this->findUrl->SearchVideoType($str);
-                    $vidId = $this->findUrl->FindVideoId($str, $vidType);
 
-                    $this->videoBuilder->create(
-                        $vidId,
-                        $vidType,
-                        $this->trickBuilder->getTrick()
-                    );
+            $videos = $form->getData()->video;
 
-                    $this->trickRepository->save($this->videoBuilder->getVideo());
-                }
-                return true;
+            foreach ($videos as $video) {
+                dump($video['video']);
+                $str = $video['video'];
+
+                $vidType = $this->findUrl->SearchVideoType($str);
+                $vidId = $this->findUrl->FindVideoId($str, $vidType);
+
+                $videos = new Video($vidId, $vidType);
+
+                $videos->setTrick($trick);
+
+                $tabVid[] = $videos;
+                //dump($tabVid);
+                //die();
+            }
+
+            $trick->setImage($tabImg);
+            $trick->setVideo($tabVid);
+
+            $this->trickRepository->save($trick);
+
+            return true;
         }
         return false;
     }

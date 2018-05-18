@@ -32,7 +32,6 @@ interface AddTrickTypeHandlerInterface
         SlugInterface $slug,
         TrickBuilderInterface $trickBuilder,
         TrickRepositoryInterface $trickRepository,
-        UniqueTrickNameInterface $uniqueTrickName,
         ValidatorInterface $validator,
         VideoBuilderInterface $videoBuilder
     );

@@ -4,8 +4,5 @@ App\Domain\DTO\NewTrickDTO:
             - NotBlank: { message: Le champ " Name " ne peut pas être vide., groups: [creation] }
         description:
             - NotBlank: {  message: Le champ " Description " ne peut pas être vide., groups: [creation] }
-        grp:
-            - Choice:
-                choices: { [Rotations, Grab, Slides], groups: [creation] }
         image:
             - NotBlank: { message: Le trick doit comporter au moins une " Image "., groups: [creation] }

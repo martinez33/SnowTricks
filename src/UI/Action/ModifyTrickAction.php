@@ -8,6 +8,7 @@
 
 namespace App\UI\Action;
 
+use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\ModifyTrickActionInterface;
 use App\UI\Form\Handler\Interfaces\ModifyTrickTypeHandlerInterface;
 use App\UI\Form\Handler\ModifyTrickTypeHandler;
@@ -15,6 +16,7 @@ use App\UI\Form\Type\Interfaces\ModifyTrickTypeInterface;
 use App\UI\Form\Type\ModifyTrickType;
 use App\UI\Responder\Interfaces\ModifyTrickResponderInterface;
 use App\UI\Responder\ModifyTrickResponder;
+use Psr\Log\InvalidArgumentException;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,7 +42,10 @@ class ModifyTrickAction implements ModifyTrickActionInterface
      * @var ModifyTrickTypeHandler
      */
     private $modifyTrickTypeHandler;
-
+    /**
+     * @var TrickRepositoryInterface
+     */
+    private $trickRepository;
     /**
      * ModifyTrickAction constructor.
      *
@@ -49,10 +54,12 @@ class ModifyTrickAction implements ModifyTrickActionInterface
      */
     public function __construct(
         FormFactoryInterface $formFactory,
-        ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler
+        ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler,
+        TrickRepositoryInterface $trickRepository
     ) {
         $this->formFactory = $formFactory;
         $this->modifyTrickTypeHandler = $modifyTrickTypeHandler;
+        $this->trickRepository = $trickRepository;
     }
 
     /**
@@ -65,7 +72,17 @@ class ModifyTrickAction implements ModifyTrickActionInterface
      */
     public function __invoke(ModifyTrickResponderInterface $responder, Request $request)
     {
-        $modifyTrickType = $this->formFactory->create(ModifyTrickType::class)->handleRequest($request);
+
+        if (!$trick = $this->trickRepository->getTrickBySlug($request->attributes->get('slug'))){
+
+            throw new \InvalidArgumentException(sprintf("")) ;
+
+
+        }
+
+        //recup objt et hydrate DTO
+        //passe les donnéees DTO au form via create ModifyTrickType::class, "datas"
+        $modifyTrickType = $this->formFactory->create(ModifyTrickType::class )->handleRequest($request);
 
         if ($this->modifyTrickTypeHandler->handle($modifyTrickType, $request)) {
             return $responder(true);

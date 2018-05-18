@@ -8,6 +8,7 @@
 
 namespace App\UI\Action\Interfaces;
 
+use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Form\Handler\Interfaces\ModifyTrickTypeHandlerInterface;
 use App\UI\Responder\Interfaces\ModifyTrickResponderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -17,7 +18,8 @@ interface ModifyTrickActionInterface
 {
     public function __construct(
         FormFactoryInterface $formFactory,
-        ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler
+        ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler,
+        TrickRepositoryInterface $trickRepository
     );
 
     public function __invoke(ModifyTrickResponderInterface $responder, Request $request);

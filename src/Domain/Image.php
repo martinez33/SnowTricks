@@ -160,5 +160,7 @@ class Image implements ImageInterface
     public function setTrick(TrickInterface $trick)
     {
         $this->trick = $trick;
+
+        return $this;
     }
 }
