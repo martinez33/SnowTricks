@@ -8,6 +8,8 @@
 
 namespace App\Domain;
 
+use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
+use App\Domain\DTO\NewTrickDTO;
 use App\Domain\Interfaces\ImageInterface;
 use App\Domain\Interfaces\TrickInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -86,23 +88,20 @@ class Trick implements TrickInterface
      * @param string $slug
      * @param int|null $updated
      */
-    public function __construct(
-        string $description,
-        string $grp,
-        string $name,
-        string $slug,
-        int $updated = null
-    ) {
+    public function __construct(NewTrickDTOInterface $creationDTO)
+    {
         $this->created = time();
-        $this->description = $description;
-        $this->grp = $grp;
+        $this->description = $creationDTO->description;
+        $this->grp = $creationDTO->grp;
         $this->id = Uuid::uuid4();
-        $this->name = $name;
-        $this->slug = $slug;
-        $this->updated = time();
+        $this->name = $creationDTO->name;
+        $this->slug = $creationDTO->slug;
 
         $this->image = new ArrayCollection();
         $this->video = new ArrayCollection();
+
+        $this->addLinkImages($creationDTO->image);
+        $this->addLinkVideos($creationDTO->video);
     }
 
     /**
@@ -185,14 +184,21 @@ class Trick implements TrickInterface
         return $this->video;
     }
 
-    public function update(string $description, string $grp, \ArrayAccess $arrayAccessImg, \ArrayAccess $arrayAccessVid)
+    /**
+     * @param string $description
+     * @param string $grp
+     * @param array $images
+     * @param array $videos
+     */
+    public function update(string $description, string $grp, array $images, array  $videos)
     {
         $this->description = $description;
         $this->grp = $grp;
-        $this->image = $arrayAccessImg;
+        $this->image = new ArrayCollection($images);
         $this->updated = time();
-        $this->video = $arrayAccessVid;
+        $this->video = new ArrayCollection($videos);
     }
+
 
     /**
      * @param ArrayCollection $comment
@@ -219,27 +225,29 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @param \ArrayAccess $image
+     * @param array $images
      */
-    public function setImage(array $image): void
+    public function addLinkImages(array $images): void
     {
-        $this->image = new ArrayCollection($image);
+        foreach ($images as $image) {
+
+            $this->image[] = $image;
+
+            $image->setTrick($this);
+        }
     }
 
     /**
-     * @param int $updated
+     * @param array $videos
      */
-    public function setUpdated(int $updated): void
+    public function addLinkVideos(array $videos): void
     {
-        $this->updated = $updated;
-    }
+        foreach ($videos as $video) {
 
-    /**
-     * @param \ArrayAccess $video
-     */
-    public function setVideo(array $videos): void
-    {
-        $this->video = new ArrayCollection($videos);
+            $this->video[] = $video;
+
+            $video->setTrick($this);
+        }
     }
 
 }

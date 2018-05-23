@@ -47,6 +47,7 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
         return $this->createQueryBuilder('t')
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)
+            ->join('t.image', 'image')
             ->getQuery()
             ->getOneOrNullResult();
     }

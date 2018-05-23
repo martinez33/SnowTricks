@@ -38,10 +38,14 @@ class NewTrickDTO implements NewTrickDTOInterface
     public $image = [];
 
     /**
+     * @var string
+     */
+    public $slug;
+
+    /**
      * @var array
      */
     public $video = [];
-
 
     /**
      * newTrickDTO constructor.

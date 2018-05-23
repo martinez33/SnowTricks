@@ -11,6 +11,8 @@ namespace App\UI\Form\Handler;
 use App\Domain\Builder\Interfaces\ImageBuilderInterface;
 use App\Domain\Builder\Interfaces\TrickBuilderInterface;
 use App\Domain\Builder\Interfaces\VideoBuilderInterface;
+use App\Domain\Image;
+use App\Domain\Video;
 use App\Helper\FileUpLoader;
 use App\Helper\Interfaces\FindUrlInterface;
 use App\Helper\Interfaces\SlugInterface;
@@ -126,54 +128,52 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
 
             $slug = $request->get('slug');
 
-            $temp = $this->trickRepository->getTrickBySlug($slug);
-            $trick = $this->trickRepository->test($temp->getId());
+            $trick = $this->trickRepository->getTrickBySlug($slug);
 
-            $trick->setUpdated(time());
-            $trick->setDescription($form->getData()->description);
-            $trick->setGrp($form->getData()->grp);
 
-            $file = $form->getData()->image; //renvoie du tab image
+            $images = $form->getData()['image'];
 
-            $maxImg = count($file);
 
-            for ($i = 0; $i < $maxImg; $i++) {
-                $pict = $form->getData()->image[$i];
+            foreach ($images as $cle => $tab) {
 
-                $fileName = $this->fileUpLoader->upLoadImg($pict['image']);
+                $fileName = $this->fileUpLoader->upLoadImg($tab['image']);
 
-                $first = false;
 
-                $this->imageBuilder->create(
-                    $request->files->get('add_trick')['image'][$i]['image'] . 'jpg',
-                    $this->imageUploadFolder . $fileName,
-                    $first,
-                    $trick
-                );
+                $res = $request->files->get('modify_trick')['image'];
 
-                $this->trickRepository->save($this->imageBuilder->getImage());
+                foreach ($res as $ext) {
+
+                    $images = new Image($ext['image']->getClientOriginalExtension(),
+                        $this->imageUploadFolder . $fileName);
+                }
+
+                $images->setTrick($trick);
+
+                $tabImg[] = $images;
             }
 
-            $video = $form->getData()->video;
-            $maxVideo = count($video);
+            $videos = $form->getData()['video'];
 
-            for ($i = 0; $i < $maxVideo; $i++) {
+            foreach ($videos as $video) {
 
-                $str = $form->getData()->video[$i]['video'];
+                dump($video['video']);
+                $str = $video['video'];
+
                 $vidType = $this->findUrl->SearchVideoType($str);
                 $vidId = $this->findUrl->FindVideoId($str, $vidType);
 
-                $this->videoBuilder->create(
-                    $vidId,
-                    $vidType,
-                    $trick
-                );
+                $videos = new Video($vidId, $vidType);
 
-                $this->trickRepository->save($this->videoBuilder->getVideo());
+                $videos->setTrick($trick);
+
+                $tabVid[] = $videos;
+                dump($tabVid);
             }
 
+            $trick->update($form->getData()['description'], $form->getData()['grp'], $tabImg, $tabVid);
+
             $this->trickRepository->update();
-           // $this->trickRepository->save($trick);
+            //$this->trickRepository->save($trick);
 
             return true;
         }

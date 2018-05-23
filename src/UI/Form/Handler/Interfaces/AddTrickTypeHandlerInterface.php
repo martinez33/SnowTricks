@@ -24,16 +24,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 interface AddTrickTypeHandlerInterface
 {
     public function __construct(
-        FileUpLoader $fileUpLoader,
-        FindUrlInterface $findUrl,
-        ImageBuilderInterface $imageBuilder,
-        string $imageUploadFolder,
         SessionInterface $session,
-        SlugInterface $slug,
-        TrickBuilderInterface $trickBuilder,
         TrickRepositoryInterface $trickRepository,
-        ValidatorInterface $validator,
-        VideoBuilderInterface $videoBuilder
+        ValidatorInterface $validator
     );
 
     public function handle(FormInterface $form, Request $request): bool;

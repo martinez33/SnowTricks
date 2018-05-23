@@ -13,7 +13,7 @@
                 {% endfor %}
             {% endif %}
             </ul>
-            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+            {{ form_start(form) }}
             {{ form_row(form.name) }}
             {{ form_widget(form.name) }}
             {{ form_errors(form.name)}}

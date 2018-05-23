@@ -8,6 +8,7 @@
 
 namespace App\Domain\Interfaces;
 
+use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
 use App\Domain\Video;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,94 +16,107 @@ use Doctrine\Common\Collections\Collection;
 interface TrickInterface
 {
     /**
-     * Trick constructor.
+     * TrickInterface constructor.
      *
-     * @param string $description
-     * @param string $grp
-     * @param string $name
-     * @param string $slug
-     * @param int|null $updated
+     * @param NewTrickDTOInterface $creationDTO
      */
-    public function __construct(
-        string $description,
-        string $grp,
-        string $name,
-        string $slug,
-        int $updated = null
-    );
+    public function __construct(NewTrickDTOInterface $creationDTO);
+
 
     /**
      * @return ArrayCollection
      */
-    public function getComment();
+    public function getComment(): ArrayCollection;
+
 
     /**
      * @return int
      */
-    public function getCreated();
+    public function getCreated(): int;
+
 
     /**
      * @return string
      */
-    public function getDescription();
+    public function getDescription(): string;
 
     /**
      * @return string
      */
-    public function getGrp();
+    public function getGrp(): string;
+
 
     /**
      * @return string
      */
-    public function getId();
+    public function getId(): string;
+
 
     /**
-     * @return \ArrayAccess
+     * @return Collection
      */
-    public function getImage();
+    public function getImage(): Collection;
 
-    /**
-     * @return string
-     */
-    public function getName();
 
     /**
      * @return string
      */
-    public function getSlug();
+    public function getName(): string;
+
+    /**
+     * @return string
+     */
+    public function getSlug(): string;
+
 
     /**
      * @return int
      */
-    public function getUpdated();
+    public function getUpdated(): int;
+
 
     /**
-     * @return Collection|video
+     * @return Collection
      */
     public function getVideo(): Collection;
 
 
-    public function update(string $description, string $grp, \ArrayAccess $arrayAccessImg, \ArrayAccess $arrayAccessVid);
+    /**
+     * @param string $description
+     * @param string $grp
+     * @param array $images
+     * @param array $videos
+     */
+    public function update(string $description, string $grp, array $images, array  $videos);
 
 
     /**
      * @param ArrayCollection $comment
      */
-    public function setComment(ArrayCollection $comment);
+    public function setComment(ArrayCollection $comment): void;
+
 
     /**
-     * @param \ArrayAccess $image
+     * @param string $description
      */
-    public function setImage(array $image);
+    public function setDescription(string $description): void;
+
 
     /**
-     * @param int $updated
+     * @param string $grp
      */
-    public function setUpdated(int $updated);
+    public function setGrp(string $grp): void;
+
 
     /**
-     * @param \ArrayAccess $video
+     * @param array $images
      */
-    //public function setVideo(\ArrayAccess $video);
+    public function addLinkImages(array $images): void;
+
+    /**
+     * @param array $videos
+     */
+    public function addLinkVideos(array $videos): void;
+
 
 }

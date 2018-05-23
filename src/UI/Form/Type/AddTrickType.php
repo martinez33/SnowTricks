@@ -8,6 +8,7 @@
 
 namespace App\UI\Form\Type;
 
+use App\Application\Subscriber\NewTrickDTOSubscriber;
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
 use App\Domain\DTO\NewTrickDTO;
 use App\Domain\Interfaces\TrickInterface;
@@ -38,13 +39,25 @@ use Symfony\Component\Validator\Constraints\NotBlankValidator;
 class AddTrickType extends AbstractType implements AddTrickTypeInterface
 {
     /**
+     * @var NewTrickDTOSubscriber
+     */
+    private $newTrickDTOSubscriber;
+
+    public function __construct(NewTrickDTOSubscriber $newTrickDTOSubscriber)
+    {
+        $this->newTrickDTOSubscriber = $newTrickDTOSubscriber;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, array(
+                'required' => true
+            ))
             ->add('description', TextareaType::class)
             ->add('grp', ChoiceType::class, array(
                 'choices' => array(
@@ -54,15 +67,16 @@ class AddTrickType extends AbstractType implements AddTrickTypeInterface
                 ),
             ))
             ->add('image', CollectionType::class, array(
-                'entry_type' => ImageType::class,
+                'entry_type' => FileType::class,
                 'allow_add' => true,
                 'allow_delete' => true
             ))
             ->add('video', CollectionType::class, array(
-                'entry_type' => VideoType::class,
+                'entry_type' => TextType::class,
                 'allow_add' => true,
                 'allow_delete' => true
             ));
+        $builder->addEventSubscriber($this->newTrickDTOSubscriber);
     }
 
     /**

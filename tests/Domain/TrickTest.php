@@ -23,7 +23,7 @@ class TrickTest extends TestCase
     private $comment;
 
     /**
-     * @var ArrayCollection
+     * @var \ArrayAccess
      */
     private $image;
 
@@ -35,7 +35,7 @@ class TrickTest extends TestCase
     protected function setUp()
     {
         $this->comment = $this->createMock(ArrayCollection::class);
-        $this->image = $this->createMock(ArrayCollection::class);
+        $this->image = $this->createMock(\ArrayAccess::class);
         $this->video = $this->createMock(ArrayCollection::class);
     }
 
@@ -44,7 +44,7 @@ class TrickTest extends TestCase
         $trick = new Trick('Grab de la planche', 'Grab', 'Japan Air', 'japan-air');
 
         $trick->setComment($this->comment);
-        $trick->setImage($this->image);
+        $trick->setImage($images);
         $trick->setVideo($this->video);
 
         $this->assertInstanceOf(UuidInterface::class, $trick->getId());

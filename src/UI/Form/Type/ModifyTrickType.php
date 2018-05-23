@@ -9,7 +9,9 @@
 namespace App\UI\Form\Type;
 
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
+use App\Domain\DTO\ModifTrickDTO;
 use App\Domain\DTO\NewTrickDTO;
+use App\Domain\Interfaces\TrickInterface;
 use App\UI\Form\Type\Interfaces\ModifyTrickTypeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -49,8 +51,11 @@ class ModifyTrickType extends AbstractType implements ModifyTrickTypeInterface
 
     /**
      * @param OptionsResolver $resolver
-     */
+     *//*
     public function configureOptions(OptionsResolver $resolver)
     {
-    }
+        $resolver->setDefaults([
+            'data_class' => ModifTrickDTO::class,
+        ]);
+    }*/
 }
