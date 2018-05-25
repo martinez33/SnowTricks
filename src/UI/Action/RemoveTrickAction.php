@@ -13,6 +13,7 @@ use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\RemoveTrickActionInterface;
 
 use App\UI\Responder\Interfaces\RemoveTrickResponderInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,6 +31,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class RemoveTrickAction implements RemoveTrickActionInterface
 {
     /**
+     * @var Filesystem
+     */
+    private $fileSystem;
+
+    /**
+     * @var string
+     */
+    private $publicDirectory;
+
+    /**
      * @var TrickRepositoryInterface
      */
     private $trickRepository;
@@ -42,13 +53,23 @@ class RemoveTrickAction implements RemoveTrickActionInterface
     /**
      * RemoveTrickAction constructor.
      *
-     * @param TrickRepositoryInterface $trickRepository
+     * @param Filesystem                $fileSystem
+     * @param string                    $publicDirectory
+     * @param TrickRepositoryInterface  $trickRepository
+     * @param SessionInterface          $session
      */
-    public function __construct(SessionInterface $session, TrickRepositoryInterface $trickRepository)
-    {
-        $this->session = $session;
+    public function __construct(
+        Filesystem $fileSystem,
+        string $publicDirectory,
+        TrickRepositoryInterface $trickRepository,
+        SessionInterface $session
+    ) {
+        $this->fileSystem = $fileSystem;
+        $this->publicDirectory = $publicDirectory;
         $this->trickRepository = $trickRepository;
+        $this->session = $session;
     }
+
 
     /**
      * @param Request $request
@@ -63,13 +84,19 @@ class RemoveTrickAction implements RemoveTrickActionInterface
 
         $trick = $this->trickRepository->getTrickBySlug($request->attributes->get('slug'));
 
+        foreach ($trick->getImage() as $fileNames) {
+
+            $images[] = $this->publicDirectory.$fileNames->getFileName();
+        }
+
+        $this->fileSystem->remove($images);
+
         $result = $this->trickRepository->delTrickBySlug($trick);
 
-       if ($result == null ) {
-            $this->session->getFlashBag()->add('notice', 'Successfull : Trick removed !');
-       } else {
-           $this->session->getFlashBag()->add('notice', 'Error : Remove Impossible !');
-       }
+        $result == null
+            ? $this->session->getFlashBag()->add('notice', 'Successfull : Trick removed !')
+            : $this->session->getFlashBag()->add('notice', 'Error : Remove Impossible !');
+
         return $responder();
     }
 }

@@ -45,8 +45,12 @@ class NewTrickDTOSubscriber implements EventSubscriberInterface
      * @param SlugInterface $slug
      * @param FileUpLoader $fileUploader
      */
-    public function __construct(SlugInterface $slug, FileUpLoader $fileUploader, FindUrlInterface $findUrl, string $imageUploadFolder)
-    {
+    public function __construct(
+        SlugInterface $slug,
+        FileUpLoader $fileUploader,
+        FindUrlInterface $findUrl,
+        string $imageUploadFolder
+    ) {
         $this->slug = $slug;
         $this->fileUploader = $fileUploader;
         $this->findUrl = $findUrl;
