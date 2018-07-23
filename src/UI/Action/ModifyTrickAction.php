@@ -8,7 +8,8 @@
 
 namespace App\UI\Action;
 
-use App\Domain\DTO\NewTrickDTO;
+use App\Domain\DTO\ModifTrickDTO;
+use App\Domain\DTO\TrickDTO;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\ModifyTrickActionInterface;
 use App\UI\Form\Handler\Interfaces\ModifyTrickTypeHandlerInterface;
@@ -88,13 +89,22 @@ class ModifyTrickAction implements ModifyTrickActionInterface
 
         $trick = $this->trickRepository->getTrickBySlug($slug);
 
-       //dump();
-        //die();
+        $modifTrickDTO = new ModifTrickDTO(
+            $trick->getName(),
+            $trick->getDescription(),
+            $trick->getGrp(),
+            $trick->getImage()->toArray(),
+            $trick->getVideo()->toArray()
+        );
+        dump($modifTrickDTO);
+        //die;
 
         //passe les donnéees DTO au form via create ModifyTrickType::class, "datas"
 
-        $modifyTrickType = $this->formFactory->create(ModifyTrickType::class)->handleRequest($request);
+        $modifyTrickType = $this->formFactory->create(ModifyTrickType::class, $modifTrickDTO)->handleRequest($request);
 
+        //dump($modifyTrickType->getData());
+        //die;
         if ($this->modifyTrickTypeHandler->handle($modifyTrickType, $request)) {
             return $responder(true);
         } else {

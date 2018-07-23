@@ -8,16 +8,16 @@
 
 namespace App\Domain\Interfaces;
 
-use App\Domain\Trick;
+
 
 interface ImageInterface
 {
-    public function __construct(
+   /* public function __construct(
         string $ext,
         string $fileName,
         bool $first = false,
         int $updated = null
-    );
+    );*/
 
     /**
      * @return int
@@ -32,7 +32,7 @@ interface ImageInterface
     /**
      * @return string
      */
-    public function getFileName(): string;
+    public function getFilename(): string;
 
     /**
      * @return bool

@@ -9,8 +9,6 @@
 namespace App\Domain;
 
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
-use App\Domain\DTO\NewTrickDTO;
-use App\Domain\Interfaces\ImageInterface;
 use App\Domain\Interfaces\TrickInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -53,7 +51,7 @@ class Trick implements TrickInterface
     private $id;
 
     /**
-     * @var \ArrayAccess
+     * @var ArrayCollection
      */
     private $image;
 
@@ -73,6 +71,11 @@ class Trick implements TrickInterface
      * @var int
      */
     private $updated;
+
+    /**
+     * @var User
+     */
+    private $user;
 
     /**
      * @var \ArrayAccess
@@ -101,8 +104,16 @@ class Trick implements TrickInterface
         $this->video = new ArrayCollection();
 
         $this->addLinkImages($creationDTO->image);
-        $this->addLinkVideos($creationDTO->video);
+       // $this->addLinkVideos($creationDTO->video);
     }
+
+  /*  public function __construct()
+    {
+        $this->created = time();
+        $this->id = Uuid::uuid4();
+        $this->image = new ArrayCollection();
+        $this->video = new ArrayCollection();
+    }*/
 
     /**
      * @return ArrayCollection
@@ -110,6 +121,14 @@ class Trick implements TrickInterface
     public function getComment(): ArrayCollection
     {
         return $this->comment;
+    }
+
+    /**
+     * @param ArrayCollection $comment
+     */
+    public function setComment(ArrayCollection $comment): void
+    {
+        $this->comment = $comment;
     }
 
     /**
@@ -121,19 +140,35 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @return string
+     * @param string $description
      */
-    public function getGrp(): string
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getGrp(): ?string
     {
         return $this->grp;
+    }
+
+    /**
+     * @param string $grp
+     */
+    public function setGrp(string $grp): void
+    {
+        $this->grp = $grp;
     }
 
     /**
@@ -145,20 +180,42 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @return Collection|Image
+     * @return \ArrayAccess
      */
-    public function getImage(): Collection
+    public function getImage(): \ArrayAccess
     {
         return $this->image;
     }
 
     /**
-     * @return string
+     * @param array
      */
-    public function getName(): string
+    public function setImage(array $tabImage)
+    {
+
+        foreach ($tabImage as $image) {
+
+            $this->image[] = $image;
+            $image->setTrick($this);
+        }
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getName(): ?string
     {
         return $this->name;
     }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
 
     /**
      * @return string
@@ -166,6 +223,14 @@ class Trick implements TrickInterface
     public function getSlug(): string
     {
         return $this->slug;
+    }
+
+    /**
+     * @param string $slug
+     */
+    public function setSlug(string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     /**
@@ -185,6 +250,14 @@ class Trick implements TrickInterface
     }
 
     /**
+     * @param \ArrayAccess $video
+     */
+    public function setVideo(array $video): void
+    {
+        $this->video = $video;
+    }
+
+    /**
      * @param string $description
      * @param string $grp
      * @param array $images
@@ -199,43 +272,57 @@ class Trick implements TrickInterface
         $this->video = new ArrayCollection($videos);
     }
 
-
     /**
-     * @param ArrayCollection $comment
+     * @return User
      */
-    public function setComment(ArrayCollection $comment): void
+    public function getUser(): User
     {
-        $this->comment = $comment;
+        return $this->user;
     }
 
     /**
-     * @param string $description
+     * @param User $user
      */
-    public function setDescription(string $description): void
+    public function setUser(User $user): void
     {
-        $this->description = $description;
+        $this->user = $user;
     }
 
-    /**
-     * @param string $grp
-     */
-    public function setGrp(string $grp): void
-    {
-        $this->grp = $grp;
-    }
+
 
     /**
      * @param array $images
      */
-    public function addLinkImages(array $images): void
+    public function addLinkImages(array $images)
     {
+
         foreach ($images as $image) {
 
+            if ($this->image->contains($image)) {
+
+                return;
+            }
             $this->image[] = $image;
 
             $image->setTrick($this);
         }
     }
+
+    /**
+     * @param Image $image
+     */
+    public function addImage(Image $image)
+    {
+        if ($this->image->contains($image)) {
+            return;
+        }
+        $this->image = $image;
+        dump($image);
+        $image->setTrick($this);
+    }
+
+
+
 
     /**
      * @param array $videos

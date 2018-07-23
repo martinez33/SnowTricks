@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Domain\User" >
+        <id name="id" column="id" type="uuid" />
+        <field name="username" column="username" type="string" length="255" nullable="false" unique="true"/>
+        <field name="email" column="email" type="string" length="255" nullable="false" unique="true"/>
+        <field name="password" column="password" type="string" length="100" nullable="false" />
+        <field name="created" column="created" type="integer" length="11" nullable="false"/>
+        <field name="tokenRegistration" column="tokenRegistration" type="string" length="60" nullable="true"/>
+        <field name="roles" column="roles" type="array" nullable="false" unique="false"/>
+        <field name="status" column="status" type="boolean" nullable="true" />
+        <one-to-many field="trick" target-entity="App\Domain\Trick"  mapped-by="user" >
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+    </entity>
+</doctrine-mapping>

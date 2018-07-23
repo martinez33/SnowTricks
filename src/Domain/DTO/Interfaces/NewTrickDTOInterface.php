@@ -9,11 +9,11 @@ namespace App\Domain\DTO\Interfaces;
 
 interface NewTrickDTOInterface
 {
-    public function __construct(
+   /* public function __construct(
         string $name = null,
         string $description = null,
         string $grp,
         array $image,
         array $video
-    );
+    );*/
 }

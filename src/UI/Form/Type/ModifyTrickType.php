@@ -8,10 +8,12 @@
 
 namespace App\UI\Form\Type;
 
+use App\Application\Subscriber\ModifyTrickDTOSubscriber;
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
 use App\Domain\DTO\ModifTrickDTO;
-use App\Domain\DTO\NewTrickDTO;
+use App\Domain\DTO\TrickDTO;
 use App\Domain\Interfaces\TrickInterface;
+use App\Domain\Trick;
 use App\UI\Form\Type\Interfaces\ModifyTrickTypeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,8 +24,23 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ModifyTrickType extends AbstractType implements ModifyTrickTypeInterface
+class ModifyTrickType extends AbstractType
 {
+
+    /**
+     * @var ModifyTrickDTOSubscriber
+     */
+    private $modifyTrickDTOSubscriber;
+
+    /**
+     * ModifyTrickType constructor.
+     * @param $modifyTrickDTOSubscriber
+     */
+    public function __construct(ModifyTrickDTOSubscriber $modifyTrickDTOSubscriber)
+    {
+        $this->modifyTrickDTOSubscriber = $modifyTrickDTOSubscriber;
+    }
+
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -38,24 +55,27 @@ class ModifyTrickType extends AbstractType implements ModifyTrickTypeInterface
                 ),
             ))
             ->add('image', CollectionType::class, array(
+                'image_property' => 'image',
                 'entry_type' => ImageType::class,
                 'allow_add' => true,
-                'allow_delete' => true
+                'allow_delete' => true,
+                'by_reference' => true
             ))
             ->add('video', CollectionType::class, array(
                 'entry_type' => VideoType::class,
                 'allow_add' => true,
                 'allow_delete' => true
-            ));
+            ))
+            ->addEventSubscriber($this->modifyTrickDTOSubscriber);
     }
 
     /**
      * @param OptionsResolver $resolver
-     *//*
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => ModifTrickDTO::class,
         ]);
-    }*/
+    }
 }

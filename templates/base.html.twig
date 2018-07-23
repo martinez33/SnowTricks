@@ -33,10 +33,13 @@
                             <a href="#">Tricks</a>
                         </li>
                         <li>
-                            <a href="#">Sign In</a>
+                            <a href="{{ path('user_registration') }}">Sign In</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="">Sign Up</a>
+                            <a class="nav-link" href="{{ path('login') }}">Log In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('logout') }}">Log Out</a>
                         </li>
                     </ul>
                 </div>

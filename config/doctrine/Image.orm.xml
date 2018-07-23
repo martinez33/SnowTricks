@@ -6,9 +6,10 @@
 
 <entity name="App\Domain\Image" >
     <id name="id" column="id" type="uuid" />
-    <field name="fileName" column="fileName" type="string" length="255" />
-    <field name="ext" column="ext" type="string" length="11" />
-    <field name="created" column="created" type="integer" length="11" />
+    <field name="fileName" column="fileName" type="string" length="255" nullable="false"/>
+    <field name="storageId" column="storageId" type="string" length="255" nullable="false"/>
+    <field name="ext" column="ext" type="string" length="11" nullable="false" />
+    <field name="created" column="created" type="integer" length="11" nullable="false"/>
     <field name="updated" column="updated" type="integer" length="11" nullable="true" />
     <field name="first" column="first" type="boolean" nullable="false" />
     <many-to-one field="trick" target-entity="App\Domain\Trick" inversed-by="image" >

@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class HomeAction.
  *
  * @Route(
- *     path="/{_locale}/",
+ *     path="/",
  *     name="home",
  *     defaults={
  *         "_locale": "%locale%"

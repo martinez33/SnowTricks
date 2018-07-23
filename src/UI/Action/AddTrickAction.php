@@ -64,10 +64,6 @@ class AddTrickAction implements AddTrickActionInterface
     ) {
         $addTrickType = $this->formFactory->create(AddTrickType::class)->handleRequest($request);
 
-
-
-
-
         if ($this->addTrickTypeHandler->handle($addTrickType, $request)) {
             $session->getFlashBag()->add('notice', 'Successfull : Trick created !'); //mettre plutot au niveau du handler
 

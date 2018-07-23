@@ -8,9 +8,12 @@
 
 namespace App\Domain;
 
+use App\Domain\DTO\ImageDTO;
+
 use App\Domain\Interfaces\ImageInterface;
 use App\Domain\Interfaces\TrickInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -38,6 +41,11 @@ class Image implements ImageInterface
     private $fileName;
 
     /**
+     * @var
+     */
+    private $file;
+
+    /**
      * @var bool
      */
     private $first;
@@ -46,6 +54,11 @@ class Image implements ImageInterface
      * @var \Ramsey\Uuid\UuidInterface
      */
     private $id;
+
+    /**
+     * @var string
+     */
+    private $storageId;
 
     /**
      * @var TrickInterface
@@ -68,7 +81,7 @@ class Image implements ImageInterface
      * @param TrickInterface $trick
      * @param int $updated
      */
-    public function __construct(
+   /*public function __construct(
         string $ext,
         string $fileName,
         bool $first = false,
@@ -78,6 +91,13 @@ class Image implements ImageInterface
         $this->ext = $ext;
         $this->fileName = $fileName;
         $this->first = $first;
+        $this->id = Uuid::uuid4();
+        $this->updated = time();
+    }*/
+
+    public function __construct()
+    {
+        $this->created = time();
         $this->id = Uuid::uuid4();
         $this->updated = time();
     }
@@ -96,6 +116,22 @@ class Image implements ImageInterface
     public function getExt(): string
     {
         return $this->ext;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param File $file
+     */
+    public function setFile(File $file)
+    {
+        $this->file = $file;
     }
 
     /**
@@ -123,6 +159,14 @@ class Image implements ImageInterface
     }
 
     /**
+     * @return string
+     */
+    public function getStorageId(): string
+    {
+        return $this->storageId;
+    }
+
+    /**
      * @return TrickInterface
      */
     public function getTrick(): TrickInterface
@@ -139,11 +183,35 @@ class Image implements ImageInterface
     }
 
     /**
+     * @param string $ext
+     */
+    public function setExt(string $ext): void
+    {
+        $this->ext = $ext;
+    }
+
+    /**
+     * @param string $fileName
+     */
+    public function setFileName(string $fileName): void
+    {
+        $this->fileName = $fileName;
+    }
+
+    /**
      * @param bool $first
      */
     public function setFirst(bool $first): void
     {
         $this->first = $first;
+    }
+
+    /**
+     * @param string $storageId
+     */
+    public function setStorageId(string $storageId): void
+    {
+        $this->storageId = $storageId;
     }
 
     /**

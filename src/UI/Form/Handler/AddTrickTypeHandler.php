@@ -9,11 +9,14 @@
 namespace App\UI\Form\Handler;
 
 
+use App\Domain\Image;
 use App\Domain\Trick;
 
 
+use App\Helper\FileUpLoader;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
+use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -37,26 +40,42 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
     private $trickRepository;
 
     /**
+     * @var FileUpLoader
+     */
+    private $fileUploader;
+
+    /**
+     * @var string
+     */
+    private $imageUploadFolder;
+
+    /**
      * @var ValidatorInterface
      */
     private $validator;
 
     /**
      * AddTrickTypeHandler constructor.
-     *
      * @param SessionInterface $session
      * @param TrickRepositoryInterface $trickRepository
+     * @param FileUpLoader $fileUploader
+     * @param string $imageUploadFolder
      * @param ValidatorInterface $validator
      */
     public function __construct(
         SessionInterface $session,
         TrickRepositoryInterface $trickRepository,
+        FileUpLoader $fileUploader,
+        string $imageUploadFolder,
         ValidatorInterface $validator
     ) {
         $this->session = $session;
         $this->trickRepository = $trickRepository;
+        $this->fileUploader = $fileUploader;
+        $this->imageUploadFolder = $imageUploadFolder;
         $this->validator = $validator;
     }
+
 
     /**
      * @param FormInterface $form
@@ -64,7 +83,34 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
      */
     public function handle(FormInterface $form, Request $request): bool
     {
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            dump($form['image']->getData());
+//die;
+            /*foreach ($form['image']->getData() as $imgDTO) {
+                dump($imgDTO->getFile());
+                $res = $imgDTO->getFile();
+                dump($res->getFilename());
+
+            }*/
+            //die;
+
+            foreach ($form['image']->getData() as $key => $img) {
+
+                $file = $img->getFile();
+
+                $filename = $this->fileUploader->upLoadImg($file);
+
+                //dump($file);
+                //dump($filename);
+
+                $img->setFilename($filename);
+                $img->setExt($file->getClientOriginalExtension());
+                $img->setFileName($this->imageUploadFolder.$filename);
+                $img->setStorageId($filename);
+                $key === 0 ? $img->setFirst(true) : $img->setFirst(false);
+            }
 
             $errors = $this->validator->validate($form->getData(), null, array('creation'));
 
@@ -79,8 +125,11 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
                 return false;
             }
 
-            $trick = new Trick($form->getData()); //hydratation du trick avec les données du DTO
-
+            //$trick = new Trick($form->getData()); //hydratation du trick avec les données du DTO
+dump($form->getData());
+            $trick =  new Trick($form->getData());
+            dump($trick);
+            //die;
             $errorName = $this->validator->validate($trick, null, array('creation'));
             if(count($errorName) > 0) {
                 $max = count($errorName);
@@ -93,8 +142,6 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
                 return false;
             }
 
-           /* dump($form->getData());
-            die();*/
             $this->trickRepository->save($trick);
 
             return true;

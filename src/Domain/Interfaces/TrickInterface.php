@@ -9,7 +9,7 @@
 namespace App\Domain\Interfaces;
 
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
-use App\Domain\Video;
+use App\Domain\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
@@ -22,29 +22,43 @@ interface TrickInterface
      */
     public function __construct(NewTrickDTOInterface $creationDTO);
 
+    //public function __construct();
+
 
     /**
      * @return ArrayCollection
      */
     public function getComment(): ArrayCollection;
 
+    /**
+     * @param ArrayCollection $comment
+     */
+    public function setComment(ArrayCollection $comment): void;
 
     /**
      * @return int
      */
     public function getCreated(): int;
 
+    /**
+     * @return null|string
+     */
+    public function getDescription(): ?string;
 
     /**
-     * @return string
+     * @param string $description
      */
-    public function getDescription(): string;
+    public function setDescription(string $description): void;
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getGrp(): string;
+    public function getGrp(): ?string;
 
+    /**
+     * @param string $grp
+     */
+    public function setGrp(string $grp): void;
 
     /**
      * @return string
@@ -55,13 +69,13 @@ interface TrickInterface
     /**
      * @return Collection
      */
-    public function getImage(): Collection;
+    public function getImage(): \ArrayAccess;
 
 
     /**
      * @return string
      */
-    public function getName(): string;
+    public function getName(): ?string;
 
     /**
      * @return string
@@ -90,28 +104,17 @@ interface TrickInterface
     public function update(string $description, string $grp, array $images, array  $videos);
 
 
-    /**
-     * @param ArrayCollection $comment
-     */
-    public function setComment(ArrayCollection $comment): void;
 
-
-    /**
-     * @param string $description
-     */
-    public function setDescription(string $description): void;
-
-
-    /**
-     * @param string $grp
-     */
-    public function setGrp(string $grp): void;
 
 
     /**
      * @param array $images
      */
-    public function addLinkImages(array $images): void;
+    //public function addLinkImages(array $images);
+
+    public function addImage(Image $image);
+
+    public function setImage(array $image); //\ArrayAccess $image
 
     /**
      * @param array $videos

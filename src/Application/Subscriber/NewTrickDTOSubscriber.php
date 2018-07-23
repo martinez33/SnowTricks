@@ -24,6 +24,7 @@ class NewTrickDTOSubscriber implements EventSubscriberInterface
      * @var SlugInterface
      */
     private $slug;
+
     /**
      * @var FileUpLoader
      */
@@ -61,29 +62,34 @@ class NewTrickDTOSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-          FormEvents::SUBMIT => "onNewTrickDTOSubmission" //appel de la method lorsque le form est soumis
+            FormEvents::SUBMIT => "onNewTrickDTOSubmission",
+            FormEvents::POST_SUBMIT => "test"
+
         ];
     }
 
     public function onNewTrickDTOSubmission(FormEvent $event)
     {
-        $images = [];
-        $event->getData()->slug = $this->slug->slug($event->getData()->name);
 
-        foreach ($event->getData()->image as $key => $image) {
+        $slug = $this->slug->slug($event->getData()->getName());
 
-            $fileName = $this->fileUploader->upLoadImg($image);
-            $images[] = new Image(
-                $image->getClientOriginalExtension(),
-                $this->imageUploadFolder.$fileName,
-                $key === 0 ? true : false
-            );
-        }
-        $event->getData()->image = $images;
+        $event->getData()->setSlug($slug);
 
 
-        $videos = [];
 
+
+//die;
+        //dump($event->getData()->getSlug());
+
+        /*if (!array_key_exists('image', $event->getData())) {
+            dump('ok');
+           /* $file['file'] = new File($this->pictureTrickDefault);
+            $picture[] = $file;
+            $trick['image'] = $picture;
+            $event->setData($trick);
+        }*/
+
+        /*$videos = [];
         foreach ($event->getData()->video as $video) {
 
 
@@ -92,6 +98,15 @@ class NewTrickDTOSubscriber implements EventSubscriberInterface
 
             $videos[] = new Video($vidId, $vidType);
         }
-        $event->getData()->video = $videos;
+        $event->getData()->video = $videos;*/
+    }
+
+
+    public function test(FormEvent $event)
+    {
+
+        dump($event->getData());
+        //die;
+
     }
 }
