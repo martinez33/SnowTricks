@@ -79,16 +79,16 @@ class AddTrickType extends AbstractType implements AddTrickTypeInterface
             'validation_groups' => array('creationDTO'),
             'data_class' => TrickDTO::class,
             /*'empty_data' => /**
-             * @param FormInterface $form
+             * @param FormInterface $Form
              * @return TrickDTO
              */
-               /* function (FormInterface $form) {
+               /* function (FormInterface $Form) {
                     return new TrickDTO(
-                    $form->get('name')->getData(),
-                    $form->get('description')->getData(),
-                    $form->get('grp')->getData(),
-                    $form->get('image')->getData(),
-                    $form->get('video')->getData()
+                    $Form->get('name')->getData(),
+                    $Form->get('description')->getData(),
+                    $Form->get('grp')->getData(),
+                    $Form->get('image')->getData(),
+                    $Form->get('video')->getData()
                 );
                 }*/
         ]);

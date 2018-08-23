@@ -65,10 +65,6 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
      * @var TrickRepositoryInterface
      */
     private $trickRepository;
-    /**
-     * @var UniqueTrickNameInterface
-     */
-    private $uniqueTrickName;
 
     /**
      * @var VideoBuilderInterface
@@ -101,7 +97,6 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
         TrickBuilderInterface $trickBuilder,
         ImageRepositoryInterface $imageRepository,
         TrickRepositoryInterface $trickRepository,
-        UniqueTrickNameInterface $uniqueTrickName,
         VideoBuilderInterface $videoBuilder
     ) {
         $this->fileUpLoader = $fileUpLoader;
@@ -113,7 +108,6 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
         $this->trickBuilder = $trickBuilder;
         $this->trickRepository = $trickRepository;
         $this->imageRepository = $imageRepository;
-        $this->uniqueTrickName = $uniqueTrickName;
         $this->videoBuilder = $videoBuilder;
     }
 

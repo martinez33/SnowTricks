@@ -45,7 +45,7 @@ class TrickDetailsResponder implements TrickDetailsResponderInterface
         return new Response(
             $this->twig
                 ->render(
-                'TrickDetails.html.twig',
+                'trickDetails.html.twig',
                     [
                     'trick' => $trick,
                 ]

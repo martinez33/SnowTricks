@@ -8,6 +8,7 @@
 
 namespace App\UI\Form\Type;
 
+use App\Application\Subscriber\ModifyTrickDTOSubscriber;
 use App\Domain\DTO\ImageDTO;
 use App\Domain\Image;
 use App\UI\Form\Type\Interfaces\ImageTypeInterface;
@@ -19,21 +20,34 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImageType extends AbstractType
 {
+    /**
+     * @var ModifyTrickDTOSubscriber
+     */
+    private $modifyTrickDTOSubscriber;
 
+    public function __construct(ModifyTrickDTOSubscriber $modifyTrickDTOSubscriber)
+    {
+        $this->modifyTrickDTOSubscriber = $modifyTrickDTOSubscriber;
+    }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('file', FileType::class);
+            ->add('file',FileType::class, array('image_property' => 'filename'));
+            //->addEventSubscriber($this->modifyTrickDTOSubscriber);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Image::class,
-            /*'empty_data' => function (FormInterface $form) {
+            /*'empty_data' => function (FormInterface $Form) {
                     return new Image(
-                        $form->get('file')->getData()
+                        $Form->get('file')->getData()
                     );
                 }*/
         ]);

@@ -26,5 +26,11 @@
                 <cascade-all/>
             </cascade>
         </one-to-many>
+
+        <many-to-one field="user" target-entity="App\Domain\User" inversed-by="trick" >
+            <cascade>
+
+            </cascade>
+        </many-to-one>
     </entity>
 </doctrine-mapping>

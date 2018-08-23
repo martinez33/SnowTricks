@@ -24,11 +24,6 @@ class UserLoginResponder
     private $twig;
 
     /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    /**
      * RemoveTrickResponder constructor.
      *
      * @param Environment $twig
@@ -37,7 +32,6 @@ class UserLoginResponder
     public function __construct(Environment $twig, UrlGeneratorInterface $urlGenerator)
     {
         $this->twig = $twig;
-        $this->urlGenerator = $urlGenerator;
     }
 
     /**
@@ -46,11 +40,9 @@ class UserLoginResponder
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function __invoke(FormInterface $loginType = null, bool $redirect = false)
+    public function __invoke(FormInterface $loginType = null)
     {
-        $redirect
-            ? $response = new RedirectResponse($this->urlGenerator->generate('home'))
-            : $response = new Response(
+            $response = new Response(
             $this->twig->render(
                 'Login.html.twig',
                 [

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Registration{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="modal-dialog">
+                <div class="loginmodal-container">
+                    <h1>Registration</h1><br>
+
+                    {{ form_start(form) }}
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.password) }}
+
+                    <button type="submit" class="login loginmodal-submit">Create An Account</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+{#{{ form_start(form) }}
+            {{ form_row(form.username) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.password) }}
+
+            <button type="submit">Envoyer</button>
+            {{ form_end(form) }}#}
+        </div>
+    </div>
+
+{% endblock %}

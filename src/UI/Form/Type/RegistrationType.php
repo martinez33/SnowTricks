@@ -11,6 +11,7 @@ namespace App\UI\Form\Type;
 
 
 use App\Domain\User;
+use phpDocumentor\Reflection\Types\Array_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -26,24 +27,21 @@ class RegistrationType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, array(
-                'label' => 'Nom d\'utilisateur'
+                'label' => 'Nom d\'utilisateur',
+                'attr' => array(
+                    'minLength' => 5,
+                    'maxLength' => 30
+                )
             ))
             ->add('email', EmailType::class)
             ->add('password', RepeatedType::class,
                 array(
                     'type' => PasswordType::class,
                     'first_options' => array('label' => 'Mot de passe'),
-                    'second_options' => array('label' => 'Confirmer le mot de passe')
+                    'second_options' => array('label' => 'Confirmez le mot de passe'),
+                    'attr' => array('pattern' => '')
+                        //'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/'
+
                 ));
     }
-
-    /**
-     * @param OptionsResolver $resolver
-     */
-   /* public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-    }*/
 }

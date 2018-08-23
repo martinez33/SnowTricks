@@ -13,6 +13,7 @@ use App\Domain\Builder\Interfaces\UserBuilderInterface;
 use App\Domain\Builder\UserBuilder;
 use App\Domain\User;
 use App\Event\UserRegistrationEvent;
+use App\Helper\EmailGenerator;
 use App\Helper\TokenGenerator;
 use App\Repository\UserRepository;
 use App\UI\Form\Type\RegistrationType;
@@ -22,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Twig\Environment;
 
 class RegistrationTypeHandler
 {
@@ -61,6 +63,21 @@ class RegistrationTypeHandler
     private $tokenGenerator;
 
     /**
+     * @var EmailGenerator
+     */
+    private $emailGenerator;
+
+    /**
+     * @var \Swift_Mailer
+     */
+    private $mailer;
+
+    /**
+     * @var Environment
+     */
+    private $twig;
+
+    /**
      * RegistrationTypeHandler constructor.
      * @param SessionInterface $session
      * @param UserRepository $userRepository
@@ -69,6 +86,9 @@ class RegistrationTypeHandler
      * @param ValidatorInterface $validator
      * @param EventDispatcherInterface $eventDispatcher
      * @param TokenGenerator $tokenGenerator
+     * @param EmailGenerator $emailGenerator
+     * @param \Swift_Mailer $mailer
+     * @param Environment $twig
      */
     public function __construct(
         SessionInterface $session,
@@ -77,7 +97,10 @@ class RegistrationTypeHandler
         UserBuilder $userBuilder,
         ValidatorInterface $validator,
         EventDispatcherInterface $eventDispatcher,
-        TokenGenerator $tokenGenerator
+        TokenGenerator $tokenGenerator,
+        EmailGenerator $emailGenerator,
+        \Swift_Mailer $mailer,
+        Environment $twig
     ) {
         $this->session = $session;
         $this->userRepository = $userRepository;
@@ -86,24 +109,26 @@ class RegistrationTypeHandler
         $this->validator = $validator;
         $this->eventDispatcher = $eventDispatcher;
         $this->tokenGenerator = $tokenGenerator;
+        $this->emailGenerator = $emailGenerator;
+        $this->mailer = $mailer;
+        $this->twig = $twig;
     }
 
 
     /**
      * @param FormInterface $form
      * @param Request $request
-     * @param User $user
      * @return bool
      * @throws \Doctrine\ORM\ORMException
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
     public function handle(FormInterface $form, Request $request): bool
     {
         if ($form->isSubmitted() && $form->isValid()) {
 
-            dump($form->get('username')->getData());
-
             $encoder = $this->encoderFactory->getEncoder(User::class);
-
 
             $this->userBuilder->createUserRegistration(
                 $form->get('username')->getData(),
@@ -115,34 +140,20 @@ class RegistrationTypeHandler
             $user = $this->userBuilder->getUser();
             $cle = $this->tokenGenerator->tokenMaker(60);
 
-            $roles = 'ROLE_ADMIN';
+            //$roles = 'ROLE_ADMIN';
 
-            $user->setRoles($roles);
+            //$user->setRoles($roles);
             $user->setTokenRegistration($cle);
+            $user->setTokenGeneratedTime(time());
 
-            dump($user);
-            //die;
-           /* $event = new UserRegistrationEvent($user);
-            dump($event);
-            $this->eventDispatcher->dispatch(UserRegistrationEvent::NAME, $event);
+            $emailView = 'emails/emailRegistration.html.twig';
 
-            /*$errors = $this->validator->validate($form->getData(), null, array('creation'));
+            $message = $this->emailGenerator->emailMaker($user->getUsername(), $user->getEmail(), $cle, $emailView);
 
-            if(count($errors) > 0) {
-                $max = count($errors);
+            $this->emailGenerator->sendEmail($message);
+            //$this->mailer->send($message);
 
-                for ($i=0; $i<$max; $i++) {
-
-                    $this->session->getFlashBag()->add('form_notice', $errors[$i]->getMessage());
-                }
-
-                return false;
-            }*/
-
-            /*$user = $form->getData(); //hydratation du trick avec les données du DTO
-            dump($user);*/
             $this->userRepository->save($user);
-
 
             return true;
         }

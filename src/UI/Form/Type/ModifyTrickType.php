@@ -9,12 +9,7 @@
 namespace App\UI\Form\Type;
 
 use App\Application\Subscriber\ModifyTrickDTOSubscriber;
-use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
 use App\Domain\DTO\ModifTrickDTO;
-use App\Domain\DTO\TrickDTO;
-use App\Domain\Interfaces\TrickInterface;
-use App\Domain\Trick;
-use App\UI\Form\Type\Interfaces\ModifyTrickTypeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -55,9 +50,8 @@ class ModifyTrickType extends AbstractType
                 ),
             ))
             ->add('image', CollectionType::class, array(
-                'image_property' => 'image',
                 'entry_type' => ImageType::class,
-                'allow_add' => true,
+                'allow_add' => false,
                 'allow_delete' => true,
                 'by_reference' => true
             ))

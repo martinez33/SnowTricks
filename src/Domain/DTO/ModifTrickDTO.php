@@ -56,6 +56,8 @@ class ModifTrickDTO implements ModifTrickDTOInterface
         $this->name = $name;
         $this->description = $description;
         $this->grp = $grp;
+        //dump($this->image);
+        //die;
         $this->image = $image;
         $this->video = $video;
     }

@@ -9,6 +9,7 @@
 namespace App\Domain\Interfaces;
 
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
+
 use App\Domain\Image;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -82,18 +83,15 @@ interface TrickInterface
      */
     public function getSlug(): string;
 
-
     /**
      * @return int
      */
     public function getUpdated(): int;
 
-
     /**
      * @return Collection
      */
     public function getVideo(): Collection;
-
 
     /**
      * @param string $description
@@ -102,10 +100,6 @@ interface TrickInterface
      * @param array $videos
      */
     public function update(string $description, string $grp, array $images, array  $videos);
-
-
-
-
 
     /**
      * @param array $images

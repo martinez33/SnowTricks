@@ -83,6 +83,11 @@ class Trick implements TrickInterface
     private $video;
 
     /**
+     * @var bool
+     */
+    private $private;
+
+    /**
      * Trick constructor.
      *
      * @param string $description
@@ -192,10 +197,9 @@ class Trick implements TrickInterface
      */
     public function setImage(array $tabImage)
     {
-
         foreach ($tabImage as $image) {
 
-            $this->image[] = $image;
+            $this->image = $image;
             $image->setTrick($this);
         }
     }
@@ -288,8 +292,6 @@ class Trick implements TrickInterface
         $this->user = $user;
     }
 
-
-
     /**
      * @param array $images
      */
@@ -298,10 +300,10 @@ class Trick implements TrickInterface
 
         foreach ($images as $image) {
 
-            if ($this->image->contains($image)) {
+            /*if ($this->image->contains($image)) {
 
                 return;
-            }
+            }*/
             $this->image[] = $image;
 
             $image->setTrick($this);
@@ -320,9 +322,6 @@ class Trick implements TrickInterface
         dump($image);
         $image->setTrick($this);
     }
-
-
-
 
     /**
      * @param array $videos

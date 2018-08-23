@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+
+
+</head>
+<body>
+    <h3>Merci pour votre inscription {{ name }}!</h3>
+
+    <p>Votre inscription a bien été pris en compte !.</p>
+
+{# example, assuming you have a route named "login" #}
+    <p>Pour finaliser votre inscription veuillez cliquez sur le lien suivant :
+
+    <a href="{{ url('validation_register', {'token': token}) }}"></a>
+
+        Thanks!</p>
+</body>
+</html>
+
+

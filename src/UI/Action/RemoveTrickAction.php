@@ -11,8 +11,8 @@ namespace App\UI\Action;
 use App\Domain\Interfaces\TrickInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\RemoveTrickActionInterface;
-
 use App\UI\Responder\Interfaces\RemoveTrickResponderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -27,6 +27,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *     path="/delete/{slug}",
  *     name="trick_delete"
  *     )
+ *
+ * @Security("is_granted('ROLE_USER')")
  */
 class RemoveTrickAction implements RemoveTrickActionInterface
 {
@@ -90,6 +92,7 @@ class RemoveTrickAction implements RemoveTrickActionInterface
         }
 
         $this->fileSystem->remove($images);
+
 
         $result = $this->trickRepository->delTrickBySlug($trick);
 

@@ -13,10 +13,6 @@ class TokenGenerator
 {
     public function tokenMaker($length)
     {
-        $str = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
-
-        $token = substr(str_shuffle(str_repeat($str, $length)), 0, $length);
-
-        return $token;
+        return md5(substr(str_shuffle((string) uniqid()), 0, $length));
     }
 }

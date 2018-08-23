@@ -10,6 +10,8 @@ namespace App\Domain\Interfaces;
 
 
 
+use App\Domain\Interfaces\TrickInterface;
+
 interface ImageInterface
 {
    /* public function __construct(

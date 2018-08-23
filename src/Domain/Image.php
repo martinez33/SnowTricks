@@ -41,7 +41,7 @@ class Image implements ImageInterface
     private $fileName;
 
     /**
-     * @var
+     * @var \SplFileInfo
      */
     private $file;
 
@@ -119,17 +119,17 @@ class Image implements ImageInterface
     }
 
     /**
-     * @return mixed
+     * @return \SplFileInfo
      */
-    public function getFile()
+    public function getFile(): ?\SplFileInfo
     {
         return $this->file;
     }
 
     /**
-     * @param File $file
+     * @param \SplFileInfo $file
      */
-    public function setFile(File $file)
+    public function setFile(\SplFileInfo $file): void
     {
         $this->file = $file;
     }

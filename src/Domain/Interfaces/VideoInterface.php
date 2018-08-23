@@ -8,6 +8,8 @@
 
 namespace App\Domain\Interfaces;
 
+use App\Domain\Interfaces\TrickInterface;
+
 
 /**
  * Interface VideoInterface

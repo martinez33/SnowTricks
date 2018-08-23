@@ -26,25 +26,22 @@ class ImageTypeExtension extends AbstractTypeExtension
         return FileType::class;
     }
 
-
-
     public function configureOptions(OptionsResolver $resolver)
     {
         // makes it legal for FileType fields to have an image_property option
-        dump($resolver);
-        $resolver->setDefaults(array('image_property'));
+        $resolver->setDefined(array('image_property'));
     }
 
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options)//essayer sur ModifytrickType
     {
 
-        dump($form, $view);
-
-        //die;
         if (isset($options['image_property'])) {
-            // this will be whatever class/entity is bound to your form (e.g. Media)
-            $parentData = $form->getParent()->getData();
+            dump($form, $view);//specifier sur clé vars les files
 
+            // this will be whatever class/entity is bound to your Form (e.g. Media)
+            $parentData = $form->getParent()->getData();
+            dump($parentData);
+            //die;
             $imageUrl = null;
             if (null !== $parentData) {
                 $accessor = PropertyAccess::createPropertyAccessor();
@@ -58,9 +55,9 @@ class ImageTypeExtension extends AbstractTypeExtension
         }
     }
 
-    /*public function finishView(FormView $view, FormInterface $form, array $options)
+    /*public function finishView(FormView $view, FormInterface $Form, array $options)
     {
-        dump($form, $view);
+        dump($Form, $view);
         die;
     }*/
 }

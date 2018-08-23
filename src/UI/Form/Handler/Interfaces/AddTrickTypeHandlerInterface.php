@@ -16,14 +16,25 @@ use App\Helper\Interfaces\FindUrlInterface;
 use App\Helper\Interfaces\SlugInterface;
 use App\Helper\Interfaces\UniqueTrickNameInterface;
 use App\Repository\Interfaces\TrickRepositoryInterface;
+use App\Repository\UserRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 interface AddTrickTypeHandlerInterface
 {
-    public function __construct(SessionInterface $session, TrickRepositoryInterface $trickRepository, FileUpLoader $fileUploader, string $imageUploadFolder, ValidatorInterface $validator);
+    public function __construct(
+        SessionInterface $session,
+
+        TrickRepositoryInterface $trickRepository,
+        UserRepository $userRepository,
+        FileUpLoader $fileUploader,
+        string $imageUploadFolder,
+        ValidatorInterface $validator,
+        TokenStorageInterface $tokenStorage
+    );
 
     public function handle(FormInterface $form, Request $request): bool;
 }

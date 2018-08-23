@@ -10,6 +10,7 @@ namespace App\UI\Action;
 
 use App\Domain\DTO\ModifTrickDTO;
 use App\Domain\DTO\TrickDTO;
+use App\Domain\Factory\ModifyTrickDTOFactory;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Action\Interfaces\ModifyTrickActionInterface;
 use App\UI\Form\Handler\Interfaces\ModifyTrickTypeHandlerInterface;
@@ -41,28 +42,39 @@ class ModifyTrickAction implements ModifyTrickActionInterface
     private $formFactory;
 
     /**
-     * @var ModifyTrickTypeHandler
+     * @var ModifyTrickTypeHandlerInterface
      */
     private $modifyTrickTypeHandler;
+
     /**
      * @var TrickRepositoryInterface
      */
     private $trickRepository;
+
+    /**
+     * @var ModifyTrickDTOFactory
+     */
+    private $modifyTrickDTOFactory;
+
     /**
      * ModifyTrickAction constructor.
-     *
      * @param FormFactoryInterface $formFactory
      * @param ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler
+     * @param TrickRepositoryInterface $trickRepository
+     * @param ModifyTrickDTOFactory $modifyTrickDTOFactory
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler,
-        TrickRepositoryInterface $trickRepository
+        TrickRepositoryInterface $trickRepository,
+        ModifyTrickDTOFactory $modifyTrickDTOFactory
     ) {
         $this->formFactory = $formFactory;
         $this->modifyTrickTypeHandler = $modifyTrickTypeHandler;
         $this->trickRepository = $trickRepository;
+        $this->modifyTrickDTOFactory = $modifyTrickDTOFactory;
     }
+
 
     /**
      * @param ModifyTrickResponder $responder
@@ -89,17 +101,20 @@ class ModifyTrickAction implements ModifyTrickActionInterface
 
         $trick = $this->trickRepository->getTrickBySlug($slug);
 
-        $modifTrickDTO = new ModifTrickDTO(
+       /* $modifTrickDTO = new ModifTrickDTO(
             $trick->getName(),
             $trick->getDescription(),
             $trick->getGrp(),
             $trick->getImage()->toArray(),
             $trick->getVideo()->toArray()
-        );
+        );*/
+
+       $modifTrickDTO = $this->modifyTrickDTOFactory->createFromUI($trick);
+
         dump($modifTrickDTO);
         //die;
 
-        //passe les donnéees DTO au form via create ModifyTrickType::class, "datas"
+        //passe les donnéees DTO au Form via create ModifyTrickType::class, "datas"
 
         $modifyTrickType = $this->formFactory->create(ModifyTrickType::class, $modifTrickDTO)->handleRequest($request);
 

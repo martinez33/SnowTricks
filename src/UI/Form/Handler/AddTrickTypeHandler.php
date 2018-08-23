@@ -15,11 +15,14 @@ use App\Domain\Trick;
 
 use App\Helper\FileUpLoader;
 use App\Repository\Interfaces\TrickRepositoryInterface;
+use App\Repository\UserRepository;
 use App\UI\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -40,6 +43,11 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
     private $trickRepository;
 
     /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    /**
      * @var FileUpLoader
      */
     private $fileUploader;
@@ -55,55 +63,55 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
     private $validator;
 
     /**
+     * @var TokenStorageInterface
+     */
+    private $tokenStorage;
+
+    /**
      * AddTrickTypeHandler constructor.
      * @param SessionInterface $session
      * @param TrickRepositoryInterface $trickRepository
+     * @param UserRepository $userRepository
      * @param FileUpLoader $fileUploader
      * @param string $imageUploadFolder
      * @param ValidatorInterface $validator
+     * @param TokenStorageInterface $tokenStorage
      */
     public function __construct(
         SessionInterface $session,
         TrickRepositoryInterface $trickRepository,
+        UserRepository $userRepository,
         FileUpLoader $fileUploader,
         string $imageUploadFolder,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
+        TokenStorageInterface $tokenStorage
     ) {
         $this->session = $session;
         $this->trickRepository = $trickRepository;
+        $this->userRepository = $userRepository;
         $this->fileUploader = $fileUploader;
         $this->imageUploadFolder = $imageUploadFolder;
         $this->validator = $validator;
+        $this->tokenStorage = $tokenStorage;
     }
 
 
     /**
      * @param FormInterface $form
+     * @param Request $request
      * @return bool
+     * @throws \Doctrine\ORM\ORMException
      */
     public function handle(FormInterface $form, Request $request): bool
     {
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            dump($form['image']->getData());
-//die;
-            /*foreach ($form['image']->getData() as $imgDTO) {
-                dump($imgDTO->getFile());
-                $res = $imgDTO->getFile();
-                dump($res->getFilename());
-
-            }*/
-            //die;
-
             foreach ($form['image']->getData() as $key => $img) {
 
                 $file = $img->getFile();
 
                 $filename = $this->fileUploader->upLoadImg($file);
-
-                //dump($file);
-                //dump($filename);
 
                 $img->setFilename($filename);
                 $img->setExt($file->getClientOriginalExtension());
@@ -125,12 +133,38 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
                 return false;
             }
 
-            //$trick = new Trick($form->getData()); //hydratation du trick avec les données du DTO
-dump($form->getData());
+            $user = $this->tokenStorage->getToken()->getUser();
+
             $trick =  new Trick($form->getData());
-            dump($trick);
+
+            $tab = new ArrayCollection();
+            $tab->add($trick);
+            dump($tab);
+
+            //dump($tricks);
             //die;
+            $user->setTrick($tab);
+
+
+
+           /* $video = $form->getData()->video;
+            $maxVideo = count($video);
+            foreach ($videos as $video) {
+                dump($video['video']);
+                $str = $video['video'];
+
+                $vidType = $this->findUrl->SearchVideoType($str);
+                $vidId = $this->findUrl->FindVideoId($str, $vidType);
+                $videos = new Video($vidId, $vidType);
+                $this->videoBuilder->create(
+                    $vidId,
+                    $vidType,
+                    $this->trickBuilder->getTrick()
+                );
+                $videos->setTrick($trick);
+            }
             $errorName = $this->validator->validate($trick, null, array('creation'));
+
             if(count($errorName) > 0) {
                 $max = count($errorName);
 
@@ -140,10 +174,11 @@ dump($form->getData());
                 }
 
                 return false;
-            }
+            }*/
 
             $this->trickRepository->save($trick);
 
+           // die;
             return true;
         }
         return false;

@@ -52,7 +52,7 @@ class ModifyTrickResponder implements ModifyTrickResponderInterface
             ? $response = new RedirectResponse($this->urlGenerator->generate('home'))
             : $response = new Response(
             $this->twig->render(
-                'ModifyTrick.html.twig',
+                'modifyTrick.html.twig',
                 [
                     'form' => $modifyTrickType->createView()
                 ]

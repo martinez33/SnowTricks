@@ -51,7 +51,7 @@ class AddTrickResponder implements AddTrickResponderInterface
             ? $response = new RedirectResponse($this->urlGenerator->generate('home'))
             : $response = new Response(
                 $this->twig->render(
-                'AddTrick.html.twig',
+                'addTrick.html.twig',
                 [
                     'form' => $addTrickType->createView()
                 ]

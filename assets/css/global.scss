@@ -3,5 +3,9 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 // customize some Bootstrap variables
 $brand-primary: darken(#428bca, 20%);
 
+$color: #000;
+
+body {background: $color}
+
 // the ~ allows you to reference things in node_modules
 @import '~bootstrap-sass/assets/stylesheets/bootstrap';

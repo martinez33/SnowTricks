@@ -9,6 +9,7 @@
 namespace App\Application\Subscriber;
 
 
+use App\UI\Form\Extension\ImageTypeExtension;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -22,13 +23,21 @@ class ModifyTrickDTOSubscriber implements EventSubscriberInterface
     private $targetImgDirectory;
 
     /**
+     * @var ImageTypeExtension
+     */
+    private $imageEtxention;
+
+    /**
      * ModifyTrickDTOSubscriber constructor.
      * @param string $targetImgDirectory
+     * @param ImageTypeExtension $imageEtxention
      */
-    public function __construct(string $targetImgDirectory)
+    public function __construct(string $targetImgDirectory, ImageTypeExtension $imageEtxention)
     {
         $this->targetImgDirectory = $targetImgDirectory;
+        $this->imageEtxention = $imageEtxention;
     }
+
 
     /**
      * @return array
@@ -47,17 +56,18 @@ class ModifyTrickDTOSubscriber implements EventSubscriberInterface
     public function onPreSubmit(FormEvent $event)
     {
         dump($event);
-//die;
 
-        foreach ($event->getForm()['image']->getData() as $key => $img) {
+        //die;
+
+        //foreach ($event->getForm()['image']->getData() as $key => $img) {
 
 
 //$img->setFile();
 //$img = $img[$key];
-            dump($img);
-            $res[$key]['file'] = $img->getFilename();
+           // dump($img);
+           //$res[$key]['file'] = $img->getFilename();
 
-            dump($res);
+           //dump($res);
             /*$file = $imgDTO->getFile();
 
             $filename = $this->fileUploader->upLoadImg($file);
@@ -79,12 +89,12 @@ class ModifyTrickDTOSubscriber implements EventSubscriberInterface
             $tabImg[] = $image;
             //die;*/
 
-        }
+        //}
 
         //$event->getForm()['image']->setData($res);
 
-        dump($event);
-        die;
+        //dump($event);
+        //die;
 
         /*foreach ($event->getData()->getImage() as $image ) {
 

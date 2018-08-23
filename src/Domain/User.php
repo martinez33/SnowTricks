@@ -9,11 +9,14 @@
 namespace App\Domain;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use phpDocumentor\Reflection\Types\Null_;
+use phpDocumentor\Reflection\Types\Nullable;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class User implements UserInterface//, \Serializable, EquatableInterface
+class User implements UserInterface, \Serializable, EquatableInterface
 {
     /**
      * @var \Ramsey\Uuid\UuidInterface
@@ -46,12 +49,22 @@ class User implements UserInterface//, \Serializable, EquatableInterface
     private $status;
 
     /**
-     * @var string
+     * @var string | null
      */
     private $tokenRegistration;
 
     /**
-     * @var Trick
+     * @var string | null
+     */
+    private $tokenResetPassword;
+
+    /**
+     * @var int
+     */
+    private $tokenGeneratedTime;
+
+    /**
+     * @var ArrayCollection
      */
     private $trick;
 
@@ -67,7 +80,11 @@ class User implements UserInterface//, \Serializable, EquatableInterface
 
     /**
      * User constructor.
-     * @param array $role
+     * @param string $username
+     * @param string $email
+     * @param string $password
+     * @param callable $passwordEncoder
+     * @throws \Exception
      */
     public function __construct(
         string $username,
@@ -78,8 +95,24 @@ class User implements UserInterface//, \Serializable, EquatableInterface
         $this->username = $username;
         $this->email = $email;
         $this->password = $passwordEncoder($password, null);
-        $this->created = time();
         $this->id = Uuid::uuid4();
+        $this->trick = new ArrayCollection();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreated(): int
+    {
+        return $this->created;
+    }
+
+    /**
+     * @param int $created
+     */
+    public function setCreated(int $created): void
+    {
+        $this->created = $created;
     }
 
     /**
@@ -131,11 +164,12 @@ class User implements UserInterface//, \Serializable, EquatableInterface
     }
 
     /**
-     * @param mixed $password
+     * @param callable $passwordEncoder
+     * @param string $password
      */
-    public function setPassword(string $password): void
+    public function setPassword(callable $passwordEncoder, string $password): void
     {
-        $this->password = $password;
+        $this->password = $passwordEncoder($password, null);
     }
 
     /**
@@ -158,35 +192,92 @@ class User implements UserInterface//, \Serializable, EquatableInterface
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getTokenRegistration(): string
+    public function getTokenRegistration(): ?string
     {
         return $this->tokenRegistration;
     }
 
     /**
-     * @param string $tokenRegistration
+     * @param null|string $tokenRegistration
      */
-    public function setTokenRegistration(string $tokenRegistration): void
+    public function setTokenRegistration(?string $tokenRegistration): void
     {
         $this->tokenRegistration = $tokenRegistration;
     }
 
     /**
-     * @return Trick
+     * @param null|string $tokenRegistration
+     * @param int $tokenGeneratedTime
+     * @param int|null $created
      */
-    public function getTrick(): Trick
+    public function setRegistration(?string $tokenRegistration, int $tokenGeneratedTime, ?int $created): void
+    {
+        $this->tokenRegistration = $tokenRegistration;
+        $this->tokenGeneratedTime = $tokenGeneratedTime;
+        $this->created = $created;
+    }
+
+    /**
+     * @param null|string $tokenResetPassword
+     * @param int $tokenGeneratedTime
+     */
+    public function setResetPassword(?string $tokenResetPassword, int $tokenGeneratedTime): void
+    {
+        $this->tokenResetPassword = $tokenResetPassword;
+        $this->tokenGeneratedTime = $tokenGeneratedTime;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getTokenResetPassword(): ?string
+    {
+        return $this->tokenResetPassword;
+    }
+
+    /**
+     * @param null|string $tokenResetPassword
+     */
+    public function setTokenResetPassword(?string $tokenResetPassword): void
+    {
+        $this->tokenResetPassword = $tokenResetPassword;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTokenGeneratedTime(): int
+    {
+        return $this->tokenGeneratedTime;
+    }
+
+    /**
+     * @param int $tokenGeneratedTime
+     */
+    public function setTokenGeneratedTime(int $tokenGeneratedTime): void
+    {
+        $this->tokenGeneratedTime = $tokenGeneratedTime;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTrick(): ArrayCollection
     {
         return $this->trick;
     }
 
     /**
-     * @param Trick $trick
+     * @param ArrayCollection $trick
      */
-    public function setTrick(Trick $trick): void
+    public function setTrick(ArrayCollection $collection): void
     {
-        $this->trick = $trick;
+        $this->trick = $collection;
+        foreach ($collection as $trick) {
+            $trick->setUser($this);
+        }
     }
 
     /**
@@ -225,16 +316,16 @@ class User implements UserInterface//, \Serializable, EquatableInterface
     public function serialize()
     {
         return serialize(array(
-            //$this->id,
-            //$this->username,
-            //$this->password,
+            $this->id,
+            $this->username,
+            $this->password
             // see section on salt below
             // $this->salt,
         ));
     }
 
     /** @see \Serializable::unserialize() */
-   /* public function unserialize($serialized)
+    public function unserialize($serialized)
     {
         list (
             $this->id,
@@ -242,8 +333,8 @@ class User implements UserInterface//, \Serializable, EquatableInterface
             $this->password,
             // see section on salt below
             //$this->salt,
-            ) = unserialize($serialized, array('allowed_classes' => false));
-    }*/
+            ) = unserialize($serialized, array('allowed' => false));
+    }
 
 
     public function eraseCredentials()

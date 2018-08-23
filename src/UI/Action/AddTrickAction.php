@@ -12,6 +12,7 @@ use App\UI\Action\Interfaces\AddTrickActionInterface;
 use App\UI\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
 use App\UI\Form\Type\AddTrickType;
 use App\UI\Responder\Interfaces\AddTrickResponderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -21,10 +22,12 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AddTrickAction
  *
  * @package App\UI\Action
+ *
  * @Route(
  *     path="/tricks/creation",
- *     name="trick_creation"
- * )
+ *     name="trick_creation")
+ *
+ * @Security("is_granted('ROLE_USER')")
  */
 class AddTrickAction implements AddTrickActionInterface
 {

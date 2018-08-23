@@ -8,6 +8,7 @@
 
 namespace App\UI\Action\Interfaces;
 
+use App\Domain\Factory\ModifyTrickDTOFactory;
 use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\UI\Form\Handler\Interfaces\ModifyTrickTypeHandlerInterface;
 use App\UI\Responder\Interfaces\ModifyTrickResponderInterface;
@@ -20,7 +21,8 @@ interface ModifyTrickActionInterface
     public function __construct(
         FormFactoryInterface $formFactory,
         ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler,
-        TrickRepositoryInterface $trickRepository
+        TrickRepositoryInterface $trickRepository,
+        ModifyTrickDTOFactory $modifyTrickDTOFactory
     );
 
     public function __invoke(ModifyTrickResponderInterface $responder, Request $request);
