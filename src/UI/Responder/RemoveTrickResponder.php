@@ -17,24 +17,16 @@ use Twig\Environment;
 class RemoveTrickResponder implements RemoveTrickResponderInterface
 {
     /**
-     * @var Environment
-     */
-    private $twig;
-
-    /**
      * @var UrlGeneratorInterface
      */
     private $urlGenerator;
 
     /**
      * RemoveTrickResponder constructor.
-     *
-     * @param Environment $twig
      * @param UrlGeneratorInterface $urlGenerator
      */
-    public function __construct(Environment $twig, UrlGeneratorInterface $urlGenerator)
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
-        $this->twig = $twig;
         $this->urlGenerator = $urlGenerator;
     }
 

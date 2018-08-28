@@ -18,7 +18,6 @@ use App\Repository\Interfaces\TrickRepositoryInterface;
 use App\Repository\UserRepository;
 use App\UI\Form\Handler\Interfaces\AddTrickTypeHandlerInterface;
 use Doctrine\Common\Collections\ArrayCollection;
-use PhpParser\Node\Scalar\MagicConst\File;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

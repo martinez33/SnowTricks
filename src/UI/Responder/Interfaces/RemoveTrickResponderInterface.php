@@ -13,7 +13,7 @@ use Twig\Environment;
 
 interface RemoveTrickResponderInterface
 {
-    public function __construct(Environment $twig, UrlGeneratorInterface $urlGenerator);
+    public function __construct(UrlGeneratorInterface $urlGenerator);
 
     public function __invoke();
 }

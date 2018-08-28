@@ -2,14 +2,14 @@
 /**
  * Created by PhpStorm.
  * User: marti
- * Date: 07/08/2018
- * Time: 00:26
+ * Date: 25/08/2018
+ * Time: 20:34
  */
 
 namespace App\UI\Action\Interfaces;
 
 
-class TokenValidationResetPasswordActionInterface
+interface RemoveImageActionInterface
 {
 
 }

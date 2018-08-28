@@ -20,9 +20,12 @@ use App\UI\Form\Type\ModifyTrickType;
 use App\UI\Responder\Interfaces\ModifyTrickResponderInterface;
 use App\UI\Responder\ModifyTrickResponder;
 use Psr\Log\InvalidArgumentException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 
 /**
  * Class ModifyTrickAction
@@ -33,6 +36,8 @@ use Symfony\Component\Routing\Annotation\Route;
  *     path="/tricks/update/{slug}",
  *     name="trick_modify"
  * )
+ *
+ *
  */
 class ModifyTrickAction implements ModifyTrickActionInterface
 {
@@ -52,6 +57,16 @@ class ModifyTrickAction implements ModifyTrickActionInterface
     private $trickRepository;
 
     /**
+     * @var \Symfony\Component\Security\Core\Security
+     */
+    private $security;
+
+    /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
      * @var ModifyTrickDTOFactory
      */
     private $modifyTrickDTOFactory;
@@ -61,17 +76,23 @@ class ModifyTrickAction implements ModifyTrickActionInterface
      * @param FormFactoryInterface $formFactory
      * @param ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler
      * @param TrickRepositoryInterface $trickRepository
+     * @param \Symfony\Component\Security\Core\Security $security
+     * @param SessionInterface $session
      * @param ModifyTrickDTOFactory $modifyTrickDTOFactory
      */
     public function __construct(
         FormFactoryInterface $formFactory,
         ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler,
         TrickRepositoryInterface $trickRepository,
+        \Symfony\Component\Security\Core\Security $security,
+        SessionInterface $session,
         ModifyTrickDTOFactory $modifyTrickDTOFactory
     ) {
         $this->formFactory = $formFactory;
         $this->modifyTrickTypeHandler = $modifyTrickTypeHandler;
         $this->trickRepository = $trickRepository;
+        $this->security = $security;
+        $this->session = $session;
         $this->modifyTrickDTOFactory = $modifyTrickDTOFactory;
     }
 
@@ -98,20 +119,22 @@ class ModifyTrickAction implements ModifyTrickActionInterface
         //repository sur slug
 
         $slug = $request->get('slug');
+        dump($slug);
+
 
         $trick = $this->trickRepository->getTrickBySlug($slug);
+        dump($trick);
+        //$authorizationChecker = new AuthorizationChecker();
+        //die;
+        /*if (!$this->security->isGranted('ROLE_USER',  $trick)) {
+            dump('Pas d\'authorisation Messir de la fraude !!');
+            //redirection
+        }*/
+            //die;
 
-       /* $modifTrickDTO = new ModifTrickDTO(
-            $trick->getName(),
-            $trick->getDescription(),
-            $trick->getGrp(),
-            $trick->getImage()->toArray(),
-            $trick->getVideo()->toArray()
-        );*/
+        $modifTrickDTO = $this->modifyTrickDTOFactory->createFromUI($trick);
 
-       $modifTrickDTO = $this->modifyTrickDTOFactory->createFromUI($trick);
-
-        dump($modifTrickDTO);
+        //dump($modifTrickDTO);
         //die;
 
         //passe les donnéees DTO au Form via create ModifyTrickType::class, "datas"

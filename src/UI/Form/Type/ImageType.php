@@ -37,7 +37,12 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('file',FileType::class, array('image_property' => 'filename'));
+            ->add('file',FileType::class,
+                [
+                'image_property' => 'filename',
+                'image_id' => 'id'
+                ]
+            );
             //->addEventSubscriber($this->modifyTrickDTOSubscriber);
     }
 

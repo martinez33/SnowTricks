@@ -65,6 +65,7 @@ class AddTrickAction implements AddTrickActionInterface
         Request $request,
         SessionInterface $session
     ) {
+
         $addTrickType = $this->formFactory->create(AddTrickType::class)->handleRequest($request);
 
         if ($this->addTrickTypeHandler->handle($addTrickType, $request)) {

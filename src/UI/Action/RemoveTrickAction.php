@@ -28,7 +28,6 @@ use Symfony\Component\Routing\Annotation\Route;
  *     name="trick_delete"
  *     )
  *
- * @Security("is_granted('ROLE_USER')")
  */
 class RemoveTrickAction implements RemoveTrickActionInterface
 {

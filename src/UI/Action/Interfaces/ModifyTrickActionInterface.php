@@ -15,6 +15,7 @@ use App\UI\Responder\Interfaces\ModifyTrickResponderInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 interface ModifyTrickActionInterface
 {
@@ -22,6 +23,8 @@ interface ModifyTrickActionInterface
         FormFactoryInterface $formFactory,
         ModifyTrickTypeHandlerInterface $modifyTrickTypeHandler,
         TrickRepositoryInterface $trickRepository,
+        \Symfony\Component\Security\Core\Security $security,
+        SessionInterface $session,
         ModifyTrickDTOFactory $modifyTrickDTOFactory
     );
 

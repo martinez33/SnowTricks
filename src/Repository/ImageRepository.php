@@ -21,19 +21,28 @@ class ImageRepository extends ServiceEntityRepository implements ImageRepository
         parent::__construct($registry, Image::class);
     }
 
-
-    public function modifyImage($slug, $fileName, $updated)
+    /**
+     * @param $id
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findImageById($id)
     {
         return $this->createQueryBuilder('i')
-            ->update()
-            ->leftJoin('i.trick_id', 'trick_id')
-            ->where('trick.id = i.trickId')
-            ->set('i.fileName', '?2')
-            ->set('i.updated', '?3')
-            ->setParameter(1, $slug)
-            ->setParameter(2, $fileName)
-            ->setParameter(3, $updated)
+            ->where('i.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @param $image
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function removeImage($image)
+    {
+        $this->_em->remove($image);
+        $this->_em->flush();
     }
 }

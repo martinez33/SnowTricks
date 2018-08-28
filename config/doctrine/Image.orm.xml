@@ -14,7 +14,7 @@
     <field name="first" column="first" type="boolean" nullable="false" />
     <many-to-one field="trick" target-entity="App\Domain\Trick" inversed-by="image" >
         <cascade>
-            <cascade-all/>
+            <cascade-refresh/>
         </cascade>
     </many-to-one>
 </entity>

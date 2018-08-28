@@ -40,13 +40,15 @@
                     {% endif %}
                 {% endfor %}
                     <h5 class="col-lg-6">{{ trick.name }}</h5>
-
+                {% if is_granted('ROLE_USER') and trick.user == app.user%}{#trick.user == app.user#}
                     <a class="col-lg-1" href="{{ path('trick_modify', {'slug': trick.slug}) }}">
                         <i class="glyphicon glyphicon-pencil" ></i>
                     </a>
+
                     <a class="col-lg-1" href="{{ path('trick_delete', {'slug': trick.slug}) }}">
                         <i class="glyphicon glyphicon-trash" ></i>
                     </a>
+                {% endif %}
                 </div>
 
                 {% else %}

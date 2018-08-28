@@ -4,8 +4,10 @@
     {% spaceless %}
 
         {{ block('form_widget') }}
-        {% if image_url is not null %}
+        {% if image_url and image_id is not null %}
+            {{ dump(image_id) }}
             <img src="{{ asset(image_url) }}"/>
+            <a href="{{ path('delete_image', {id: image_id}) }}" class="btn btn-danger btn-xs">Supprimer</a>
         {% endif %}
 
     {% endspaceless %}

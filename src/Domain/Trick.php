@@ -319,7 +319,7 @@ class Trick implements TrickInterface
             return;
         }
         $this->image = $image;
-        dump($image);
+        //dump($image);
         $image->setTrick($this);
     }
 

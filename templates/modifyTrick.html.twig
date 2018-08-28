@@ -6,18 +6,42 @@
     <div class="container">
         <div class="row">
 
+            <div class="form-group">
             {{ form_start(form) }}
             {{ form_row(form.name) }}
             {{ form_row(form.description) }}
             {{ form_row(form.grp) }}
+            </div>
+
             {% form_theme form 'form/imageField.html.twig' %}
-            {{ form_row(form.image) }}
-            <a href="#" id="modify_image" class="btn btn-default">Ajouter une image</a><br />
+
+            <div id="block_image" class="form-group">
+                {{ form_row(form.image) }}
+                <a href="#" id="modify_image" class="btn btn-default">Ajouter une image</a><br />
+            </div>
             {{ form_row(form.video) }}
             <a href="#" id="modify_video" class="btn btn-default">Ajouter une vidéo</a><br />
             <button type="submit">Envoyer</button>
             {{ form_end(form) }}
         </div>
     </div>
+
+    {#<div class="container">
+        <div class="row">
+            <div class="modal-dialog">
+                <div class="loginmodal-container">
+                    <h1>Registration</h1><br>
+
+                    {{ form_start(form) }}
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.email) }}
+                    {{ form_row(form.password) }}
+
+                    <button type="submit" class="login loginmodal-submit">Create An Account</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>#}
 
 {% endblock %}

@@ -61,4 +61,14 @@ class ModifTrickDTO implements ModifTrickDTOInterface
         $this->image = $image;
         $this->video = $video;
     }
+
+    /**
+     * @return array
+     */
+    public function getImage(): array
+    {
+        return $this->image;
+    }
+
+
 }

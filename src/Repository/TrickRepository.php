@@ -78,31 +78,4 @@ class TrickRepository extends ServiceEntityRepository implements TrickRepository
       return $this->_em->find('App\Domain\Trick',$id);
     }
 
-   /* public function modifyTrick(
-        $slug,
-        $name,
-        $description,
-        $grp,
-        $newSlug,
-        $updated
-    ) {
-        return $this->createQueryBuilder('t')
-            ->update()
-            ->join('t.image', 'image')
-            ->where('t.slug = ?1')
-            ->set('t.name', '?2')
-            ->set('t.description', '?3')
-            ->set('t.grp', '?4')
-            ->set('t.slug', '?5')
-            ->set('t.updated', '?6')
-            ->setParameter(1, $slug)
-            ->setParameter(2, $name)
-            ->setParameter(3, $description)
-            ->setParameter(4, $grp)
-            ->setParameter(5, $newSlug)
-            ->setParameter(6, $updated)
-            ->getQuery()
-            ->getResult();
-    }*/
-
 }

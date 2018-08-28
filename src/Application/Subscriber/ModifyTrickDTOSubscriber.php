@@ -55,7 +55,7 @@ class ModifyTrickDTOSubscriber implements EventSubscriberInterface
      */
     public function onPreSubmit(FormEvent $event)
     {
-        dump($event);
+        //dump($event);
 
         //die;
 

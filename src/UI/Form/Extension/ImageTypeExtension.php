@@ -29,7 +29,12 @@ class ImageTypeExtension extends AbstractTypeExtension
     public function configureOptions(OptionsResolver $resolver)
     {
         // makes it legal for FileType fields to have an image_property option
-        $resolver->setDefined(array('image_property'));
+        $resolver->setDefined(
+            [
+                'image_property',
+                'image_id'
+            ]
+        );
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options)//essayer sur ModifytrickType
@@ -48,10 +53,20 @@ class ImageTypeExtension extends AbstractTypeExtension
                 $imageUrl = $accessor->getValue($parentData, $options['image_property']);
             }
 
-            // sets an "image_url" variable that will be available when rendering this field
             $view->vars['image_url'] = $imageUrl;
+
+            $imageId = null;
+            if (null !== $parentData) {
+                $accessor = PropertyAccess::createPropertyAccessor();
+                $imageId = $accessor->getValue($parentData, $options['image_id']);
+            }
+
+            // sets an "image_url" variable that will be available when rendering this field
+
+            $view->vars['image_id'] = $imageId;
             dump($imageUrl);
-           // die;
+            dump($imageId);
+            //die;
         }
     }
 
