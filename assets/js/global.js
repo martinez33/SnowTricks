@@ -1,6 +1,7 @@
-require('../css/global.scss');
+//require('../css/global.scss');
 
-    $(document).ready(function() {
+
+   $(document).ready(function() {
         // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
         var $container = $('div#add_trick_image');
 

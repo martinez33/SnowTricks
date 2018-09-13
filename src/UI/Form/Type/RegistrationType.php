@@ -40,11 +40,11 @@ class RegistrationType extends AbstractType
                     'type' => PasswordType::class,
                     'first_options' => array('label' => 'Mot de passe'),
                     'second_options' => array('label' => 'Confirmez le mot de passe'),
-                    'invalid_message' => 'Le mot de passe doit comporter au moins : un caractère minuscule, un caractère Majuscule et un chiffre !!',
-                    'constraints' => array(new Assert\Regex(array('pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/',
-                        'message' => 'Le mot de passe doit comporter au moins : un caractère minuscule, un caractère Majuscule et un 1 chiffre !!'))
-                        //'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/'
-                )))
+                    'invalid_message' => 'Le mot de passe ne sont pas identiques !'//,
+                    //'constraints' => array(new Assert\Regex(array('pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/',
+                        //'message' => 'Le mot de passe doit comporter au moins : un caractère minuscule, un caractère Majuscule et un 1 chiffre !!'))
+                        //'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/'*/
+                ))//)
         ;
     }
 }

@@ -12,6 +12,7 @@ use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
 
 use App\Domain\Image;
 use App\Domain\User;
+use App\Domain\Video;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 

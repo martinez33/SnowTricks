@@ -11,7 +11,9 @@ namespace App\UI\Form\Handler\Interfaces;
 use App\Domain\Builder\Interfaces\ImageBuilderInterface;
 use App\Domain\Builder\Interfaces\TrickBuilderInterface;
 use App\Domain\Builder\Interfaces\VideoBuilderInterface;
+use App\Domain\Builder\VideoBuilder;
 use App\Helper\FileUpLoader;
+use App\Helper\FindUrl;
 use App\Helper\Interfaces\FindUrlInterface;
 use App\Helper\Interfaces\SlugInterface;
 use App\Helper\Interfaces\UniqueTrickNameInterface;
@@ -27,7 +29,6 @@ interface AddTrickTypeHandlerInterface
 {
     public function __construct(
         SessionInterface $session,
-
         TrickRepositoryInterface $trickRepository,
         UserRepository $userRepository,
         FileUpLoader $fileUploader,

@@ -78,7 +78,7 @@ class Trick implements TrickInterface
     private $user;
 
     /**
-     * @var \ArrayAccess
+     * @var ArrayCollection
      */
     private $video;
 
@@ -109,7 +109,7 @@ class Trick implements TrickInterface
         $this->video = new ArrayCollection();
 
         $this->addLinkImages($creationDTO->image);
-       // $this->addLinkVideos($creationDTO->video);
+        $this->addLinkVideos($creationDTO->video);
     }
 
   /*  public function __construct()
@@ -326,14 +326,25 @@ class Trick implements TrickInterface
     /**
      * @param array $videos
      */
-    public function addLinkVideos(array $videos): void
+    public function addLinkVideos(array $videos)
     {
         foreach ($videos as $video) {
 
             $this->video[] = $video;
-
             $video->setTrick($this);
         }
+    }
+
+    /**
+     * @param Video $video
+     */
+    public function addVideo(Video $video)
+    {
+        if ($this->video->contains($video)) {
+            return;
+        }
+        $this->video[] = $video;
+        $video->setTrick($this);
     }
 
 }

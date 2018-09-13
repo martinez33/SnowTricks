@@ -2,19 +2,22 @@
 <html lang="en">
 <head>
     {% block head %}
-    <!-- Required meta tags -->
+        <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
+        {% block stylesheet %}
+            <!-- Latest compiled and minified CSS -->
 
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <link rel="stylesheet" href="{{ asset('style.css') }}">
-        <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+                  integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+                  crossorigin="anonymous">
 
+            <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+        {% endblock %}
 
     {% endblock %}
 
@@ -54,26 +57,26 @@
 
 
     {% endblock %}
-
-    {% set flashbag_notices = app.session.flashbag.get('notice') %}
-    {% if flashbag_notices is not empty %}
-    <ul class="msg">
-        {% for notice in flashbag_notices %}
-            <li>{{ notice }}</li>
+    {% if app.request.hasPreviousSession() %}
+        {%  for notice in app.flashes("notice") %} {#clé  : notice#}
+            <div class="alert alert-info">
+                {{ notice }}
+            </div>
         {% endfor %}
-        {% endif %}
-    </ul>
+    {% endif %}
+
     {% block content %}{% endblock %}
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-
+    {% block javascript %}
+    {#<script src="{{ asset('js/app.js') }}" type="text/javascript"></script>#}
 
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
 
-    <script src="{{ asset('build/js/app.js') }}" ></script>
+   {# <script src="{{ asset('build/js/app.js') }}" ></script>#}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
@@ -89,7 +92,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 
-
+    {% endblock %}
 
 
 

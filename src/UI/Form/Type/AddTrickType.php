@@ -10,7 +10,6 @@ namespace App\UI\Form\Type;
 
 use App\Application\Subscriber\NewTrickDTOSubscriber;
 use App\Domain\DTO\TrickDTO;
-use App\Domain\Trick;
 use App\UI\Form\Type\Interfaces\AddTrickTypeInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -60,12 +59,13 @@ class AddTrickType extends AbstractType implements AddTrickTypeInterface
                 'entry_type' => ImageType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'label' => 'Image'
+                'prototype' => true
             ))
             ->add('video', CollectionType::class, array(
                 'entry_type' => TextType::class,
                 'allow_add' => true,
-                'allow_delete' => true
+                'allow_delete' => true,
+                'prototype' => true
             ));
         $builder->addEventSubscriber($this->newTrickDTOSubscriber);
     }

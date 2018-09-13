@@ -30,7 +30,7 @@
 
                     {% if image.first %}
 
-                <div class="col-md-2">
+                <div id="trick_image" class="col-md-2">
                     <a name="bas" id="bas"></a>
 
                     <a href="{{ path('trick_details', {'slug': trick.slug}) }}" class="">
@@ -40,7 +40,7 @@
                     {% endif %}
                 {% endfor %}
                     <h5 class="col-lg-6">{{ trick.name }}</h5>
-                {% if is_granted('ROLE_USER') and trick.user == app.user%}{#trick.user == app.user#}
+                {% if is_granted('ROLE_USER') and trick.user == app.user%}
                     <a class="col-lg-1" href="{{ path('trick_modify', {'slug': trick.slug}) }}">
                         <i class="glyphicon glyphicon-pencil" ></i>
                     </a>

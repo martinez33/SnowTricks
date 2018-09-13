@@ -62,9 +62,7 @@ class NewTrickDTOSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::SUBMIT => "onNewTrickDTOSubmission",
-            FormEvents::POST_SUBMIT => "test"
-
+            FormEvents::SUBMIT => "onNewTrickDTOSubmission"
         ];
     }
 
@@ -72,41 +70,17 @@ class NewTrickDTOSubscriber implements EventSubscriberInterface
     {
 
         $slug = $this->slug->slug($event->getData()->getName());
-
         $event->getData()->setSlug($slug);
 
-
-
-
-//die;
-        //dump($event->getData()->getSlug());
-
-        /*if (!array_key_exists('image', $event->getData())) {
-            dump('ok');
-           /* $file['file'] = new File($this->pictureTrickDefault);
-            $picture[] = $file;
-            $trick['image'] = $picture;
-            $event->setData($trick);
-        }*/
-
-        /*$videos = [];
+        $videos = [];
         foreach ($event->getData()->video as $video) {
-
 
             $vidType = $this->findUrl->SearchVideoType($video);
             $vidId = $this->findUrl->FindVideoId($video, $vidType);
 
             $videos[] = new Video($vidId, $vidType);
         }
-        $event->getData()->video = $videos;*/
+        $event->getData()->video = $videos;
     }
 
-
-    public function test(FormEvent $event)
-    {
-
-        dump($event->getData());
-        //die;
-
-    }
 }
