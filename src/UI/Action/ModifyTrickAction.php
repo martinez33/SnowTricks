@@ -134,14 +134,15 @@ class ModifyTrickAction implements ModifyTrickActionInterface
 
         $modifTrickDTO = $this->modifyTrickDTOFactory->createFromUI($trick);
 
-        //dump($modifTrickDTO);
+        dump($modifTrickDTO);
+
         //die;
 
         //passe les donnéees DTO au Form via create ModifyTrickType::class, "datas"
 
         $modifyTrickType = $this->formFactory->create(ModifyTrickType::class, $modifTrickDTO)->handleRequest($request);
 
-        //dump($modifyTrickType->getData());
+        dump($modifyTrickType->getData());
         //die;
         if ($this->modifyTrickTypeHandler->handle($modifyTrickType, $request)) {
             return $responder(true);

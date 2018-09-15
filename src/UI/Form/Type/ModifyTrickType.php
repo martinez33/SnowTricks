@@ -53,14 +53,17 @@ class ModifyTrickType extends AbstractType
                 'entry_type' => ImageType::class,
                 'allow_add' => false,
                 'allow_delete' => true,
-                'by_reference' => true
+                'by_reference' => true,
+                'prototype' => true
             ))
             ->add('video', CollectionType::class, array(
                 'entry_type' => VideoType::class,
-                'allow_add' => true,
-                'allow_delete' => true
-            ))
-            ->addEventSubscriber($this->modifyTrickDTOSubscriber);
+                'allow_add' => false,
+                'allow_delete' => true,
+                'by_reference' => true,
+                'prototype' => true
+            ));
+            //->addEventSubscriber($this->modifyTrickDTOSubscriber);
     }
 
     /**

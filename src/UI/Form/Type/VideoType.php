@@ -19,7 +19,7 @@ class VideoType extends AbstractType implements VideoTypeInterface
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('video', TextType::class, array(
+        $builder->add('link', TextType::class, array(
             'label' => 'Collez le lien Integrer de la vidéo : '
         ));
     }

@@ -66,6 +66,10 @@ class NewTrickDTOSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @param FormEvent $event
+     * @throws \Exception
+     */
     public function onNewTrickDTOSubmission(FormEvent $event)
     {
 

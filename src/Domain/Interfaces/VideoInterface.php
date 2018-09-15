@@ -19,11 +19,11 @@ use App\Domain\Interfaces\TrickInterface;
 interface VideoInterface
 {
     /**
-     * VideoInterface constructor.
-     *
-     * @param int $created
-     * @param string $fileName
+     * Video constructor.
+     * @param string $vidId
+     * @param string $vidType
      * @param int|null $updated
+     * @throws \Exception
      */
     public function __construct(
         string $vidId,

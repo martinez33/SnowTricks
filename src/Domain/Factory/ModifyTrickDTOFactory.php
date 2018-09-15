@@ -33,6 +33,7 @@ class ModifyTrickDTOFactory
     public function createFromUI(Trick $trick)
      {
          $this->transformImgToFile($trick->getImage()->toArray());
+         $this->transformVideoToLink($trick->getVideo()->toArray());
 
          return new ModifTrickDTO($trick->getName(),
              $trick->getDescription(),
@@ -45,6 +46,19 @@ class ModifyTrickDTOFactory
      {
          foreach ($images as $image) {
              $image->setFile( new File($this->publicDirectory.$image->getFilename()));
+         }
+     }
+
+     private  function transformVideoToLink(array $videos)
+     {
+
+         foreach ($videos as $video) {
+             $vidType = strtolower($video->getVidType());
+
+             $vidId = $video->getVidId();
+             $video->setLink('<embed width="200" height="150" src="https://www.'
+                 .$vidType.'.com/embed/'
+                 .$vidId.'" frameborder="0" allow="encrypted-media" allowfullscreen />');
          }
      }
 

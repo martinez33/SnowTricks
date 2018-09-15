@@ -56,8 +56,6 @@ class ModifTrickDTO implements ModifTrickDTOInterface
         $this->name = $name;
         $this->description = $description;
         $this->grp = $grp;
-        //dump($this->image);
-        //die;
         $this->image = $image;
         $this->video = $video;
     }
@@ -70,5 +68,11 @@ class ModifTrickDTO implements ModifTrickDTOInterface
         return $this->image;
     }
 
-
+    /**
+     * @return array
+     */
+    public function getVideo(): array
+    {
+        return $this->video;
+    }
 }

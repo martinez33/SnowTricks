@@ -83,11 +83,6 @@ class Trick implements TrickInterface
     private $video;
 
     /**
-     * @var bool
-     */
-    private $private;
-
-    /**
      * Trick constructor.
      *
      * @param string $description
@@ -220,7 +215,6 @@ class Trick implements TrickInterface
         $this->name = $name;
     }
 
-
     /**
      * @return string
      */
@@ -246,9 +240,9 @@ class Trick implements TrickInterface
     }
 
     /**
-     * @return Collection|video
+     * @return \ArrayAccess
      */
-    public function getVideo(): Collection
+    public function getVideo(): \ArrayAccess
     {
         return $this->video;
     }

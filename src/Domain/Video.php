@@ -27,6 +27,11 @@ class Video implements VideoInterface
     private $id;
 
     /**
+     * @var string
+     */
+    private $link;
+
+    /**
      * @var TrickInterface
      */
     private $trick;
@@ -48,10 +53,10 @@ class Video implements VideoInterface
 
     /**
      * Video constructor.
-     *
-     * @param string    $vidId
-     * @param string    $vidType
-     * @param int|null  $updated
+     * @param string $vidId
+     * @param string $vidType
+     * @param int|null $updated
+     * @throws \Exception
      */
     public function __construct(
         string $vidId,
@@ -80,6 +85,22 @@ class Video implements VideoInterface
     public function getId(): \Ramsey\Uuid\UuidInterface
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLink(): string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $link
+     */
+    public function setLink(string $link): void
+    {
+        $this->link = $link;
     }
 
     /**
