@@ -59,7 +59,8 @@ class AddTrickType extends AbstractType implements AddTrickTypeInterface
                 'entry_type' => ImageType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'prototype' => true
+                'prototype' => true,
+                'by_reference' => false
             ))
             ->add('video', CollectionType::class, array(
                 'entry_type' => TextType::class,

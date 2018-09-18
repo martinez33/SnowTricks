@@ -1,13 +1,13 @@
-{% extends 'modifyTrick.html.twig' %}
+
 
 {% block file_widget %}
-    {% spaceless %}
 
-        {{ block('form_widget') }}
-        {% if image_url and image_id is not null %}
+{#{{ block('form_widget') }}#}
+{% if image_url and image_id is not null %}
+
             <img src="{{ asset(image_url) }}"/>
-            <a href="{{ path('delete_image', {id: image_id}) }}" class="btn btn-danger btn-xs">Supprimer</a>
+
+            <button id="rm-img" type="button" class="btn btn-danger">Supprimer</button>
         {% endif %}
 
-    {% endspaceless %}
 {% endblock %}

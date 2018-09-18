@@ -16,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModifyTrickType extends AbstractType
@@ -53,17 +52,18 @@ class ModifyTrickType extends AbstractType
                 'entry_type' => ImageType::class,
                 'allow_add' => false,
                 'allow_delete' => true,
-                'by_reference' => true,
-                'prototype' => true
+                'by_reference' => false,
+                'prototype' => true,
+
             ))
             ->add('video', CollectionType::class, array(
                 'entry_type' => VideoType::class,
                 'allow_add' => false,
                 'allow_delete' => true,
                 'by_reference' => true,
-                'prototype' => true
+                'prototype' => true,
+
             ));
-            //->addEventSubscriber($this->modifyTrickDTOSubscriber);
     }
 
     /**

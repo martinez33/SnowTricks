@@ -15,13 +15,18 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class VideoType extends AbstractType implements VideoTypeInterface
+class VideoType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('link', TextType::class, array(
-            'label' => 'Collez le lien Integrer de la vidéo : '
-        ));
+        $builder->add('link', TextType::class,
+            [
+                'video_url' => 'link',
+                'video_id' => 'vidId',
+                'video_type' => 'vidType'
+
+            ]
+        );
     }
 
     public function configureOptions(OptionsResolver $resolver)

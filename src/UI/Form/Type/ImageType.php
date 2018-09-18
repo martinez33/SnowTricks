@@ -39,9 +39,10 @@ class ImageType extends AbstractType
         $builder
             ->add('file',FileType::class,
                 [
-                'image_property' => 'filename',
-                'image_id' => 'id'
+                    'image_property' => 'filename',
+                    'image_id' => 'id'
                 ]
+
             );
             //->addEventSubscriber($this->modifyTrickDTOSubscriber);
     }

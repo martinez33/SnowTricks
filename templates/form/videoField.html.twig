@@ -1,0 +1,15 @@
+
+{% block text_widget %}
+
+
+{#{{ block('form_widget') }}#}
+    {% if video_id and video_type is not null %}
+
+        <div id="extd_video" class="">
+            <embed width="200" height="150" src="https://www.{{ video_type }}.com/embed/{{ video_id }}"
+               frameborder="0" allow="encrypted-media" allowfullscreen />
+            <button id="rm-video" class="btn btn-danger">Supprimer</button>
+        </div>
+    {% endif %}
+
+{% endblock text_widget %}

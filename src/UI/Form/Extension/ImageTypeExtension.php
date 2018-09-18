@@ -41,12 +41,9 @@ class ImageTypeExtension extends AbstractTypeExtension
     {
 
         if (isset($options['image_property'])) {
-            dump($form, $view);//specifier sur clé vars les files
 
-            // this will be whatever class/entity is bound to your Form (e.g. Media)
             $parentData = $form->getParent()->getData();
-            dump($parentData);
-            //die;
+
             $imageUrl = null;
             if (null !== $parentData) {
                 $accessor = PropertyAccess::createPropertyAccessor();
@@ -64,8 +61,8 @@ class ImageTypeExtension extends AbstractTypeExtension
             // sets an "image_url" variable that will be available when rendering this field
 
             $view->vars['image_id'] = $imageId;
-            dump($imageUrl);
-            dump($imageId);
+            dump($view);
+            //dump($imageId);
             //die;
         }
     }

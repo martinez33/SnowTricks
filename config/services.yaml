@@ -36,6 +36,8 @@ services:
 
     App\UI\Form\Extension\ImageTypeExtension:
         tags:
-        #- { name: form.type_extension, extended_type: App\UI\Form\Type\ImageType }
-        #- { name: form.type_extension, extended_type: App\UI\Form\Type\ModifyTrickType }
         - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FileType }
+
+    App\UI\Form\Extension\VideoTypeExtension:
+        tags:
+        - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\TextType }
