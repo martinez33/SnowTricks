@@ -2,12 +2,16 @@
 
 {% block file_widget %}
 
-{#{{ block('form_widget') }}#}
+{{ block('form_widget') }}
 {% if image_url and image_id is not null %}
 
-            <img src="{{ asset(image_url) }}"/>
+    <img src="{{ asset(image_url) }}"/>
 
-            <button id="rm-img" type="button" class="btn btn-danger">Supprimer</button>
-        {% endif %}
+    <button id="modif_ext_image" type="button" name="modify" class="btn btn-warning" >Modifier</button>
+    <br>
+    <br>
+
+    <button id="remove_ext_image" type="button" class="btn btn-danger" >Supprimer</button>
+{% endif %}
 
 {% endblock %}

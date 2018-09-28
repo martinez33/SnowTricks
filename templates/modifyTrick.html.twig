@@ -15,11 +15,11 @@
 
                 {% form_theme form 'form/imageField.html.twig' %}
 
-                <div id="images"   data-index="{{ form.image|length }}">
+                <div id="images" data-prototype="{{ form_widget(form.image.vars['prototype'])|e("html_attr") }}" data-index="{{ form.image|length }}">
                 {{ form_row(form.image) }}
-                <a href="#" id="modify_image" class="btn btn-default">Ajouter une image</a><br />
-                </div>
 
+                </div>
+                <a href="#" id="add_image" class="btn btn-default">Ajouter une image</a><br />
                 {% form_theme form 'form/videoField.html.twig' %}
 
                 {{ form_row(form.video) }}

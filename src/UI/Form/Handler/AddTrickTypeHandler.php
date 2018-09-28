@@ -90,6 +90,7 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
      */
     public function handle(FormInterface $form, Request $request): bool
     {
+
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($form['image']->getData() as $key => $img) {
                 $file = $img->getFile();

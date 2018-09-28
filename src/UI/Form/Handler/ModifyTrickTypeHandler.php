@@ -107,16 +107,11 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
     {
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            dump($form->getData()->getImage());
-
-            $slug = $request->get('slug');
-
-            $trick = $this->trickRepository->getTrickBySlug($slug);
-
-            dump($trick);
-            //dump($form['image']->getData());
+            dump($form);
+            //dump($form->getData()->getImage());
             die;
+
+
 
             foreach ($form['image']->getData() as $key => $img) {
 
@@ -149,7 +144,7 @@ class ModifyTrickTypeHandler implements ModifyTrickTypeHandlerInterface
                 return false;
             }
 
-            $this->trickRepository->update();
+            //$this->trickRepository->update();
 
             dump($trick);
             //die;

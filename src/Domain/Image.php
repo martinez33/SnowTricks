@@ -127,7 +127,7 @@ class Image implements ImageInterface
     }
 
     /**
-     * @param \SplFileInfo $file
+     * @param \SplFileInfo $file | null
      */
     public function setFile(\SplFileInfo $file): void
     {

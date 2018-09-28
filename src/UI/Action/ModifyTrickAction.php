@@ -123,7 +123,7 @@ class ModifyTrickAction implements ModifyTrickActionInterface
 
 
         $trick = $this->trickRepository->getTrickBySlug($slug);
-        dump($trick);
+       // dump($trick);
         //$authorizationChecker = new AuthorizationChecker();
         //die;
         /*if (!$this->security->isGranted('ROLE_USER',  $trick)) {

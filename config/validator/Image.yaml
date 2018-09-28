@@ -1,4 +1,1 @@
 App\Domain\Image:
-    properties:
-        fileName:
-            - NotBlank: ~

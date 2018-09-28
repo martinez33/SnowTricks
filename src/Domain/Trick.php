@@ -107,14 +107,6 @@ class Trick implements TrickInterface
         $this->addLinkVideos($creationDTO->video);
     }
 
-  /*  public function __construct()
-    {
-        $this->created = time();
-        $this->id = Uuid::uuid4();
-        $this->image = new ArrayCollection();
-        $this->video = new ArrayCollection();
-    }*/
-
     /**
      * @return ArrayCollection
      */

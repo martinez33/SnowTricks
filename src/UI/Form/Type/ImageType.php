@@ -8,7 +8,7 @@
 
 namespace App\UI\Form\Type;
 
-use App\Application\Subscriber\ModifyTrickDTOSubscriber;
+use App\Application\Subscriber\ModifTrickDTOSubscriber;
 use App\Domain\DTO\ImageDTO;
 use App\Domain\Image;
 use App\UI\Form\Type\Interfaces\ImageTypeInterface;
@@ -21,11 +21,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ImageType extends AbstractType
 {
     /**
-     * @var ModifyTrickDTOSubscriber
+     * @var ModifTrickDTOSubscriber
      */
     private $modifyTrickDTOSubscriber;
 
-    public function __construct(ModifyTrickDTOSubscriber $modifyTrickDTOSubscriber)
+    public function __construct(ModifTrickDTOSubscriber $modifyTrickDTOSubscriber)
     {
         $this->modifyTrickDTOSubscriber = $modifyTrickDTOSubscriber;
     }
@@ -40,11 +40,12 @@ class ImageType extends AbstractType
             ->add('file',FileType::class,
                 [
                     'image_property' => 'filename',
-                    'image_id' => 'id'
+                    'image_id' => 'id',
+                    'label' => 'Image',
+                    'required' => false
                 ]
 
             );
-            //->addEventSubscriber($this->modifyTrickDTOSubscriber);
     }
 
     public function configureOptions(OptionsResolver $resolver)

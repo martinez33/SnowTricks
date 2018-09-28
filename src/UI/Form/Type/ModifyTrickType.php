@@ -8,7 +8,7 @@
 
 namespace App\UI\Form\Type;
 
-use App\Application\Subscriber\ModifyTrickDTOSubscriber;
+use App\Application\Subscriber\ModifTrickDTOSubscriber;
 use App\Domain\DTO\ModifTrickDTO;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -22,7 +22,7 @@ class ModifyTrickType extends AbstractType
 {
 
     /**
-     * @var ModifyTrickDTOSubscriber
+     * @var ModifTrickDTOSubscriber
      */
     private $modifyTrickDTOSubscriber;
 
@@ -30,7 +30,7 @@ class ModifyTrickType extends AbstractType
      * ModifyTrickType constructor.
      * @param $modifyTrickDTOSubscriber
      */
-    public function __construct(ModifyTrickDTOSubscriber $modifyTrickDTOSubscriber)
+    public function __construct(ModifTrickDTOSubscriber $modifyTrickDTOSubscriber)
     {
         $this->modifyTrickDTOSubscriber = $modifyTrickDTOSubscriber;
     }
@@ -50,20 +50,24 @@ class ModifyTrickType extends AbstractType
             ))
             ->add('image', CollectionType::class, array(
                 'entry_type' => ImageType::class,
-                'allow_add' => false,
+                'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'prototype' => true,
+                'allow_extra_fields' => true,
+                'label' => 'Images'
 
             ))
             ->add('video', CollectionType::class, array(
                 'entry_type' => VideoType::class,
-                'allow_add' => false,
+                'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => true,
                 'prototype' => true,
 
-            ));
+            ))
+            ->addEventSubscriber($this->modifyTrickDTOSubscriber)
+        ;
     }
 
     /**
