@@ -84,19 +84,24 @@ class ForgotPasswordTypeHandler
     {
         if ($form->isSubmitted() && $form->isValid()) {
 
-            dump($form->get('username')->getData());
+            //dump($form->get('username')->getData());
 
             $user = $this->userRepository->getUserByName($form->get('username')->getData());
 
+
+
             if ($user != null) {
+                dump($user);
 
                 $cle = $this->tokenGenerator->tokenMaker(60);
 
                 $user->setResetPassword($cle, time());
 
+                //dd($user);
+
                 $emailView = 'emails/emailForgotPassword.html.twig';
 
-                $message = $this->emailGenerator->emailMaker($user->getUsername(), $user->getEmail(), $cle, $emailView);
+                $message = $this->emailGenerator->emailMaker($user->getUsername(), $user->getEmail(), $cle, $emailView, $user);
 
                 $this->email->send($message);
 

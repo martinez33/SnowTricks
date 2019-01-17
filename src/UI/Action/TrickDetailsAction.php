@@ -58,6 +58,18 @@ class TrickDetailsAction implements TrickDetailsActionInterface
 
         $trick = $this->trickRepository->getTrickBySlug($request->attributes->get('slug'));
 
+        $videos = $trick->getVideo()->toArray();
+
+        foreach ($videos as $video) {
+            $vidType = strtolower($video->getVidType());
+
+            $vidId = $video->getVidId();
+            $video->setLink('src="https://www.'
+                .$vidType.'.com/embed/video/'
+                .$vidId);
+        }
+
+        //dd($trick->getVideo()->toArray());
         return $responder($trick);
     }
 }

@@ -34,7 +34,7 @@ class FindUrl implements FindUrlInterface
     {
         if ($type === 'Youtube') {
 
-            $reg = "#.+?https?://www.youtube.com/embed\/([a-z0-9]+).+?#i";
+            $reg = "#.+?https?:\/\/www.youtube.com\/embed\/([a-z0-9A-Z_-]+).+?#i";
 
             preg_match($reg, $str, $matches);
 
@@ -42,7 +42,7 @@ class FindUrl implements FindUrlInterface
 
         } elseif ($type === 'Dailymotion') {
 
-            $reg = "#.//www.dailymotion.com/embed/video/([a-z0-9]+).+?#i";
+            $reg = "#.//www.dailymotion.com/embed/video/([a-z0-9_-]+).+?#i";
 
             preg_match($reg, $str, $matches);
 
@@ -50,7 +50,7 @@ class FindUrl implements FindUrlInterface
 
         } elseif ($type === "Vimeo") {
 
-            $reg = "#.+?https?://player.vimeo.com/video/([a-z0-9]+).+?#i";
+            $reg = "#.+?https?://player.vimeo.com/video/([a-z0-9_-]+).+?#i";
 
             preg_match($reg, $str, $matches);
 

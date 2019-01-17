@@ -18,12 +18,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 interface FileUpLoaderInterface
 {
     /**
-     * FileUpLoaderInterface constructor.
-     *
+     * FileUpLoader constructor.
      * @param string $targetImgDirectory
-     * @param string $targetVideoDirectory
+     * @param string $targetPictDirectory
      */
-    public function __construct(string $targetImgDirectory);
+    public function __construct(string $targetImgDirectory, string $targetPictDirectory);
 
     /**
      * @param UploadedFile $file

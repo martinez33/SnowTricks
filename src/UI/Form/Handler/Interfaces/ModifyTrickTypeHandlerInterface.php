@@ -8,10 +8,11 @@
 
 namespace App\UI\Form\Handler\Interfaces;
 
+use App\Domain\Trick;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 interface ModifyTrickTypeHandlerInterface
 {
-    public function handle(FormInterface $form, Request $request);
+    public function handle(FormInterface $form, Request $request, Trick $trick);
 }

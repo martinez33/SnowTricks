@@ -9,6 +9,7 @@
 namespace App\Domain\Builder;
 
 
+use App\Domain\Image;
 use App\Domain\User;
 
 class UserBuilder
@@ -18,9 +19,18 @@ class UserBuilder
      */
     private $user;
 
-    public function createUserRegistration(string $username, string $email, string $password, callable $passwordEncoder): self
+    /**
+     * @param Image $picture
+     * @param string $username
+     * @param string $email
+     * @param string $password
+     * @param callable $passwordEncoder
+     * @return UserBuilder
+     * @throws \Exception
+     */
+    public function createUserRegistration(Image $picture, string $username, string $email, string $password, callable $passwordEncoder): self
     {
-        $this->user = new User($username, $email, $password, $passwordEncoder);
+        $this->user = new User($picture, $username, $email, $password, $passwordEncoder);
 
         return $this;
     }

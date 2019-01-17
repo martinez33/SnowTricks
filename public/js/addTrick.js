@@ -1,74 +1,28 @@
-/**
- * Ajout d'image
- */
+
 (function () {
-    let addImageBtn = document.getElementById('add_image');
+    let inptPicture = document.getElementById('registration_picture');
 
-    let indexImg = document.getElementById('images').getAttribute('data-index');
+    inptPicture.setAttribute('onchange', 'previewFile()');
 
-    addImageBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+    let divParent = inptPicture.parentNode;
 
-        let prototype = document.getElementById('images').getAttribute('data-prototype');
+    let labelPicture = divParent.firstChild;
 
-        let newImage = prototype.replace(/__name__/g, indexImg);
+    labelPicture.innerHTML = "<img src=\"https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120\" class=\"avatar\" alt=\"avatar\">"
 
-        let rmImageBtn = document.createElement('button');
-        rmImageBtn.id = 'remove_image';
-        rmImageBtn.type = 'button';
-        rmImageBtn.textContent = 'Suprimer';
-        rmImageBtn.className = 'btn btn-danger';
-
-        addImageBtn.insertAdjacentHTML('beforebegin', newImage);
-
-        let image = addImageBtn.parentElement.querySelector('div#add_trick_image_'+indexImg);
-
-        image.appendChild(rmImageBtn);
-
-        rmImageBtn.addEventListener('click', function (e) {
-            let parentImage = addImageBtn.parentElement;
-
-            parentImage.removeChild(image);
-            indexImg--;
-        });
-        indexImg++;
-    });
 }) ();
 
-/**
- * Ajout de video
- */
-(function () {
-    let addVideoBtn = document.getElementById('add_video');
-    let indexVideo = document.getElementById('videos').getAttribute('data-index');
+function previewFile() {
+    let preview = document.querySelector('img');
 
-    addVideoBtn.addEventListener('click', function(e) {
-        e.preventDefault();
+    let file    = document.querySelector('input[type=file]').files[0];
+    let reader  = new FileReader();
 
-        let prototype = document.getElementById('videos').getAttribute('data-prototype');
-        let newVideo = prototype.replace(/__name__/g, indexVideo);
+    reader.addEventListener("load", function () {
+        preview.src = reader.result;
+    }, false);
 
-        let videoDiv = document.createElement('div');
-        videoDiv.id = 'video_'+indexVideo;
-
-        let videos = document.getElementById('videos');
-
-        let rmVideoBtn = document.createElement('button');
-        rmVideoBtn.id = 'remove_video';
-        rmVideoBtn.type = 'button';
-        rmVideoBtn.textContent = 'Suprimer';
-        rmVideoBtn.className = 'btn btn-danger';
-
-        videos.appendChild(videoDiv);
-
-        videoDiv.insertAdjacentHTML('afterbegin', newVideo);
-        videoDiv.appendChild(rmVideoBtn);
-
-        rmVideoBtn.addEventListener('click', function (e) {
-
-            videos.removeChild(videoDiv);
-            indexVideo--;
-        });
-        indexVideo++;
-    });
-}) ();
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+}

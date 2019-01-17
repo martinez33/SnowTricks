@@ -30,7 +30,7 @@ class TrickVoter implements VoterInterface
     public function vote(TokenInterface $token, $subject, array $attributes)
     {
 
-        dump($subject);
+        //dump($subject);
         //die;
 
         if (!$subject instanceof Trick) {
@@ -42,7 +42,7 @@ class TrickVoter implements VoterInterface
         }
 
         $user = $token->getUser();
-        dump($user);
+        //dump($user);
         //die;
 
         if (!$user instanceof User) {

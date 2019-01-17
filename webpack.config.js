@@ -11,9 +11,10 @@ Encore
     // .enableVersioning(Encore.isProduction())
 
     // uncomment to define the assets of the project
-    .addEntry('js/app', './assets/js/global.js')
     .addStyleEntry('css/app', './assets/css/global.scss')
-
+    .addEntry('js/preview', './assets/js/previewPicture.js')
+    .addEntry('js/add', './assets/js/addElmt.js')
+    .addEntry('js/modif', './assets/js/modifElmt.js')
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()
 

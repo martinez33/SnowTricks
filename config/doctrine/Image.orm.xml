@@ -17,5 +17,11 @@
             <cascade-refresh/>
         </cascade>
     </many-to-one>
+    <one-to-one field="user" target-entity="App\Domain\User" inversed-by="image" >
+        <cascade>
+            <cascade-refresh/>
+        </cascade>
+    </one-to-one>
+
 </entity>
 </doctrine-mapping>

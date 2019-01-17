@@ -28,5 +28,11 @@ interface ModifyTrickActionInterface
         ModifyTrickDTOFactory $modifyTrickDTOFactory
     );
 
-    public function __invoke(ModifyTrickResponderInterface $responder, Request $request);
+    /**
+     * @param ModifyTrickResponderInterface $responder
+     * @param Request $request
+     * @param SessionInterface $session
+     * @return mixed
+     */
+    public function __invoke(ModifyTrickResponderInterface $responder, Request $request, SessionInterface $session);
 }

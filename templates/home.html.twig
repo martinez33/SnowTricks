@@ -3,26 +3,58 @@
 
 {% block title %}{{ parent() }} - Home{% endblock %}
 
+
+{% block stylesheet %} {{ parent() }}
+<style type="text/css">
+
+    .home-head {
+        position: relative;
+        width: 100%;
+        height: 950px;
+        min-height: 35rem;
+        padding: 15rem 0;
+        background: -webkit-gradient(linear, left top, left bottom, from(rgba(22, 22, 22, 0.1)), color-stop(75%, rgba(22, 22, 22, 0.5)), to(#161616)), url("images/home.jpg");
+        background: linear-gradient(to bottom, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%), url("images/home.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-size: cover;
+    }
+
+    .tricks-section {
+        padding-top: 150px;
+        height: 700px;
+        width: auto;
+        background: linear-gradient(to top, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%), url("images/two_riders.jpg");
+    }
+
+</style>
+
+{% endblock stylesheet %}
+
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <img src="{{ asset('images/home.jpg') }}" class="responsive" style="height: 800px; width: 102%" /><!--mettre dans style.css-->
 
-                <a href="#bas" class="navbar-fixed-bottom">
-                    <img src="{{ asset('images/arrow-up.png') }}" style="float: right;" />
-                </a>
+    <!--<div class="container-fluid">-->
+
+        <header class="home-head">
+            <div class="container d-flex h-100 align-items-center">
+                <div class="mx-auto text-center">
+                    <h1 class="mx-auto my-0 text-uppercase" style="color: #d58512;">Riders Community</h1>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">A free, responsive, one page Bootstrap theme created by Start Bootstrap.</h2>
+                    <a href="{{ path('trick_creation') }}" id="trick_creation" class="btn btn-primary js-scroll-trigger">Create some tricks !</a>
+                </div>
             </div>
-        </div>
-        <div class="">
-            <a href="{{ path('trick_creation') }}" id="trick_creation">
-                <button id="trick_creation-btn">Créez un Trick !</button>
-            </a>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
 
+        </header>
+    <div>
+        <a id="cAller" class="cVisible" href="#home_tricks">
+        </a>
+    </div>
+    <!--</div>-->
+<section id="home_tricks" class="tricks-section">
+    <div class="container">
+
+        <div class="row" id="tricks-block">
 
 
             {% for trick in tricks %}
@@ -35,12 +67,11 @@
 
                     <a href="{{ path('trick_details', {'slug': trick.slug}) }}" class="">
                         <img src="{{ asset( image.fileName) }}" class="img-thumbnail" />
-
                     </a>
                     {% endif %}
                 {% endfor %}
                     <h5 class="col-lg-6">{{ trick.name }}</h5>
-                {% if is_granted('ROLE_USER') and trick.user == app.user%}
+                {% if is_granted('ROLE_USER') and trick.user == app.user %}
                     <a class="col-lg-1" href="{{ path('trick_modify', {'slug': trick.slug}) }}">
                         <i class="glyphicon glyphicon-pencil" ></i>
                     </a>
@@ -54,12 +85,61 @@
                 {% else %}
                    <p>Auncun trick !</p>
             {% endfor %}
-        </div>
 
-        <div id="" class="" style="">
-            <a href="#haut">
-                <img src="{{ asset('images/arrow-up.png') }}" style="" />
-            </a>
         </div>
     </div>
+</section>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script type="text/javascript">
+
+document.addEventListener('DOMContentLoaded', function() {
+  var aLiens = document.querySelectorAll('a[href*="#"]');
+  for(var i=0, len = aLiens.length; i<len; i++) {
+    aLiens[i].onclick = function () {
+      if (location.pathname.replace(/^\//,'') === this.pathname.replace(/^\//,'') && location.hostname === this.hostname) {
+        var target = this.getAttribute("href").slice(1);
+        if (target.length) {
+          scrollTo(document.getElementById(target).offsetTop, 5000);
+          return false;
+        }
+      }
+    };
+  }
+});
+//Exemple de : Forestrf
+// http://jsfiddle.net/forestrf/tPQSv/2/
+function scrollTo(element, duration) {
+  var e = document.documentElement;
+  if(e.scrollTop===0){
+    var t = e.scrollTop;
+    ++e.scrollTop;
+    e = t+1===e.scrollTop--?e:document.body;
+  }
+  scrollToC(e, e.scrollTop, element, duration);
+}
+
+function scrollToC(element, from, to, duration) {
+  if (duration < 0) return;
+  if(typeof from === "object")from=from.offsetTop;
+  if(typeof to === "object")to=to.offsetTop;
+  scrollToX(element, from, to, 0, 1/duration, 20, easeOutCuaic);
+}
+
+function scrollToX(element, x1, x2, t, v, step, operacion) {
+  if (t < 0 || t > 1 || v <= 0) return;
+  element.scrollTop = x1 - (x1-x2)*operacion(t);
+  t += v * step;
+  setTimeout(function() {
+    scrollToX(element, x1, x2, t, v, step, operacion);
+  }, step);
+}
+
+function easeOutCuaic(t){
+  t--;
+  return t*t*t+1;
+}
+
 {% endblock %}

@@ -62,8 +62,10 @@ class ModifyTrickType extends AbstractType
                 'entry_type' => VideoType::class,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'by_reference' => true,
+                'by_reference' => false,
                 'prototype' => true,
+                'allow_extra_fields' => true,
+                'label' => 'Videos'
 
             ))
             ->addEventSubscriber($this->modifyTrickDTOSubscriber)

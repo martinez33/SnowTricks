@@ -31,30 +31,37 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
      * @var SessionInterface
      */
     private $session;
+
     /**
      * @var TrickRepositoryInterface
      */
     private $trickRepository;
+
     /**
      * @var UserRepository
      */
     private $userRepository;
+
     /**
      * @var FileUpLoader
      */
     private $fileUploader;
+
     /**
      * @var string
      */
     private $imageUploadFolder;
+
     /**
      * @var ValidatorInterface
      */
     private $validator;
+
     /**
      * @var TokenStorageInterface
      */
     private $tokenStorage;
+
     /**
      * AddTrickTypeHandler constructor.
      * @param SessionInterface $session
@@ -95,7 +102,6 @@ class AddTrickTypeHandler implements AddTrickTypeHandlerInterface
             foreach ($form['image']->getData() as $key => $img) {
                 $file = $img->getFile();
                 $filename = $this->fileUploader->upLoadImg($file);
-                $img->setFilename($filename);
                 $img->setExt($file->getClientOriginalExtension());
                 $img->setFileName($this->imageUploadFolder.$filename);
                 $img->setStorageId($filename);

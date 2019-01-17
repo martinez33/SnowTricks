@@ -23,8 +23,8 @@ class VideoType extends AbstractType
             [
                 'video_url' => 'link',
                 'video_id' => 'vidId',
-                'video_type' => 'vidType'
-
+                'video_type' => 'vidType',
+                'label' => "Veuillez insérer le code d'intégration de la vidéo ci-dessous :"
             ]
         );
     }

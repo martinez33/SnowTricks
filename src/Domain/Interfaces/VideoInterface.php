@@ -19,17 +19,9 @@ use App\Domain\Interfaces\TrickInterface;
 interface VideoInterface
 {
     /**
-     * Video constructor.
-     * @param string $vidId
-     * @param string $vidType
-     * @param int|null $updated
-     * @throws \Exception
+     * VideoInterface constructor.
      */
-    public function __construct(
-        string $vidId,
-        string $vidType,
-        int $updated = null
-    );
+    //public function __construct();
 
     /**
      * @return int
@@ -49,7 +41,7 @@ interface VideoInterface
     /**
      * @return TrickInterface
      */
-    public function getTrick(): TrickInterface;
+    public function getTrick(): ?TrickInterface;
 
     /**
      * @return int

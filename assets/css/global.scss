@@ -1,14 +1,37 @@
-$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+//$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
 // customize some Bootstrap variables
-$brand-primary: darken(#428bca, 20%);
+//$brand-primary: darken(#428bca, 20%);
 
-$color: #000;
+//$color: #000;
 
-body {background: $color}
+//body {background: $color}
 
 // the ~ allows you to reference things in node_modules
-@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+//@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+
+
+/** Barre de nav **/
+#mainNav.navbar-shrink {
+  background: linear-gradient(  rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%);
+}
+
+#mainNav.navbar-shrink .nav-link {
+  -webkit-transition: none;
+  transition: none;
+  padding: 1rem 1.5rem;
+  color: #bd621d;
+  font-size: large;
+}
+
+#mainNav .nav-link {
+  -webkit-transition: none;
+  transition: none;
+  padding: 1rem 1.5rem;
+  color: #F7F7F7;
+  font-size: large;
+}
 
 
 /****** LOGIN MODAL ******/
@@ -102,37 +125,39 @@ body {background: $color}
   transition: opacity ease 0.5s;
 }
 
-.login-help{
+.login-help {
   font-size: 12px;
   text-align: center;
 }
-;
 
-/********Accueil*****/
-/*
-html {
-    font-size: 14px;
-}
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
+.avatar {
+  border-radius: 50%;
 }
 
-.container {
-    max-width: 960px;
+.custom-file-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 }
 
-.pricing-header {
-    max-width: 700px;
+.avatar {
+  display: block;
+  margin-left: 200px;
+  cursor: pointer; /* "hand" cursor */
+  width: 100px;
+  height: 100px;
 }
 
-.card-deck .card {
-    min-width: 220px;
+#profile_picture {
+  border-radius: 4px;
+  width: 25px;
+  height: 25px;
 }
 
-.border-top { border-top: 1px solid #e5e5e5; }
-.border-bottom { border-bottom: 1px solid #e5e5e5; }
 
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
-*/
+/***************************************** Home *************/
+
+

@@ -19,13 +19,25 @@
                 {{ form_row(form.image) }}
 
                 </div>
-                <a href="#" id="add_image" class="btn btn-default">Ajouter une image</a><br />
+                <a href="#" id="add_image"
+                   class="collection-add btn btn-default nobuttons_values-collection-add nobuttons_values-collection-action"
+                   title="Add element"><span class="glyphicon glyphicon-plus-sign"></span></a>
+
+                {#<a href="#" id="add_image" class="glyphicon glyphicon-plus-sign"></a><br />#}
+                
                 {% form_theme form 'form/videoField.html.twig' %}
 
+                <div id="videos" data-prototype="{{ form_widget(form.video.vars['prototype'])|e("html_attr") }}" data-index="{{ form.video|length }}">
                 {{ form_row(form.video) }}
-                <a href="#" id="modify_video" class="btn btn-default">Ajouter une vidéo</a><br />
+                </div>
+                <a href="#" id="add_video"
+                   class="collection-add btn btn-default nobuttons_values-collection-add nobuttons_values-collection-action"
+                   title="Add element"><span class="glyphicon glyphicon-plus-sign"></span></a>
+                {#<a href="#" id="add_video" class="btn btn-default">Ajouter une vidéo</a><br />#}
 
-            <button type="submit">Envoyer</button>
+                <br/>
+                <br/>
+                <button type="submit">Envoyer</button>
 
             {{ form_end(form) }}
             </div>
@@ -37,5 +49,5 @@
 
 {% block javascript %}
 {{ parent() }}
-<script type="text/javascript" src="{{ asset('js/modifTrick.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('build/js/modif.js') }}"></script>
 {% endblock %}

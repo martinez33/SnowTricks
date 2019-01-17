@@ -24,13 +24,19 @@ class FileUpLoader implements FileUpLoaderInterface
     private $targetImgDirectory;
 
     /**
-     * FileUpLoader constructor.
-     *
-     * @param $targetDirectory
+     * @var string
      */
-    public function __construct(string $targetImgDirectory)
+    private $targetPictDirectory;
+
+    /**
+     * FileUpLoader constructor.
+     * @param string $targetImgDirectory
+     * @param string $targetPictDirectory
+     */
+    public function __construct(string $targetImgDirectory, string $targetPictDirectory)
     {
         $this->targetImgDirectory = $targetImgDirectory;
+        $this->targetPictDirectory = $targetPictDirectory;
     }
 
 
@@ -51,11 +57,11 @@ class FileUpLoader implements FileUpLoaderInterface
      * @param UploadedFile $file
      * @return string
      */
-    public function upLoadVideo(UploadedFile $file)
+    public function upLoadPict(UploadedFile $file)
     {
         $fileName = md5(uniqid()).'.'.$file->getClientOriginalExtension();
 
-        $file->move($this->getTargetVideoDirectory(), $fileName);
+        $file->move($this->getTargetPictDirectory(), $fileName);
 
         return $fileName;
     }
@@ -66,5 +72,13 @@ class FileUpLoader implements FileUpLoaderInterface
     public function getTargetImgDirectory()
     {
         return $this->targetImgDirectory;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTargetPictDirectory()
+    {
+        return $this->targetPictDirectory;
     }
 }

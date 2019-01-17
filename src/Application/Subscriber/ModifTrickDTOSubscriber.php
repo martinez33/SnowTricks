@@ -9,56 +9,26 @@
 namespace App\Application\Subscriber;
 
 
-use App\Helper\FileUpLoader;
-use App\UI\Form\Extension\ImageTypeExtension;
-use phpDocumentor\Reflection\Types\Void_;
+use App\Helper\Interfaces\FindUrlInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
-use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ModifTrickDTOSubscriber implements EventSubscriberInterface
 {
     /**
-     * @var string
+     * @var FindUrlInterface
      */
-    private $targetImgDirectory;
+    private $findUrl;
 
     /**
-     * @var ImageTypeExtension
+     * ModifTrickDTOSubscriber constructor.
+     * @param FindUrlInterface $findUrl
      */
-    private $imageEtxention;
-
-    /**
-     * @var FileUpLoader
-     */
-    private $fileUpLoader;
-
-    /**
-     * @var string
-     */
-    private $imageUploadFolder;
-
-    /**
-     * ModifyTrickDTOSubscriber constructor.
-     * @param string $targetImgDirectory
-     * @param ImageTypeExtension $imageEtxention
-     * @param FileUpLoader $fileUpLoader
-     * @param string $imageUploadFolder
-     */
-    public function __construct(
-        string $targetImgDirectory,
-        ImageTypeExtension $imageEtxention,
-        FileUpLoader $fileUpLoader,
-        string $imageUploadFolder
-    ) {
-        $this->targetImgDirectory = $targetImgDirectory;
-        $this->imageEtxention = $imageEtxention;
-        $this->fileUpLoader = $fileUpLoader;
-        $this->imageUploadFolder = $imageUploadFolder;
+    public function __construct(FindUrlInterface $findUrl)
+    {
+        $this->findUrl = $findUrl;
     }
-
 
     /**
      * @return array
@@ -66,84 +36,59 @@ class ModifTrickDTOSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            FormEvents::PRE_SUBMIT => 'onPreSubmit',
-            FormEvents::PRE_SET_DATA => 'test',
+            FormEvents::PRE_SUBMIT => 'onPreSubmit'
         ];
     }
 
     /**
-     * @param FormEvent $formEvent
+     * @param FormEvent $event
+     * @throws \Exception
      */
     public function onPreSubmit(FormEvent $event)
     {
-        $currentTrick = $event->getData();
-        $form = $event->getForm();
-        dump($event);
-        //die;
+        $trickImages = $event->getForm()['image']->getData();
+        $tabData = $event->getData();
 
-        $assignImgTab = [];
-        $imageRest = [];
+        if (array_key_exists('image', $tabData)) {    //Si LES images ne sont pas vide !
 
-        foreach ($currentTrick['image'] as $imgKey => $imagesForm) {
+            $newTrickImages = $event->getData()['image']; //newTrickImages recup les images
 
-            if ($imagesForm['file'] === null) { //si il y a des images à conserver
+            $indexToRmv = array_keys(array_diff_key($trickImages, $newTrickImages)); //index different des nouvelles images
 
-                foreach ($form['image']->getData() as $cpt => $image) {
+            $cloneImages = $trickImages; //clonage des images de base
 
-                    if ($imgKey === $cpt) { //attribution via clé de tableau de la bonne image
-
-                        $assignImgTab[$cpt]['file'] = $image->getFile();//tableau anciennes images avec bonne clé tableau
-                    }
-                }
-            } elseif ($imagesForm['file'] !== null) {//si il y a des nouvelle(s) image(s)
-
-                $imageRest[] = $imagesForm; // tableau des nouvelles images
-
-            } else {
-                $imageRest = [];
+            foreach ($indexToRmv as $i) {
+                unset($cloneImages[$i]);  //Suppression de l'image ayant l'index different  == Probleme pour upload car les index sont les meme !
             }
 
-        }
+            $imgAdded = array_diff_key($newTrickImages, $trickImages); //Image ajouté
+            foreach ($imgAdded as $key => $id) {
+                unset($newTrickImages[$key]);//On ne garde que les index identiques aux anciennes images
+            }
 
+            if (array_keys($newTrickImages) === array_keys($cloneImages)) {
+                $oldImg = false;
+                foreach ($newTrickImages as $cpt => $newImg) {
 
-        dump($assignImgTab);
-        dump($imageRest);
-        die;
-        unset($currentTrick['image']);
-
-        if (isset($imageRest) && isset($assignImgTab)) {
-            $temp['image'] = array_merge($assignImgTab, $imageRest);
-
-            $images = array_merge($currentTrick, $temp);
+                    if($newImg['file'] === null) {
+                        $tabRecupFile[$cpt]['file'] = $cloneImages[$cpt]->getFile();
+                        $oldImg = true;
+                    }
+                }
+                if ($oldImg) {
+                    $tabModifImg = array_replace($newTrickImages, $tabRecupFile, $imgAdded);
+                } else {
+                    $tabModifImg = array_replace($newTrickImages, $imgAdded);
+                }
+            }
+            $finalTabImg['image'] = $tabModifImg;
+            $finalTab = array_replace($tabData, $finalTabImg);
         } else {
-            $assignImg['image'] = $assignImgTab;
-            //dump($temp2);
-            $images = array_merge($currentTrick, $assignImg);
+
+            $tabDefaultImg['image'][0]['file'] = $trickImages[0]->getFile();
+            $finalTab = array_replace($tabData, $tabDefaultImg);
         }
-
-
-        $event->setData($images);
-
-
-
-
-
-
-
+        $event->setData($finalTab);
     }
 
-    public function test(FormEvent $event)
-    {
-        /*$trick = $event->getData();
-        $form = $event->getForm();
-        dump($event);
-        dump($trick);
-        dump($form);
-       //die;*/
-
-
-
-        //die;
-
-    }
 }

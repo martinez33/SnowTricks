@@ -9,24 +9,29 @@
 namespace App\UI\Form\Type;
 
 
-
-use App\Domain\User;
-use phpDocumentor\Reflection\Types\Array_;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints as Assert;
+
 
 class RegistrationType extends AbstractType
 {
+
+
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('picture', FileType::class, array(
+            ))
+
             ->add('username', TextType::class, array(
                 'label' => 'Nom d\'utilisateur',
                 'attr' => array(
@@ -44,7 +49,8 @@ class RegistrationType extends AbstractType
                     //'constraints' => array(new Assert\Regex(array('pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/',
                         //'message' => 'Le mot de passe doit comporter au moins : un caractère minuscule, un caractère Majuscule et un 1 chiffre !!'))
                         //'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W)/'*/
-                ))//)
-        ;
+                )
+            );
     }
+
 }

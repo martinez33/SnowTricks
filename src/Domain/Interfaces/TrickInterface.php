@@ -10,6 +10,7 @@ namespace App\Domain\Interfaces;
 
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
 
+use App\Domain\DTO\ModifTrickDTO;
 use App\Domain\Image;
 use App\Domain\User;
 use App\Domain\Video;
@@ -28,6 +29,12 @@ interface TrickInterface
      * @param int|null $updated
      */
     //public function __construct(NewTrickDTOInterface $creationDTO);
+
+    /**
+     * @param ModifTrickDTO $modifTrickDTO
+     * @return $this
+     */
+    public function update(ModifTrickDTO $modifTrickDTO);
 
     /**
      * @return ArrayCollection
@@ -113,14 +120,6 @@ interface TrickInterface
      * @param \ArrayAccess $video
      */
     public function setVideo(array $video);
-
-    /**
-     * @param string $description
-     * @param string $grp
-     * @param array $images
-     * @param array $videos
-     */
-    public function update(string $description, string $grp, array $images, array  $videos);
 
     /**
      * @return User

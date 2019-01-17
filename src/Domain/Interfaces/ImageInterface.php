@@ -34,7 +34,7 @@ interface ImageInterface
     /**
      * @return string
      */
-    public function getFilename(): string;
+    public function getFilename(): ?string;
 
     /**
      * @return bool

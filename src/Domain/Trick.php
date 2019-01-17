@@ -9,7 +9,9 @@
 namespace App\Domain;
 
 use App\Domain\DTO\Interfaces\NewTrickDTOInterface;
+use App\Domain\DTO\ModifTrickDTO;
 use App\Domain\Interfaces\TrickInterface;
+use App\Helper\RemoveImage;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Ramsey\Uuid\Uuid;
@@ -105,6 +107,37 @@ class Trick implements TrickInterface
 
         $this->addLinkImages($creationDTO->image);
         $this->addLinkVideos($creationDTO->video);
+    }
+
+    /**
+     * @param ModifTrickDTO $modifTrickDTO
+     */
+    public function update(ModifTrickDTO $modifTrickDTO)
+    {
+        $this->setDescription($modifTrickDTO->description);
+        $this->setGrp($modifTrickDTO->grp);
+        $this->setName($modifTrickDTO->name);
+
+        $this->updated = time();
+
+        $this->addLinkImages($modifTrickDTO->image);
+        $this->addLinkVideos($modifTrickDTO->video);
+    }
+
+    /**
+     * @return RemoveImage
+     */
+    public function removeImage(Image $image)
+    {
+        $this->image->removeElement($image);
+    }
+
+    /**
+     * @param Video $video
+     */
+    public function removeVideo(Video $video)
+    {
+        $this->video->removeElement($video);
     }
 
     /**
@@ -245,21 +278,6 @@ class Trick implements TrickInterface
     public function setVideo(array $video): void
     {
         $this->video = $video;
-    }
-
-    /**
-     * @param string $description
-     * @param string $grp
-     * @param array $images
-     * @param array $videos
-     */
-    public function update(string $description, string $grp, array $images, array  $videos)
-    {
-        $this->description = $description;
-        $this->grp = $grp;
-        $this->image = new ArrayCollection($images);
-        $this->updated = time();
-        $this->video = new ArrayCollection($videos);
     }
 
     /**

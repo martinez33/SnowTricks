@@ -55,19 +55,22 @@ class Video implements VideoInterface
      * Video constructor.
      * @param string $vidId
      * @param string $vidType
+     * @param string $link
      * @param int|null $updated
      * @throws \Exception
      */
     public function __construct(
-        string $vidId,
+        /*string $vidId,
         string $vidType,
-        int $updated = null
+        string $link,
+        int $updated = null*/
     ) {
         $this->created = time();
         $this->id = Uuid::uuid4();
-        $this->updated = time();
-        $this->vidId = $vidId;
+       // $this->updated = time();
+        /*$this->vidId = $vidId;
         $this->vidType = $vidType;
+        $this->link = $link;*/
     }
 
 
@@ -90,7 +93,7 @@ class Video implements VideoInterface
     /**
      * @return string
      */
-    public function getLink(): string
+    public function getLink(): ?string
     {
         return $this->link;
     }
@@ -106,9 +109,17 @@ class Video implements VideoInterface
     /**
      * @return TrickInterface
      */
-    public function getTrick(): TrickInterface
+    public function getTrick(): ?TrickInterface
     {
         return $this->trick;
+    }
+
+    /**
+     * @param int $updated
+     */
+    public function setUpdated(int $updated): void
+    {
+        $this->updated = $updated;
     }
 
     /**
@@ -128,11 +139,27 @@ class Video implements VideoInterface
     }
 
     /**
+     * @param string $vidId
+     */
+    public function setVidId(string $vidId): void
+    {
+        $this->vidId = $vidId;
+    }
+
+    /**
      * @return string
      */
-    public function getVidId(): string
+    public function getVidId(): ?string
     {
         return $this->vidId;
+    }
+
+    /**
+     * @param string $vidType
+     */
+    public function setVidType(string $vidType): void
+    {
+        $this->vidType = $vidType;
     }
 
     /**

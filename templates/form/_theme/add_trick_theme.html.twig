@@ -1,0 +1,25 @@
+
+{% block form %}
+
+{{ form_start(form) }}
+
+            {{ form_row(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_errors(form.name)}}
+            {{ form_row(form.description) }}
+            {{ form_row(form.grp) }}
+
+<div id="images" data-prototype="{{ form_widget(form.image.vars['prototype'])|e("html_attr") }}" data-index="{{ form.image|length }}">
+    {{ form_row(form.image) }}
+</div>
+<button  type="button" id="add_image" class="btn btn-default">Ajouter une image</button><br />
+
+<div id="videos" data-prototype="{{ form_widget(form.video.vars['prototype'])|e("html_attr") }}" data-index="{{ form.video|length }}">
+    {{ form_row(form.video) }}
+</div>
+<button type="button" id="add_video" class="btn btn-default">Ajouter une vidéo</button><br />
+
+<button type="submit">Envoyer</button>
+{{ form_end(form) }}
+
+{% endblock %}

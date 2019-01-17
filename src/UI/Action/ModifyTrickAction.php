@@ -98,14 +98,12 @@ class ModifyTrickAction implements ModifyTrickActionInterface
 
 
     /**
-     * @param ModifyTrickResponder $responder
+     * @param ModifyTrickResponderInterface $responder
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @param SessionInterface $session
+     * @return mixed
      */
-    public function __invoke(ModifyTrickResponderInterface $responder, Request $request)
+    public function __invoke(ModifyTrickResponderInterface $responder, Request $request, SessionInterface $session)
     {
 
         if (!$trick = $this->trickRepository->getTrickBySlug($request->attributes->get('slug'))){
@@ -114,37 +112,18 @@ class ModifyTrickAction implements ModifyTrickActionInterface
 
         }
 
-        //recup objt et hydrate DTO
-
-        //repository sur slug
-
         $slug = $request->get('slug');
-       // dump($slug);
-
 
         $trick = $this->trickRepository->getTrickBySlug($slug);
-       // dump($trick);
-        //$authorizationChecker = new AuthorizationChecker();
-        //die;
-        /*if (!$this->security->isGranted('ROLE_USER',  $trick)) {
-            dump('Pas d\'authorisation Messir de la fraude !!');
-            //redirection
-        }*/
-            //die;
 
         $modifTrickDTO = $this->modifyTrickDTOFactory->createFromUI($trick);
-
-        //dump($modifTrickDTO);
-
-        //die;
-
-        //passe les donnéees DTO au Form via create ModifyTrickType::class, "datas"
 
         $modifyTrickType = $this->formFactory->create(ModifyTrickType::class, $modifTrickDTO)->handleRequest($request);
 
         //dump($modifyTrickType->getData());
         //die;
-        if ($this->modifyTrickTypeHandler->handle($modifyTrickType, $request)) {
+        if ($this->modifyTrickTypeHandler->handle($modifyTrickType, $request, $trick)) {
+            $session->getFlashBag()->add('notice', 'Successfull : Trick Modified !');
             return $responder(true);
         } else {
             return $responder(false, $modifyTrickType);

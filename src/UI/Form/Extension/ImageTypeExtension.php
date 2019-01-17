@@ -61,7 +61,7 @@ class ImageTypeExtension extends AbstractTypeExtension
             // sets an "image_url" variable that will be available when rendering this field
 
             $view->vars['image_id'] = $imageId;
-            dump($view);
+            //dump($view);
             //dump($imageId);
             //die;
         }

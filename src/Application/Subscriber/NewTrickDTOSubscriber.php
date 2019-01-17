@@ -82,8 +82,13 @@ class NewTrickDTOSubscriber implements EventSubscriberInterface
             $vidType = $this->findUrl->SearchVideoType($video);
             $vidId = $this->findUrl->FindVideoId($video, $vidType);
 
-            $videos[] = new Video($vidId, $vidType);
+            $newVideo = new Video();
+            $newVideo->setLink($video);
+            $newVideo->setVidType($vidType);
+            $newVideo->setVidId($vidId);
+            $videos[] = $newVideo;
         }
+
         $event->getData()->video = $videos;
     }
 

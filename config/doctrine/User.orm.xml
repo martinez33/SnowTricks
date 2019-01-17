@@ -20,5 +20,10 @@
                 <cascade-all/>
             </cascade>
         </one-to-many>
+        <one-to-one field="picture" target-entity="App\Domain\Image" mapped-by="user">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-one>
     </entity>
 </doctrine-mapping>

@@ -38,7 +38,6 @@ class ModifTrickDTO implements ModifTrickDTOInterface
      */
     public $video = [];
 
-
     /**
      * newTrickDTO constructor.
      *
@@ -61,6 +60,30 @@ class ModifTrickDTO implements ModifTrickDTOInterface
     }
 
     /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGrp(): string
+    {
+        return $this->grp;
+    }
+
+    /**
      * @return array
      */
     public function getImage(): array
@@ -75,4 +98,5 @@ class ModifTrickDTO implements ModifTrickDTOInterface
     {
         return $this->video;
     }
+
 }

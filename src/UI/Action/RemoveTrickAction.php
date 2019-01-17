@@ -86,11 +86,10 @@ class RemoveTrickAction implements RemoveTrickActionInterface
         $trick = $this->trickRepository->getTrickBySlug($request->attributes->get('slug'));
 
         foreach ($trick->getImage() as $fileNames) {
-
-            $images[] = $this->publicDirectory.$fileNames->getFileName();
+            $this->fileSystem->remove($this->publicDirectory.$fileNames->getFileName());
         }
 
-        $this->fileSystem->remove($images);
+
 
 
         $result = $this->trickRepository->delTrickBySlug($trick);

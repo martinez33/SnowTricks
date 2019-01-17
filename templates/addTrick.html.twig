@@ -2,6 +2,8 @@
 
 {% block title %}{{ parent() }} - Tricks{% endblock %}
 
+{% form_theme form 'form/_theme/add_trick_theme.html.twig' %}
+
 {% block content %}
     <div class="container">
         <div class="row">
@@ -13,26 +15,7 @@
                 {% endfor %}
             {% endif %}
             </ul>
-            {{ form_start(form) }}
-
-
-            {{ form_row(form.name) }}
-            {{ form_widget(form.name) }}
-            {{ form_errors(form.name)}}
-            {{ form_row(form.description) }}
-            {{ form_row(form.grp) }}
-            <div id="images" data-prototype="{{ form_widget(form.image.vars['prototype'])|e("html_attr") }}" data-index="{{ form.image|length }}">
-                {{ form_row(form.image) }}
-            </div>
-            <button  type="button" id="add_image" class="btn btn-default">Ajouter une image</button><br />
-
-            <div id="videos" data-prototype="{{ form_widget(form.video.vars['prototype'])|e("html_attr") }}" data-index="{{ form.video|length }}">
-                {{ form_row(form.video) }}
-            </div>
-            <button type="button" id="add_video" class="btn btn-default">Ajouter une vidéo</button><br />
-
-            <button type="submit">Envoyer</button>
-            {{ form_end(form) }}
+            {{ form(form) }}
         </div>
     </div>
 
@@ -40,5 +23,6 @@
 
 {% block javascript %}
    {{ parent() }}
-   <script type="text/javascript" src="{{ asset('js/addTrick.js') }}"></script>
+   {#<script type="text/javascript" src="{{ asset('js/addTrick.js') }}"></script>#}
+   <script type="text/javascript" src="{{ asset('build/js/add.js') }}"></script>
 {% endblock %}

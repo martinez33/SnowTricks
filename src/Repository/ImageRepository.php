@@ -16,6 +16,10 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class ImageRepository extends ServiceEntityRepository implements ImageRepositoryInterface
 {
+    /**
+     * ImageRepository constructor.
+     * @param RegistryInterface $registry
+     */
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Image::class);
@@ -43,6 +47,17 @@ class ImageRepository extends ServiceEntityRepository implements ImageRepository
     public function removeImage($image)
     {
         $this->_em->remove($image);
+        $this->_em->flush();
+    }
+
+    /**
+     * @param $image
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save($image)
+    {
+        $this->_em->persist($image);
         $this->_em->flush();
     }
 }

@@ -10,6 +10,7 @@ namespace App\Domain\Factory;
 
 
 use App\Domain\DTO\ModifTrickDTO;
+use App\Domain\Image;
 use App\Domain\Trick;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -30,6 +31,11 @@ class ModifyTrickDTOFactory
         $this->publicDirectory = $publicDirectory;
     }
 
+    /**
+     * @param Trick $trick
+     *
+     * @return ModifTrickDTO
+     */
     public function createFromUI(Trick $trick)
      {
          $this->transformImgToFile($trick->getImage()->toArray());
@@ -42,6 +48,9 @@ class ModifyTrickDTOFactory
              $trick->getVideo()->toArray());
      }
 
+    /**
+     * @param array $images
+     */
      private function transformImgToFile(array $images)
      {
          foreach ($images as $image) {
@@ -49,7 +58,10 @@ class ModifyTrickDTOFactory
          }
      }
 
-     private  function transformVideoToLink(array $videos)
+    /**
+     * @param array $videos
+     */
+     private function transformVideoToLink(array $videos)
      {
 
          foreach ($videos as $video) {
@@ -62,4 +74,11 @@ class ModifyTrickDTOFactory
          }
      }
 
+    /**
+     * @param Image $image
+     */
+    public function transformImgToFilePreSub(Image $image)
+    {
+        $image->setFile( new File($this->publicDirectory.$image->getFilename()));
+    }
 }

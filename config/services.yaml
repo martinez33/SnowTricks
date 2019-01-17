@@ -3,7 +3,9 @@
 parameters:
     locale: 'en'
     imageUploadFolder: '/uploads/images/'
+    pictureUploadFolder: '/uploads/pictures/'
     imagesDirectory: '%kernel.project_dir%/public/uploads/images/'
+    picturesDirectory: '%kernel.project_dir%/public/uploads/pictures/'
     publicDirectory: '%kernel.project_dir%/public'
 
 services:
@@ -16,7 +18,9 @@ services:
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
             $imageUploadFolder: '%imageUploadFolder%'
+            $pictureUploadFolder: '%pictureUploadFolder%'
             $targetImgDirectory: '%imagesDirectory%'
+            $targetPictDirectory: '%picturesDirectory%'
             $publicDirectory: '%publicDirectory%'
 
     # makes classes in src/ available to be used as services

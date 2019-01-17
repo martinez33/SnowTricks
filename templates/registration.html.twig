@@ -2,24 +2,115 @@
 
 {% block title %}{{ parent() }} - Registration{% endblock %}
 
+{% block stylesheet %} {{ parent() }}
+
+    <style type="text/css">
+
+        .registration-head {
+            padding-top: 150px;
+            height: 900px;
+            width: auto;
+            background: linear-gradient(to top, rgba(22, 22, 22, 0.1) 0%, rgba(22, 22, 22, 0.5) 75%, #161616 100%), url("/images/rider_login.jpg");
+        }
+
+        label img {
+           width: 350px;
+
+        }
+
+        label img.avatar {
+           margin-left: 10px;
+       }
+
+        #registration_form {
+           width: 350px;
+           padding: 5px;
+           border-color: #2e3436;
+           border-style: solid;
+           border-width: 2px;
+           border-radius: 10px;
+       }
+
+        #registration_submit {
+            border-radius: 10px;
+        }
+
+    </style>
+
+{% endblock %}
+
 {% block content %}
     <div class="container">
-        <div class="row">
+       {#<div class="row">
             <div class="modal-dialog">
                 <div class="loginmodal-container">
                     <h1>Registration</h1><br>
 
                     {{ form_start(form) }}
+
                     <div id="form_input">
-                    {{ form_row(form.username) }}
-                    {{ form_row(form.email) }}
-                    {{ form_row(form.password) }}
+
+                        <p class="zmdi">Choisissez une photo de profile : </p>
+                        {{ form_row(form.picture) }}
+                        {{ form_widget(form.picture) }}
+
+
+                        {{ form_row(form.username) }}
+                        {{ form_row(form.email) }}
+                        {{ form_row(form.password) }}
                 </div>
                     <button type="submit" id="registration_submit" class="login loginmodal-submit">Create An Account</button>
                     {{ form_end(form) }}
                 </div>
             </div>
-        </div>
+        </div>#}
     </div>
 
+
+
+
+
+
+
+    <div>
+        <a id="cAller" class="cVisible" href="#registration_form">
+        </a>
+    </div>
+    <header class="registration-head">
+        <div class="container d-flex h-100 align-items-center">
+            <div class="mx-auto text-center">
+                <div class="">
+                    <div class="row">
+                        <div class="registration-form" id="registration_form">
+                            <h1>Registration</h1><br>
+
+                            {{ form_start(form) }}
+
+                            <div id="form_input">
+
+                                <p class="zmdi">Choose your picture : </p>
+                                {{ form_row(form.picture) }}
+
+                                {{ form_widget(form.picture) }}
+
+
+
+                                {{ form_row(form.username) }}
+                                {{ form_row(form.email) }}
+                                {{ form_row(form.password) }}
+                                <button type="submit" id="registration_submit" class="login loginmodal-submit">Create An Account</button>
+                            {{ form_end(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/addTrick.js') }}"></script>
 {% endblock %}

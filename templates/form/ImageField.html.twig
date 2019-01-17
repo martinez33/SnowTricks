@@ -7,11 +7,15 @@
 
     <img src="{{ asset(image_url) }}"/>
 
-    <button id="modif_ext_image" type="button" name="modify" class="btn btn-warning" >Modifier</button>
-    <br>
-    <br>
+    <button href="#" id="modify_ext_image"  name="modify_image"
+       class="collection-add btn btn-default nobuttons_values-collection-add nobuttons_values-collection-action"
+       title="Add element"><span class="glyphicon glyphicon-pencil"></span></button>
+    {#<button id="modify_ext_image" type="button" name="modify_image" class="btn btn-warning" >Modifier</button>#}
 
-    <button id="remove_ext_image" type="button" class="btn btn-danger" >Supprimer</button>
+    <button href="#" id="remove_ext_image"
+       class="collection-remove btn btn-default nobuttons_values-collection-remove nobuttons_values-collection-action"
+       title="Delete element"><span class="glyphicon glyphicon-trash"></span></button>
+    {#<button id="remove_ext_image" type="button" class="btn btn-danger" >Supprimer</button>#}
 {% endif %}
 
 {% endblock %}

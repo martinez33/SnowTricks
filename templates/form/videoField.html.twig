@@ -2,14 +2,31 @@
 {% block text_widget %}
 
 
-{#{{ block('form_widget') }}#}
+{{ block('form_widget') }}
     {% if video_id and video_type is not null %}
 
-        <div id="extd_video" class="">
-            <embed width="200" height="150" src="https://www.{{ video_type }}.com/embed/{{ video_id }}"
-               frameborder="0" allow="encrypted-media" allowfullscreen />
-            <button id="rm-video" class="btn btn-danger">Supprimer</button>
-        </div>
+        {% if video_type == "youtube" %}
+            <iframe width="200" height="150" src="https://www.youtube.com/embed/{{ asset(video_id) }}"
+                    frameborder="0" allowfullscreen ></iframe>
+        {% elseif video_type == "dailymotion" %}
+            <iframe width="200" height="150" src="//www.dailymotion.com/embed/video{{ asset(video_id) }}"
+                    frameborder="0" allow="encrypted-media" allowfullscreen ></iframe>
+        {% elseif video_type == "vimeo" %}
+            <iframe src="https://player.vimeo.com/video/{{ asset(video_id) }}"
+                    width="200" height="150" frameborder="0"
+                    webkitallowfullscreen mozallowfullscreen allowfullscreen ></iframe>
+        {% endif %}
+
+        <button href="#" id="modif_ext_video"  name="modify_video"
+           class="collection-add btn btn-default nobuttons_values-collection-add nobuttons_values-collection-action"
+           title="Add element"><span class="glyphicon glyphicon-pencil"></span></button>
+        {#<button id="modif_ext_video" type="button" name="modify_video" class="btn btn-warning" >Modifier</button>#}
+
+        <button href="#" id="remove_ext_video"
+           class="collection-remove btn btn-default nobuttons_values-collection-remove nobuttons_values-collection-action"
+           title="Delete element"><span class="glyphicon glyphicon-trash"></span></button>
+        {#<button id="remove_ext_video" type="button" class="btn btn-danger" >Supprimer</button>#}
+
     {% endif %}
 
 {% endblock text_widget %}

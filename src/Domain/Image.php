@@ -66,6 +66,11 @@ class Image implements ImageInterface
     private $trick;
 
     /**
+     * @var User
+     */
+    private $user;
+
+    /**
      * @var int
      */
     private $updated;
@@ -137,7 +142,7 @@ class Image implements ImageInterface
     /**
      * @return string
      */
-    public function getFileName(): string
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
@@ -172,6 +177,14 @@ class Image implements ImageInterface
     public function getTrick(): TrickInterface
     {
         return $this->trick;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
     }
 
     /**
@@ -230,5 +243,13 @@ class Image implements ImageInterface
         $this->trick = $trick;
 
         return $this;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }

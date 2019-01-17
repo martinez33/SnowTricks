@@ -12,13 +12,8 @@
         <field name="updated" column="updated" type="integer" length="11" nullable="true" />
         <many-to-one field="trick" target-entity="App\Domain\Trick" inversed-by="video" >
             <cascade>
-                <cascade-all/>
+                <cascade-refresh/>
             </cascade>
-            <join-table name="trick">
-                <join-columns>
-                    <join-column name="trick_id" reference-colum-name="id" nullable="false" unique="false" />
-                </join-columns>
-            </join-table>
         </many-to-one>
     </entity>
 </doctrine-mapping>

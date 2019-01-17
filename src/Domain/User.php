@@ -79,7 +79,13 @@ class User implements UserInterface, \Serializable, EquatableInterface
     private $salt;
 
     /**
+     * @var Image
+     */
+    private $picture;
+
+    /**
      * User constructor.
+     * @param Image $picture
      * @param string $username
      * @param string $email
      * @param string $password
@@ -87,11 +93,13 @@ class User implements UserInterface, \Serializable, EquatableInterface
      * @throws \Exception
      */
     public function __construct(
+        Image $picture,
         string $username,
         string $email,
         string $password,
         callable $passwordEncoder
     ) {
+        $this->picture = $picture;
         $this->username = $username;
         $this->email = $email;
         $this->password = $passwordEncoder($password, null);
@@ -365,5 +373,26 @@ class User implements UserInterface, \Serializable, EquatableInterface
         }
 
         return true;
+    }
+
+    /**
+     * @return Image
+     */
+    public function getPicture(): ?Image
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @param Image $picture
+     */
+    public function setPicture(Image $picture): void
+    {
+        $this->picture = $picture;
+    }
+
+    public function __toString()
+    {
+        return $this->picture;
     }
 }
