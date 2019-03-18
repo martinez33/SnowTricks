@@ -4,7 +4,6 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
         http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-<<<<<<< HEAD
     <entity name="App\Domain\Trick" table="trick">
         <unique-constraints>
             <unique-constraint columns="name,slug" name="search_idx" />
@@ -33,17 +32,6 @@
 
             </cascade>
         </many-to-one>
-=======
-    <entity name="App\Entity\Trick">
-        <id name="id" column="id" type="string" >
-            <generator strategy="CUSTOM"/>
-            <custom-id-generator class="Ramsey\Uuid\Doctrine\UuidGenerator"/>
-        </id>
 
-        <field name="name" type="string" length="100" />
-        <field name="description" type="string" length="255" />
-        <field name="grp" type="string" length="100" />
-
->>>>>>> 687c3a47012fb8fcae29d16525308245c8e2b3b8
     </entity>
 </doctrine-mapping>

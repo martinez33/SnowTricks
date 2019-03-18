@@ -15,7 +15,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         public: false       # Allows optimizing the container by removing unused services; this also means
-<<<<<<< HEAD
                             # fetching services directly from the container via $container->get() won't work.
                             # The best practice is to be explicit about your dependencies anyway.
         bind:
@@ -24,9 +23,7 @@ services:
             $targetImgDirectory: '%imagesDirectory%'
             $targetPictDirectory: '%picturesDirectory%'
             $publicDirectory: '%publicDirectory%'
-=======
 
->>>>>>> 687c3a47012fb8fcae29d16525308245c8e2b3b8
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
